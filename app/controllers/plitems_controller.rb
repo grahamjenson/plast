@@ -1,0 +1,2 @@
+class PlitemsController < ApplicationController
+end
