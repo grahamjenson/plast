@@ -13,8 +13,12 @@ class Playlist < ActiveRecord::Base
 
   def as_json(options)
     jsond = super(options)
+    #fix uuid
     jsond["id"] = uuid
     jsond.delete("uuid")
+
+    #add plitems
+    jsond["plitems"] = self.plitems
     return jsond
   end
 

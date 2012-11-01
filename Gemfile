@@ -9,11 +9,13 @@ gem 'sqlite3'
 gem 'thin'
 gem 'pg'
 gem 'haml-rails'
-
+gem 'google-webfonts'
 
 gem 'bootstrap-sass', '~> 2.1.0.0'
 
 gem 'backbone-on-rails'
+
+gem 'validates_formatting_of'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,0 +1,10 @@
+<div class="container">
+  <h1 id="biglogo">
+    [PLAST]
+  </h1>
+  <div id="createbtn">
+    <a href="#playlist"  class="btn btn-danger">
+      Create Playlist
+    </a>
+  </div>
+</div>

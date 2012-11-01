@@ -1,11 +1,14 @@
+!!!
 %html
   %head
     %title= Plast
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"}
     = csrf_meta_tags
+    = google_webfonts_link_tag :unica_one, :lato, :strait
 %body
+  #ojumbo
+    #jumbo
   .container
-    .row
-      .span12
-        = yield
+    #playlist
