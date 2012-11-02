@@ -4,7 +4,7 @@ window.Plast =
   Views: {}
   Routers: {}
   init: ->
-    new Plast.Routers.Playlists()
+    Backbone.defaultrouter = new Plast.Routers.Playlists()
     Backbone.history.start()
 
 $(document).ready ->

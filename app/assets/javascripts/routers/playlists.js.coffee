@@ -6,28 +6,30 @@ class Plast.Routers.Playlists extends Backbone.Router
 
   constructor: ->
     super()
-    @jumbo = new Plast.Views.Jumbo()
-    this.bind("all", (route, router) ->
-      $('#jumbo').html(@jumbo.render().el))
+    @jumbo = new Plast.Views.Jumbo(this)
 
   index: ->
     console.log("index")
 
-  showpl: (uuid) ->
-    console.log("Showpl Route")
-    npl = new Plast.Models.Playlist({id : uuid})
-    npl.fetch()
-    plview = new Plast.Views.Playlist(npl)
-    $('#playlist').html(plview.render().el)
 
+  showpl: (uuid) ->
+    npl = new Plast.Models.Playlist({id : uuid})
+    @renderpl(npl)
 
   newpl: ->
     npl = new Plast.Models.Playlist()
     npl.save({},{
     success: =>
-      @navigate("playlist/#{npl.get('id')}",{trigger: true, replace: true});
+      @navigate("playlist/#{npl.get('id')}",{replace: true});
+      @renderpl(npl)
     error: =>
       @navigate("",{trigger: true});
       })
+
+  renderpl: (pl) ->
+    pl.fetch()
+    plview = new Plast.Views.Playlist(pl)
+    $('#playlist').html(plview.render().el)
+
 
 

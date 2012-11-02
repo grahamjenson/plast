@@ -1,13 +1,28 @@
-class Plast.Models.Playlist extends Backbone.Model
+class Plast.Models.Playlist extends Backbone.RelationalModel
   urlRoot: "/api/playlists"
 
-  defaults: {
-    "plitems": []
-  }
+  relations: [{
+      type: Backbone.HasMany,
+      key: 'plitems',
+      relatedModel: 'Plast.Models.Plitem',
+      collectionType: 'Plast.Collections.Plitems',
+      reverseRelation:
+        key: 'playlist',
+        includeInJSON: 'uuid'
+      }]
 
-  constructor: (attributes,options) ->
-    Backbone.Model.apply( this, arguments )
-    for plitem in this.get("plitems")
-        npl = new Plast.Models.Plitem({url : plitem.url})
-    console.log (this.get("plitems"))
-    this
+  additem: (url, callbacks) ->
+    callbacks = {} if not callbacks
+    pli = new Plast.Models.Plitem({"url" : url})
+    @get("plitems").add(pli)
+    pli.save({}, {
+      success: =>
+        callbacks.success() if callbacks.success
+      error: ->
+        callbacks.error() if callbacks.error})
+    @trigger("change")
+
+  fetch: (options) ->
+    console.log("fetch")
+    super(options)
+    @get("plitems").fetch()

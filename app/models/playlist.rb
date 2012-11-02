@@ -8,7 +8,7 @@ class Playlist < ActiveRecord::Base
   has_many :plitems
 
   def generate_uuid
-    self.uuid ||= SecureRandom.uuid
+    self.uuid ||= rand(36**8).to_s(36)
   end
 
   def as_json(options)
@@ -16,9 +16,6 @@ class Playlist < ActiveRecord::Base
     #fix uuid
     jsond["id"] = uuid
     jsond.delete("uuid")
-
-    #add plitems
-    jsond["plitems"] = self.plitems
     return jsond
   end
 

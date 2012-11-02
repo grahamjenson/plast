@@ -3,7 +3,7 @@
     [PLAST]
   </h1>
   <div id="createbtn">
-    <a href="#playlist"  class="btn btn-danger">
+    <a id="createbtnlink" class="btn btn-danger">
       Create Playlist
     </a>
   </div>

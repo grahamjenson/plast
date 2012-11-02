@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require swfobject
 //= require underscore
 //= require backbone
+//= require backbone-relational
 //= require plast
 //= require_tree ../templates
 //= require_tree ./models
