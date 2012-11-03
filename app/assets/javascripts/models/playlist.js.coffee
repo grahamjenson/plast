@@ -11,15 +11,23 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
         includeInJSON: 'uuid'
       }]
 
-  additem: (youtubeid, callbacks = {}) ->
-    pli = new Plast.Models.Plitem({"youtubeid" : youtubeid})
-    @get("plitems").add(pli)
+  additem: (ytitem, callbacks = {}) ->
+    console.log(ytitem)
+    pli = new Plast.Models.Plitem({
+      "youtubeid" : ytitem.id,
+      playlist_id: this.id,
+      title: ytitem.title ,
+      thumbnail: ytitem.thumbnail.sqDefault,
+      length: ytitem.duration,
+      rating: 0})
+
     pli.save({}, {
       success: =>
+        @get("plitems").add(pli)
         callbacks.success() if callbacks.success
         @trigger("change")
-      error: ->
-        callbacks.error() if callbacks.error})
+      error: (model,xhr) ->
+        callbacks.error(model,xhr) if callbacks.error})
 
 
   fetch: (options) ->

@@ -7,30 +7,36 @@ class Plast.Views.Search extends Backbone.View
     'submit #searchyt' : 'searchyt'
     'click .srlink' : 'srclick'
 
+
   constructor: (playlist) ->
     super()
     @playlist = playlist
+    @results = {}
 
   render: ->
     console.log("render search")
     $(@el).html(@template())
     this
 
-  searchyt: (event) ->
+  searchyt: (event) =>
     event.preventDefault()
     lol = $("#serchtext").val()
-    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&alt=json", {}, (d) ->
+    @results = {}
+    res = @results
+    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&alt=jsonc", {}, (d) ->
       window.hui = d
-      console.log(d.data)
-      srhtml = JST["playlists/searchresult"](items : d.feed.entry)
+      for item in d.data.items
+        res[item.id] = item
+      srhtml = JST["playlists/searchresult"](items : d.data.items)
       $("#searchresults").html(srhtml)
     )
 
 
-  srclick: (e) ->
-    @playlist.additem(e.currentTarget.id,
-      {success: =>
-
+  srclick: (e) =>
+    it = $(e.currentTarget).attr("dataid")
+    item = @results[it]
+    @playlist.additem(item,
+      {
       error: (model, xhr) =>
         errors = $.parseJSON(xhr.responseText).errors
         console.log(errors)

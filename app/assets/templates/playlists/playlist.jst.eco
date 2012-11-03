@@ -1,8 +1,12 @@
+
 <table class="table table-striped">
-  <tr><th>Title</th></tr>
+  <tr>  <th width=10% >Actions</th> <th width=10% >Length</th> <th width=10%>Rating</th> <th width=60%>Title</th>   </tr>
   <% for plitem in @playlist.get("plitems").models: %>
     <tr>
-      <td> <%= plitem.get("youtubeid") %> </td>
+      <td> TODO </td>
+      <td> <%= plitem.get("length") %> </td>
+      <td> <%= plitem.get("rating") %> </td>
+      <td> <%= plitem.get("title") %> </td>
     </tr>
   <% end %>
 </table>
