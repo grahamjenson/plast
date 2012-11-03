@@ -1,36 +1,8 @@
-<% if @playlist: %>
-  <div class="row">
-    <div class="span12">
-      <h1>
-        Playlist
-      </h1>
-
-      <div class="row">
-        <div class="span6">
-          <form id="new_plitem">
-            <div class="controls">
-              <div class="input-append">
-                <input id="new_plitem_url" class="span4" type="text" placeholder="Put a Youtube Video ID here"></input>
-                <button class="btn" type="submit"  >Submit</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="span4">
-         <p id="new_form_error" class="text-error"></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span12">
-        <% for plitem in @playlist.get("plitems").models: %>
-          <% plid = "plitem_#{plitem.id}" %>
-          <div id="<%=plid %>">
-          <%= plid %>
-          <% swfobject.embedSWF("http://www.youtube.com/v/R_j2fW1-Lwo?version=3&enablejsapi=1", plid, "640", "385", "9.0.0") %>
-        <% end %>
-    </div>
-  </div>
-<% end %>
+<table class="table table-striped">
+  <tr><th>Title</th></tr>
+  <% for plitem in @playlist.get("plitems").models: %>
+    <tr>
+      <td> <%= plitem.get("youtubeid") %> </td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="span3">
+    <form id="searchyt" class="form-search">
+      <input id="serchtext" type="text" placeholder="Search Here" class="input-medium search-query">
+      <button type="submit" class="btn">Search</button>
+    </form>
+  </div>
+  <div id="searchresults" class="span3">
+
+  </div>
+</div>

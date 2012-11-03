@@ -9,8 +9,6 @@ class Plast.Routers.Playlists extends Backbone.Router
     @jumbo = new Plast.Views.Jumbo(this)
 
   index: ->
-    console.log("index")
-
 
   showpl: (uuid) ->
     npl = new Plast.Models.Playlist({id : uuid})
@@ -29,7 +27,10 @@ class Plast.Routers.Playlists extends Backbone.Router
   renderpl: (pl) ->
     pl.fetch()
     plview = new Plast.Views.Playlist(pl)
+    plsearch = new Plast.Views.Search(pl)
+    plplayer = new Plast.Views.Player(pl)
+
     $('#playlist').html(plview.render().el)
-
-
+    $('#search').html(plsearch.render().el)
+    plplayer.render()
 

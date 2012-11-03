@@ -1,7 +1,6 @@
 class Plitem < ActiveRecord::Base
-  attr_accessible :url
-  #validates :url, :presence => true
-  validates_formatting_of :url, :using => :url, :message => 'is completely unacceptable'
+  attr_accessible :youtubeid
+  validates :youtubeid, :presence => true
 
   belongs_to :playlist
 end

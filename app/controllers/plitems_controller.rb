@@ -15,7 +15,7 @@ class PlitemsController < ApplicationController
 
   def create
     pl = Playlist.where(:uuid => params[:playlist_id]).first
-    pitem = pl.plitems.create({url: params[:url]})
+    pitem = pl.plitems.create({youtubeid: params[:youtubeid]})
     if pitem.save
       render :json => pitem
     else
