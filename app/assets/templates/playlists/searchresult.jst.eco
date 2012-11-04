@@ -1,9 +1,21 @@
-<div>
+<table class="table table-striped">
+  <tr> <th width=5% >Length</th> <th width=5%>Youtube Rating</th> <th width=60%>Title</th> <th width=30% ></th> </tr>
   <%for yto in @items: %>
-    <div>
-      <a dataid="<%=yto.id %>" class="srlink thumbnail">
-        <img src="<%=yto.thumbnail.sqDefault%>" alt=""><p><%= yto.title %></p>
-      </a>
-    </div>
+    <tr>
+      <% console.log(yto) %>
+      <td><%= yto.duration %></td>
+      <td><%= yto.rating %> </td>
+      <td> <%= yto.title %> </td>
+      <td>
+        <div class="btn-group">
+          <a dataid="<%=yto.id %>" class="btn btn-success srlink">
+            <i class="icon-plus"></i>
+          </a>
+          <a dataid="<%=yto.id %>" class="btn btn-primary" href="http://www.youtube.com/watch?v=<%=yto.id%>" target="_blank">
+            <i class="icon-share-alt"></i>
+          </a>
+        </div>
+      </td>
+    </tr>
   <% end %>
-</div>
+</table>

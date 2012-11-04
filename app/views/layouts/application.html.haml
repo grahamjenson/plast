@@ -8,9 +8,13 @@
     = csrf_meta_tags
     = google_webfonts_link_tag :unica_one, :lato, :strait
 %body
-  #ojumbo
-    #jumbo
-  .container
+  .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+        %a.brand{href: "#"}= "[PLAST]"
+        #playerhead
+
+  .container#body
     .row
       #search.span3
       .span9

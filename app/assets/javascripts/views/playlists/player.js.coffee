@@ -1,11 +1,21 @@
 class Plast.Views.Player extends Backbone.View
 
+  template: JST['playlists/playerhead']
+
+
+  events:
+    'click #back' : 'back'
+    'click #play' : 'play'
+    'click #pause' : 'pause'
+    'click #forward' : 'forward'
+
   constructor: (playlist) ->
     super()
     @playlist = playlist
 
+
   render: ->
-    console.log("render player")
+    $(@el).html(@template(playlist: @playlist))
     #Rendered the template
     params = { allowScriptAccess: "always"};
     atts = { id: "ytplayer" };
@@ -14,7 +24,15 @@ class Plast.Views.Player extends Backbone.View
     this
 
 
-
   window.onYouTubePlayerReady = (id) ->
     console.log("onYouTubePlayerResadsadsady() Fired! #{id}");
     console.log(ytplayer)
+
+  back: ->
+    console.log("back")
+  play: ->
+    console.log("play")
+  pause: ->
+    console.log("pause")
+  forward: ->
+    console.log("forward")

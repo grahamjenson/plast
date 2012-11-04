@@ -23,7 +23,7 @@ class Plast.Views.Search extends Backbone.View
     lol = $("#serchtext").val()
     @results = {}
     res = @results
-    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&alt=jsonc", {}, (d) ->
+    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&category=music&alt=jsonc", {}, (d) ->
       window.hui = d
       for item in d.data.items
         res[item.id] = item
