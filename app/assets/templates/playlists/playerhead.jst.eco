@@ -1,14 +1,14 @@
-<div class="row">
-    <div class="btn-toolbar span2">
-      <div class="btn-group">
-        <a class="btn" id="back"><i class="icon-step-backward"></i></a>
-        <a class="btn" id="play"><i class="icon-play"></i></a>
-        <a class="btn" id="pause"><i class="icon-pause"></i></a>
-        <a class="btn" id="forward"><i class="icon-step-forward"></i></a>
-      </div>
-    </div>
-    <div class="progress progress-striped span3" style="margin:15px 0 0 10px; height: 30px">
-      <div class="bar" style="z-index: 1; width: 60%; height: 30px"></div>
-      <div style="z-index: 2;color: black; position: absolute;"> <strong>Title of the Song</strong> </div>
-    </div>
+<div class="btn-toolbar playercontrols">
+  <div class="btn-group row-fluid " data-toggle="buttons-checkbox">
+    <button class="btn playerbtn"><i class="icon-step-backward" ></i></button>
+    <button class="btn playerbtn"  id="play"><i class="icon-play"></i></button>
+    <button class="btn playerbtn" id="forward"><i class="icon-step-forward"></i></button>
+  </div>
 </div>
+<div class="progress progress-striped player-progress">
+  <div class="bar" style="z-index: 1; width: 60%; height: 100%"></div>
+  <div style="z-index: 2;color: black; position: absolute;">
+    <strong>Title of the Song</strong>
+  </div>
+</div>
+

@@ -11,12 +11,15 @@
   .navbar.navbar-inverse.navbar-fixed-top
     .navbar-inner
       .container
-        %a.brand{href: "#"}= "[PLAST]"
-        #playerhead
-
+        .row
+          .span2
+            %a.brand
+              =image_tag "logo.png"
+          #playerhead.span5
+          #search.span2.pullright
   .container#body
     .row
-      #search.span3
+
       .span9
         .invisible
           #ytplayer
