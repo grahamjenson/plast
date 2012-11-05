@@ -6,9 +6,9 @@
   </div>
 </div>
 <div class="progress progress-striped player-progress">
-  <div class="bar" style="z-index: 1; width: 60%; height: 100%"></div>
+  <div class="bar" style="z-index: 1; width: 100%; height: 100%"></div>
   <div style="z-index: 2;color: black; position: absolute;">
-    <strong>Title of the Song</strong>
+    <strong><% @plitem.title if @plitem %></strong>
   </div>
 </div>
 

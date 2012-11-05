@@ -11,6 +11,13 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
         includeInJSON: 'uuid'
       }]
 
+  STATE_INIT: 0
+  STATE_PLAYING: 1
+  STATE_PAUSED: 2
+
+  initialize: ->
+    this.set("state", @STATE_INIT)
+
   additem: (ytitem, callbacks = {}) ->
     console.log(ytitem)
     pli = new Plast.Models.Plitem({
@@ -33,3 +40,8 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   fetch: (options) ->
     super(options)
     @get("plitems").fetch()
+
+  getPlayableItems: ->
+    results = (plitem for plitem in this.get("plitems").models when not plitem.get("played"))
+    results = _(results).sortBy (plitem) -> [plitem.get("rating"), plitem.get("updated_at")]
+    return results

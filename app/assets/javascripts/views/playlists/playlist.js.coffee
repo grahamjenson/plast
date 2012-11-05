@@ -9,6 +9,6 @@ class Plast.Views.Playlist extends Backbone.View
     @playlist.bind('change', @render,this)
 
   render: ->
-    console.log("render")
+    console.log("render playlist")
     $(@el).html(@template(playlist: @playlist))
     this

@@ -1,21 +1,24 @@
-<table class="table table-striped">
-  <tr> <th width=5% >Length</th> <th width=5%>Youtube Rating</th> <th width=60%>Title</th> <th width=30% ></th> </tr>
+<li>
+<% if not @items: %>
+  Waiting for results...
+<% else: %>
+  <% i = 1 %>
   <%for yto in @items: %>
-    <tr>
-      <% console.log(yto) %>
-      <td><%= yto.duration %></td>
-      <td><%= yto.rating %> </td>
-      <td> <%= yto.title %> </td>
-      <td>
-        <div class="btn-group">
-          <a dataid="<%=yto.id %>" class="btn btn-success srlink">
-            <i class="icon-plus"></i>
-          </a>
-          <a dataid="<%=yto.id %>" class="btn btn-primary" href="http://www.youtube.com/watch?v=<%=yto.id%>" target="_blank">
-            <i class="icon-share-alt"></i>
+    <% i += 1 %>
+  <div style="width: 500px; heigth: 30px; overflow: hidden;" >
+        <div class="pull-left" style="width:185px; heigth: 60px; overflow: hidden;">
+          <a  tabindex="-100" href="http://www.youtube.com/watch?v=<%=yto.id%>" target="_blank">
+            <h6> <%= yto.title.trunc(20) %> -- <%= yto.duration.toMinSec() %></h6>
           </a>
         </div>
-      </td>
-    </tr>
+        <div class="pull-rigth" style="width: 60px; heigth: 60px; overflow: hidden;">
+            <p>
+            <button dataid="<%=yto.id %>" class="srlink btn btn-mini btn-success" tabindex="<%= i%>">
+              <i class="icon-plus"></i>
+            </button>
+          </p>
+        </div>
+    </div>
   <% end %>
-</table>
+<% end %>
+</li>

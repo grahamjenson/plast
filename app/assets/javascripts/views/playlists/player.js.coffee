@@ -2,12 +2,11 @@ class Plast.Views.Player extends Backbone.View
 
   template: JST['playlists/playerhead']
 
-
   events:
     'click #back' : 'back'
     'click #play' : 'play'
-    'click #pause' : 'pause'
     'click #forward' : 'forward'
+    'click #pause' : 'pause'
 
   constructor: (playlist) ->
     super()
@@ -15,7 +14,7 @@ class Plast.Views.Player extends Backbone.View
 
 
   render: ->
-    $(@el).html(@template(playlist: @playlist))
+    $(@el).html(@template(plitem: @playlist))
     #Rendered the template
     params = { allowScriptAccess: "always"};
     atts = { id: "ytplayer" };
@@ -30,9 +29,16 @@ class Plast.Views.Player extends Backbone.View
 
   back: ->
     console.log("back")
-  play: ->
-    console.log("play")
+
   pause: ->
     console.log("pause")
+
+  play: ->
+    console.log("play")
+    plitem = @playlist.getPlayableItems()[0]
+    plitem.set("played", (new Date()).getTime())
+    console.log(plitem)
+    ytplayer.loadVideoById(plitem.get("youtubeid"))
+
   forward: ->
     console.log("forward")

@@ -4,7 +4,7 @@
   <% for plitem in @playlist.get("plitems").models: %>
     <tr>
       <td> TODO </td>
-      <td> <%= plitem.get("length") %> </td>
+      <td> <%= plitem.get("length").toMinSec() %> </td>
       <td> <%= plitem.get("rating") %> </td>
       <td> <%= plitem.get("title") %> </td>
     </tr>
