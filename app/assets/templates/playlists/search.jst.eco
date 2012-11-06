@@ -1,8 +1,0 @@
-<div class="dropdown">
-  <form id="searchyt" class="navbar-search form-search dropdown-toggle" data-toggle="dropdown">
-    <input id="serchtext" type="text" placeholder="Add More Songs" class=" search-query">
-  </form>
-  <ul id="searchresults" class="dropdown-menu srddm" role="menu" aria-labelledby="searchyt">
-    <li>Waiting for results...</li>
-  </ul>
-</div>

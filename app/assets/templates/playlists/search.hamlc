@@ -1,0 +1,5 @@
+.dropdown
+  %form#searchyt.navbar-search.form-search.dropdown-toggle{data-toggle: "dropdown"}
+    %input#serchtext.search-query{type: "text", placeholder:"Add More Songs"}
+  %ul#searchresults.dropdown-menu.srddm{role: "menu", "aria-labelledby": "searchyt"}
+    %li="Waiting for results..."

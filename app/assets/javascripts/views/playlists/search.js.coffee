@@ -5,9 +5,9 @@ class Plast.Views.Search extends Backbone.View
 
   events:
     'click .srlink' : 'srclick'
+    'keydown .srlink' : 'srkey'
     'submit #searchyt' : 'searchyt'
     'input #serchtext' : 'searchyt'
-
   constructor: (playlist) ->
     super()
     @playlist = playlist
@@ -18,6 +18,8 @@ class Plast.Views.Search extends Backbone.View
     $(@el).html(@template())
     this
 
+  refocusonsearch: ->
+
   searchyt: (event) =>
     event.preventDefault()
     #TODO make sure $("#searchresults") has been dropped
@@ -26,6 +28,7 @@ class Plast.Views.Search extends Backbone.View
       $("#searchresults").parent().toggleClass('open')
     lol = $("#serchtext").val()
     res = @results
+    #https://developers.google.com/youtube/2.0/developers_guide_protocol
     $("#searchresults").html("Waiting for results...")
     $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&category=music&alt=jsonc", {}, (d) ->
       if not d.data.items
@@ -37,8 +40,14 @@ class Plast.Views.Search extends Backbone.View
       $("#searchresults").html(srhtml)
     )
 
+  srkey: (e) =>
+    ENTER_CODE = 13
+    if e.which == ENTER_CODE
+      e.preventDefault()
+      this.srclick(e)
 
   srclick: (e) =>
+    e.preventDefault()
     it = $(e.currentTarget).attr("dataid")
     item = @results[it]
     @playlist.additem(item,

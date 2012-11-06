@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require swfobject
+//= require hamlcoffee
 //= require bootstrap
 //= require underscore
 //= require backbone

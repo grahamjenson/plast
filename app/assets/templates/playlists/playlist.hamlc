@@ -1,0 +1,13 @@
+%table.table.table-striped
+  %tr
+    %th{width: "20%"}= "Actions"
+    %th{width: "10%"}= "Length"
+    %th{width: "10%"}= "Rating"
+    %th{width: "60%"}= "Title"
+  - for plitem in @playlist.get("plitems").models
+    %tr
+      %td= "TODO"
+      %td= plitem.get("length").toMinSec()
+      %td= plitem.get("rating")
+      %td= plitem.get("title")
+
