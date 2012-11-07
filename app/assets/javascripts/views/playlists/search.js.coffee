@@ -11,7 +11,6 @@ class Plast.Views.Search extends Backbone.View
   constructor: (playlist) ->
     super()
     @playlist = playlist
-    @results = {}
 
   render: ->
     console.log("render search")
@@ -34,10 +33,10 @@ class Plast.Views.Search extends Backbone.View
       if not d.data.items
         $("#searchresults").html("No results")
         return
-      for item in d.data.items
-        res[item.id] = item
       srhtml = JST["playlists/searchresult"](items : d.data.items)
       $("#searchresults").html(srhtml)
+      for item in d.data.items
+        $("#"+item.id).data("yto", item)
     )
 
   srkey: (e) =>
@@ -48,8 +47,8 @@ class Plast.Views.Search extends Backbone.View
 
   srclick: (e) =>
     e.preventDefault()
-    it = $(e.currentTarget).attr("dataid")
-    item = @results[it]
+    item = $(e.currentTarget).data("yto")
+    console.log(item)
     @playlist.additem(item,
       {
       success: ->

@@ -6,6 +6,7 @@ class PlaylistsController < ApplicationController
   end
 
   def create
+    puts session[:id]
     render :json => Playlist.create
   end
 

@@ -3,5 +3,5 @@
 - else
   - for yto in @items
     %li
-      %a.srlink{:dataid => yto.id, :tabindex => "0", href: "#"}
+      %a.srlink{:id => yto.id, :tabindex => "0", href: "#"}
         = "#{yto.duration.toMinSec()} -- #{yto.title}"

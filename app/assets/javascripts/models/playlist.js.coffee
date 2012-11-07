@@ -14,7 +14,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
 
   additem: (ytitem, callbacks = {}) ->
-    console.log(ytitem)
     pli = new Plast.Models.Plitem({
       "youtubeid" : ytitem.id,
       playlist_id: this.id,
@@ -37,6 +36,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     @get("plitems").fetch()
 
   getPlayableItems: ->
+    this.fetch()
     results = (plitem for plitem in this.get("plitems").models when not plitem.get("played"))
     results = _(results).sortBy (plitem) -> [plitem.get("rating"), plitem.get("updated_at")]
     return results
