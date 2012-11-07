@@ -5,7 +5,7 @@ window.Plast =
   Routers: {}
   init: ->
     Backbone.defaultrouter = new Plast.Routers.Playlists()
-    Backbone.history.start()
+    Backbone.history.start({pushState: true})
 
 String::trunc = (n) ->
   sb = this.substr(0,n)

@@ -7,14 +7,15 @@ class Plast.Routers.Playlists extends Backbone.Router
     super()
 
   showpl: (uuid) ->
-    npl = new Plast.Models.Playlist({id : uuid})
+    console.log(uuid)
+    npl = Plast.Models.Playlist.findOrCreate({id : uuid})
     @renderpl(npl)
 
   newpl: ->
     npl = new Plast.Models.Playlist()
     npl.save({},{
     success: =>
-      @navigate("playlist/#{npl.get('id')}",{replace: true});
+      @navigate("playlist/#{npl.get('id')}",{replace: true, trigger: false});
       @renderpl(npl)
     error: =>
       console.log(error)

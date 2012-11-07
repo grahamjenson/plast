@@ -11,5 +11,8 @@ class Plast.Views.Playlist extends Backbone.View
   render: ->
     console.log("render playlist")
     $(@el).html(@template(playlist: @playlist))
-    $(@el).find("#playlist_list tbody").sortable({}).disableSelection()
+    $(@el).find("#playlist_list tbody").sortable({"stop" : -> console.log("asd")}).disableSelection()
     this
+
+  changedOrder: =>
+    console.log("changed")
