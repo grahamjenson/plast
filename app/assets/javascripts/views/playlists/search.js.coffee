@@ -30,7 +30,7 @@ class Plast.Views.Search extends Backbone.View
     res = @results
     #https://developers.google.com/youtube/2.0/developers_guide_protocol
     $("#searchresults").html("Waiting for results...")
-    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=4&v=2&category=music&alt=jsonc", {}, (d) ->
+    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=10&v=2&alt=jsonc", {}, (d) ->
       if not d.data.items
         $("#searchresults").html("No results")
         return

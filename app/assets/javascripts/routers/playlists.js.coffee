@@ -23,6 +23,8 @@ class Plast.Routers.Playlists extends Backbone.Router
 
   renderpl: (pl) ->
     pl.fetch()
+    youtubeplayerview = new Plast.Views.YoutubePlayer()
+    $('#youtubeplayer').html(youtubeplayerview.render().el)
 
     player = new Plast.Models.Player()
     player.set("playlist",pl)

@@ -14,9 +14,6 @@ class Plast.Models.Player extends Backbone.RelationalModel
   initialize: ->
     this.set("repeat", true)
     this.set("state", Plast.Models.Player.STATE_NOTREADY)
-    params = { allowScriptAccess: "always"};
-    atts = { id: "ytplayer" };
-    ytid = "9bZkp7q19f0"
     window.onYouTubePlayerReady = (id) =>
       console.log("onYouTubePlayerResadsadsady() Fired! #{id}");
       this.set("state", Plast.Models.Player.STATE_READY)
@@ -36,7 +33,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
         when Plast.Models.Player.YTSTATE_BUF then #do nothgin
         when Plast.Models.Player.YTSTATE_CUED then #do nothing
 
-    swfobject.embedSWF("http://www.youtube.com/v/#{ytid}?version=3&enablejsapi=1&playerapiid=ytplayer", "ytplayer", "600", "400", "9.0.0", null, null, params, atts)
+    swfobject.embedSWF("http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1", "ytplayer", "600", "400", "9.0.0", null, null, { allowScriptAccess: "always", allowfullscreen: "true"}, { id: "ytplayer" })
 
   playNext: (plitem = null) ->
     if not plitem

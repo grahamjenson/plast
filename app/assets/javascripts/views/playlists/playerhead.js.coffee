@@ -7,7 +7,7 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #play' : -> @player.play()
     'click #forward' : -> @player.forward()
     'click #pause' : -> @player.pause()
-
+    'click #showvideo': -> this.toggleVideo()
 
   constructor: (player) ->
     super()
@@ -19,6 +19,7 @@ class Plast.Views.PlayerHead extends Backbone.View
     @player.bind("change:progress", (model,progress) =>
         this.updateProgressBar(progress)
     )
+
 
   stateDirector: (state)->
     switch state
@@ -52,8 +53,26 @@ class Plast.Views.PlayerHead extends Backbone.View
       progress = 100
     $("#bar").width("#{progress}%")
 
+  toggleVideo: ->
+    $("#showvideo").popover({
+      html: true,
+      placement: "bottom",
+      title: "VIDEO"
+      content: "<div id='tmpytvideo'></div>",
+      selector: "#showvideo",
+      trigger: "manual",
+
+      })
+    if $("#tmpytvideo").length == 0
+      $("#showvideo").popover('show')
+      $("#outerytplayer").detach().prependTo("#tmpytvideo");
+    else
+      $("#outerytplayer").detach().prependTo(".invisible");
+      $("#showvideo").popover('hide')
+
   render: ->
     $(@el).html(@template(plitem: @player))
+
     this.stateDirector(@player.get("state"))
     this
 
