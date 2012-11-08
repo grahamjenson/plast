@@ -57,7 +57,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       })
 
 
-  comparator: (plitem) -> [plitem.get("order"), plitem.get("updated_at")]
+  comparator: (plitem) -> plitem.get("order")
 
   getPlayableItems: ->
     this.fetch()

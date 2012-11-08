@@ -21,7 +21,7 @@ class PlitemsController < ApplicationController
       title: params[:title],
       thumbnail: params[:thumbnail],
       length: params[:length],
-      rating: 100
+      rating: 100 - pl.plitems.size
       })
     if pitem.save
       render :json => pitem
@@ -30,4 +30,23 @@ class PlitemsController < ApplicationController
     end
   end
 
+  def vote
+    logger.debug("VOTING #{params}")
+    pl = Playlist.where(:uuid => params[:playlist_id]).first
+    votes = params[:votes]
+
+    for plitem in pl.plitems do
+      vote = votes["#{plitem.id}"]
+      if vote
+        votingAlgorithm(pl,plitem,vote.to_f)
+      end
+    end
+    render :json => {success: "Votes counted"}
+  end
+
+  def votingAlgorithm(pl,plitem,vote)
+    plitem.rating += (vote / pl.sessions.size())
+
+    plitem.save()
+  end
 end

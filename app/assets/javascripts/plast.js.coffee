@@ -21,6 +21,7 @@ Number::pad = (size) ->
 Number::toMinSec = ->
   sb = "#{(this / 60).truncate()}:#{(this % 60).truncate().pad(2) }"
 
+
 $(document).ready ->
   Plast.init()
 

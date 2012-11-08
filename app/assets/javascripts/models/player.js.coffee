@@ -33,7 +33,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
         when Plast.Models.Player.YTSTATE_BUF then #do nothgin
         when Plast.Models.Player.YTSTATE_CUED then #do nothing
 
-    swfobject.embedSWF("http://www.youtube.com/v/oHg5SJYRHA0?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1", "ytplayer", "600", "400", "9.0.0", null, null, { allowScriptAccess: "always", allowfullscreen: "true"}, { id: "ytplayer" })
+    swfobject.embedSWF("http://www.youtube.com/v/oHg5SJYRHA0?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1", "ytplayer", "600", "400", "9.0.0", null, null, { allowScriptAccess: "always", allowfullscreen: "true", wmode: "opaque"}, { id: "ytplayer" })
 
   playNext: (plitem = null) ->
     if not plitem
