@@ -20,7 +20,7 @@ class PlitemsController < ApplicationController
       title: params[:title],
       thumbnail: params[:thumbnail],
       length: params[:length],
-      rating: params[:rating]
+      rating: 0
       })
     if pitem.save
       render :json => pitem

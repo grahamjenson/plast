@@ -8,6 +8,6 @@ class Plitem < ActiveRecord::Base
   validate :unique_ytid
 
   def unique_ytid
-    errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli.youtubeid == youtubeid}
+    errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli != self and pli.youtubeid == youtubeid}
   end
 end

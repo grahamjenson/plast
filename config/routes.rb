@@ -2,7 +2,7 @@ Plast::Application.routes.draw do
 
   scope "api" do
     resources :playlists , :only => [:show, :create, :update] do
-      resources :plitems, :only => [:index, :create]
+      resources :plitems, :only => [:show, :index, :create]
     end
   end
 

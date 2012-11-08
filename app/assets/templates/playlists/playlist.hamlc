@@ -1,12 +1,14 @@
 %table.table.table-striped#playlist_list
   %thead
     %tr
-      %th{width: "10%"}= "Length"
+      %th{width: "10%"}= "Order"
       %th{width: "10%"}= "Rating"
+      %th{width: "10%"}= "Length"
       %th{width: "60%"}= "Title"
     %tbody
-      - for plitem in @playlist.get("plitems").models
+      - for plitem in @items
         %tr
+          %td= plitem.get("order")
           %td= plitem.get("rating")
           %td= plitem.get("length").toMinSec()
           %td= plitem.get("title")

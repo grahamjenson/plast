@@ -23,22 +23,23 @@ class Plast.Routers.Playlists extends Backbone.Router
       })
 
   renderpl: (pl) ->
-    pl.fetch()
-    youtubeplayerview = new Plast.Views.YoutubePlayer()
-    $('#youtubeplayer').html(youtubeplayerview.render().el)
+    window.pl = pl
+    pl.fetch({success: =>
+      youtubeplayerview = new Plast.Views.YoutubePlayer()
+      $('#youtubeplayer').html(youtubeplayerview.render().el)
 
-    player = new Plast.Models.Player()
-    player.set("playlist",pl)
+      player = new Plast.Models.Player()
+      player.set("playlist",pl)
 
-    plview = new Plast.Views.Playlist(pl)
+      plview = new Plast.Views.Playlist(pl)
 
-    plsearch = new Plast.Views.Search(pl)
+      plsearch = new Plast.Views.Search(pl)
 
-    playerhead = new Plast.Views.PlayerHead(player)
+      playerhead = new Plast.Views.PlayerHead(player)
 
-    $('#playlist').html(plview.render().el)
+      $('#playlist').html(plview.render().el)
 
-    $('#search').html(plsearch.render().el)
+      $('#search').html(plsearch.render().el)
 
-    $('#playerhead').html(playerhead.render().el)
-
+      $('#playerhead').html(playerhead.render().el)
+    })

@@ -6,13 +6,20 @@ class Plast.Views.Playlist extends Backbone.View
     super()
     @playlist = playlist
     console.log(@playlist)
-    @playlist.bind('change', @render,this)
+    @playlist.bind('change', (e) =>
+      console.log(e)
+      this.render()
+    )
+    @playlist.get("plitems").bind('change', (e) =>
+      console.log(e.changedAttributes())
+      this.render()
+    )
 
   render: ->
     console.log("render playlist")
-    $(@el).html(@template(playlist: @playlist))
-    $(@el).find("#playlist_list tbody").sortable({"stop" : -> console.log("asd")}).disableSelection()
+    $(@el).html(@template(items: @playlist.getOrderedPlitems()))
+    $(@el).find("#playlist_list tbody").sortable({"stop" : => this.droppedOrder()}).disableSelection()
     this
 
-  changedOrder: =>
-    console.log("changed")
+  droppedOrder: ->
+    console.log("dropped check")
