@@ -17,9 +17,23 @@ class Plast.Views.Playlist extends Backbone.View
 
   render: ->
     console.log("render playlist")
-    $(@el).html(@template(items: @playlist.getOrderedPlitems()))
-    $(@el).find("#playlist_list tbody").sortable({"stop" : => this.droppedOrder()}).disableSelection()
+    lastplayed = @playlist.getLastPlayed()
+
+    console.log(lastplayed)
+    $(@el).html(@template(items: @playlist.getOrderedPLItems(), playingitem : lastplayed))
+
+    for plrow in $(@el).find("#playlist_list tbody tr")
+      $(plrow).data("plitem",@playlist.get("plitems").get(plrow.id))
+    $(@el).find("#playlist_list tbody").sortable({"stop" : (e,ui) => this.droppedOrder(e,ui)}).disableSelection()
     this
 
-  droppedOrder: ->
-    console.log("dropped check")
+  droppedOrder: (e,ui)->
+    i = 0
+    for plrow in $("#playlist_list tbody tr")
+      plitem = $(plrow).data("plitem")
+      i += 1
+      diff = plitem.attributes.order - i
+      if(diff != 0)
+        plitem.vote(diff)
+      plitem.attributes.order = i
+    @playlist.trigger("change")

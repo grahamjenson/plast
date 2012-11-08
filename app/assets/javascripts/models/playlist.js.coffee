@@ -21,8 +21,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     pli = new Plast.Models.Plitem({
       "youtubeid" : ytitem.id,
       playlist_id: this.id,
-      playlist: this,
-      title: ytitem.title ,
+      title: ytitem.title,
       thumbnail: ytitem.thumbnail.sqDefault,
       length: ytitem.duration
       })
@@ -42,15 +41,12 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       add: true,
       success: =>
         i = 0
-        changed = false
         for pli in this.get("plitems").models
           if not pli.get("order")
             i += 1
-            changed = true
             pli.set({"order": i})
           else
             i = pli.get("order")
-        this.trigger("change") if changed
         options.success() if options && options.success
       })
 
@@ -61,16 +57,18 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       })
 
 
+  comparator: (plitem) -> [plitem.get("order"), plitem.get("updated_at")]
+
   getPlayableItems: ->
     this.fetch()
     results = (plitem for plitem in this.get("plitems").models when not plitem.get("played"))
-    results = _(results).sortBy (plitem) -> [plitem.order, plitem.get("updated_at")]
+    results = _(results).sortBy this.comparator
     return results
 
-  getOrderedPlitems: ->
+  getOrderedPLItems: ->
     this.fetch()
-    results =  this.get("plitems").models
-    results = _(results).sortBy (plitem) -> [plitem.order, plitem.get("updated_at")]
+    results = this.get("plitems").models
+    results = _(results).sortBy this.comparator
     return results
 
   getLastPlayed: ->

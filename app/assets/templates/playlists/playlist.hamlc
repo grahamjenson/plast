@@ -7,9 +7,22 @@
       %th{width: "60%"}= "Title"
     %tbody
       - for plitem in @items
-        %tr
-          %td= plitem.get("order")
-          %td= plitem.get("rating")
-          %td= plitem.get("length").toMinSec()
-          %td= plitem.get("title")
+        - if plitem == @playingitem
+          %tr.success{id: plitem.id}
+            %td= plitem.get("order")
+            %td= plitem.get("rating")
+            %td= plitem.get("length").toMinSec()
+            %td= plitem.get("title")
+        - else if plitem.get("played")
+          %tr.info{id: plitem.id}
+            %td= plitem.get("order")
+            %td= plitem.get("rating")
+            %td= plitem.get("length").toMinSec()
+            %td= plitem.get("title")
+        -else
+          %tr{id: plitem.id}
+            %td= plitem.get("order")
+            %td= plitem.get("rating")
+            %td= plitem.get("length").toMinSec()
+            %td= plitem.get("title")
 

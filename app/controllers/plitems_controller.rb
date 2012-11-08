@@ -4,7 +4,8 @@ class PlitemsController < ApplicationController
 
   def index
     pl = Playlist.where(:uuid => params[:playlist_id]).first
-    render :json => pl.plitems
+    plitems = pl.plitems.order(:rating).reverse()
+    render :json => plitems
   end
 
   def show
@@ -20,7 +21,7 @@ class PlitemsController < ApplicationController
       title: params[:title],
       thumbnail: params[:thumbnail],
       length: params[:length],
-      rating: 0
+      rating: 100
       })
     if pitem.save
       render :json => pitem
