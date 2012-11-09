@@ -1,3 +1,4 @@
+
 window.Plast =
   Models: {}
   Collections: {}
@@ -24,4 +25,3 @@ Number::toMinSec = ->
 
 $(document).ready ->
   Plast.init()
-

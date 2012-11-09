@@ -1,10 +1,15 @@
 class Plast.Routers.Playlists extends Backbone.Router
   routes:
-    '': 'newpl'
+    '': 'newel'
     'playlist/:uuid' : 'showpl'
 
-  constructor: ->
-    super()
+
+  initialize: ->
+    @bind 'all', @_trackPageview
+
+  _trackPageview: ->
+    url = Backbone.history.getFragment()
+    _gaq.push(['_trackPageview', "/#{url}"])
 
   showpl: (uuid) ->
     console.log(uuid)

@@ -1,10 +1,12 @@
 class PlitemsController < ApplicationController
 
   respond_to :json
+  INIT_RATING = 100
 
   def index
     pl = Playlist.where(:uuid => params[:playlist_id]).first
     plitems = pl.plitems.order(:rating).reverse()
+    plitem = plitems.select{|x| x.rating > 0}
     render :json => plitems
   end
 
@@ -21,7 +23,7 @@ class PlitemsController < ApplicationController
       title: params[:title],
       thumbnail: params[:thumbnail],
       length: params[:length],
-      rating: 100 - pl.plitems.size
+      rating: INIT_RATING - pl.plitems.size
       })
     if pitem.save
       render :json => pitem
@@ -46,7 +48,6 @@ class PlitemsController < ApplicationController
 
   def votingAlgorithm(pl,plitem,vote)
     plitem.rating += (vote / pl.sessions.size())
-
     plitem.save()
   end
 end
