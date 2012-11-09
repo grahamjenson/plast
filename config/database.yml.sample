@@ -8,7 +8,7 @@ development:
   encoding: unicode
   database: plast_dev
   pool: 5
-  username: gdjenson
+  username: postgres
   password:
 
 test:
@@ -16,5 +16,5 @@ test:
   encoding: unicode
   database: plast_test
   pool: 5
-  username: gdjenson
+  username: postgres
   password:

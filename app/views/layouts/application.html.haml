@@ -2,22 +2,9 @@
 %html
   %head
     %title= "PLYSIT"
-    :javascript
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-36200754-1']);
-      _gaq.push(['_setDomainName', 'plysit.com']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    %link{rel: "shortcut icon", href: "/assets/icon.ico" }
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
-    %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"}
+    = favicon_link_tag "/assets/icon.ico"
+    = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
-    = google_webfonts_link_tag :unica_one, :lato, :strait
 
 %body
   .navbar.navbar-inverse.navbar-fixed-top
@@ -35,3 +22,8 @@
         #playlist
   #youtubeplayer
 
+
+= render 'shared/google_analytics'
+= google_webfonts_link_tag :unica_one, :lato, :strait
+= javascript_include_tag "application"
+= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"
