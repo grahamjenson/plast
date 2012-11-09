@@ -1,6 +1,6 @@
 class Plast.Routers.Playlists extends Backbone.Router
   routes:
-    '': 'newel'
+    '': 'newpl'
     'playlist/:uuid' : 'showpl'
 
 

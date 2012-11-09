@@ -6,13 +6,13 @@ class PlitemsController < ApplicationController
   def index
     pl = Playlist.where(:uuid => params[:playlist_id]).first
     plitems = pl.plitems.order(:rating).reverse()
-    plitem = plitems.select{|x| x.rating > 0}
+    plitems = plitems.select{|x| x.rating > 0}
     render :json => plitems
   end
 
   def show
     pl = Playlist.where(:uuid => params[:playlist_id]).first
-    pli = pl.plitems.select{|x| x.id == params[:id]}.first
+    pli = pl.plitems.select{|x| x.id == params[:id].to_i}.first
     render :json => pli
   end
 
@@ -49,5 +49,14 @@ class PlitemsController < ApplicationController
   def votingAlgorithm(pl,plitem,vote)
     plitem.rating += (vote / pl.sessions.size())
     plitem.save()
+  end
+
+  def remove
+    pl = Playlist.where(:uuid => params[:playlist_id]).first
+    logger.debug("PLAYLIST #{pl}")
+    pli = pl.plitems.select{|x| x.id == params[:id].to_i}.first
+    logger.debug("PLAYLISTITEM #{pli}")
+    votingAlgorithm( pl, pli, -INIT_RATING)
+    render :json => {success: "removed"}
   end
 end

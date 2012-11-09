@@ -1,28 +1,22 @@
 %table.table.table-striped#playlist_list
   %thead
     %tr
-      %th{width: "10%"}= "Order"
-      %th{width: "10%"}= "Rating"
-      %th{width: "10%"}= "Length"
+      %th
+      %th= "Order"
       %th{width: "60%"}= "Title"
-    %tbody
+      %th= "Length"
+    %tbody{style: "cursor: move;"}
       - for plitem in @items
+        - clazz = ""
         - if plitem == @playingitem
-          %tr.success{id: plitem.id}
-            %td= plitem.get("order")
-            %td= plitem.get("rating")
-            %td= plitem.get("length").toMinSec()
-            %td= plitem.get("title")
+          - clazz = "success"
         - else if plitem.get("played")
-          %tr.info{id: plitem.id}
-            %td= plitem.get("order")
-            %td= plitem.get("rating")
-            %td= plitem.get("length").toMinSec()
-            %td= plitem.get("title")
-        -else
-          %tr{id: plitem.id}
-            %td= plitem.get("order")
-            %td= plitem.get("rating")
-            %td= plitem.get("length").toMinSec()
-            %td= plitem.get("title")
+          - clazz = "info"
+        %tr{id: plitem.id, "class" : "plitem-row #{clazz}"}
+          %td
+            %buttn.btn.btn-danger.btn-mini.remove-btn
+              %i.icon-remove-sign
+          %td= plitem.get("order")
+          %td= plitem.get("title")
+          %td= plitem.get("length").toMinSec()
 

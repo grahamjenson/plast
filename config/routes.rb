@@ -6,6 +6,9 @@ Plast::Application.routes.draw do
         collection do
           post 'vote'
         end
+        member do
+          post 'remove'
+        end
       end
     end
   end

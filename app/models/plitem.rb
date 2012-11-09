@@ -10,4 +10,11 @@ class Plitem < ActiveRecord::Base
   def unique_ytid
     errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli != self and pli.youtubeid == youtubeid}
   end
+
+  def as_json(options)
+    jsond = super(options)
+    #fix uuid
+    jsond["playlist_id"] = playlist.uuid
+    return jsond
+  end
 end

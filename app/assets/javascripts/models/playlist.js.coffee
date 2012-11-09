@@ -15,9 +15,9 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   initialize: ->
     setInterval(=>
       this.fetch()
-    ,1000)
+    ,10000)
 
-  additem: (ytitem, callbacks = {}) ->
+  additem: (ytitem, callbacks = {}) =>
     pli = new Plast.Models.Plitem({
       "youtubeid" : ytitem.id,
       playlist_id: this.id,
@@ -41,7 +41,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       add: true,
       success: =>
         i = 0
-        for pli in this.get("plitems").models
+        for pli in this.getOrderedPLItems()
           if not pli.get("order")
             i += 1
             pli.set({"order": i})
@@ -51,6 +51,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       })
 
   fetch: (options) ->
+    console.log("FETCHING")
     super({
       success: =>
         this.fetchplitems(options)
@@ -60,14 +61,13 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   comparator: (plitem) -> plitem.get("order")
 
   getPlayableItems: ->
-    this.fetch()
+    results = this.getOrderedPLItems()
     results = (plitem for plitem in this.get("plitems").models when not plitem.get("played"))
-    results = _(results).sortBy this.comparator
     return results
 
   getOrderedPLItems: ->
-    this.fetch()
     results = this.get("plitems").models
+    results = (plitem for plitem in this.get("plitems").models when not plitem.get("hidden"))
     results = _(results).sortBy this.comparator
     return results
 

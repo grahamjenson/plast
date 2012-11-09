@@ -11,20 +11,19 @@
   position: fixed
   left: -600px
   top: 300px
-
-#ytplayer
+  width: 650px
+  height: 400px
   display: inline-block
-  overflow: hidden
 
 #showvideobtndiv
   @include rotate(90deg)
   position: relative
-  left : -184px
-  top : 186px
 
 #showvideobtn
-  width : 400px
-
+  position: relative
+  width : 350px
+  top: -142px
+  left: -218px
 .playercontrols
   float: left
   .playerbtn
@@ -50,3 +49,5 @@
 #searchresults
   overflow: hidden
 
+.remove-btn
+  @include border-radius(80px)
