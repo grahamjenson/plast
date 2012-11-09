@@ -8,6 +8,9 @@ class Plast.Views.Search extends Backbone.View
     'keydown .srlink' : 'srkey'
     'submit #searchyt' : 'searchyt'
     'input #serchtext' : 'searchyt'
+
+  el: $('#search')
+
   constructor: (playlist) ->
     super()
     @playlist = playlist

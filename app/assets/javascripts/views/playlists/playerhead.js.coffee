@@ -9,6 +9,8 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #pause' : -> @player.pause()
     'click #showvideo': -> this.toggleVideo()
 
+  el : $('#playerhead')
+
   constructor: (player) ->
     super()
     @player = player

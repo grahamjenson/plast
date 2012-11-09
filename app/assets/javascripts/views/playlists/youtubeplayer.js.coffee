@@ -4,7 +4,12 @@ class Plast.Views.YoutubePlayer extends Backbone.View
   events:
     'click #showvideobtn' : 'toggleVideo'
 
+  el: $('#youtubeplayer')
+
   @animator
+
+  initialize: ->
+    console.log("Asd")
 
   toggleVideo: ->
     if this.animator
