@@ -35,46 +35,28 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       error: (model,xhr) ->
         callbacks.error(model,xhr) if callbacks.error})
 
-  fetchplitems: (options) ->
-    @get("plitems").fetch(
-      {
-      add: true,
-      success: =>
-        i = 0
-        for pli in this.getOrderedPLItems()
-          if not pli.get("order")
-            i += 1
-            pli.set({"order": i})
-          else
-            i = pli.get("order")
-        options.success() if options && options.success
-      })
 
-  fetch: (options) ->
+  fetch: (options = {}) ->
     console.log("FETCHING")
     super({
       success: =>
-        this.fetchplitems(options)
+        @get("plitems").fetch()
+        options.success() if options.success
       })
 
 
-  comparator: (plitem) -> plitem.get("order")
+  reorderitems: (items) ->
+    this.get("plitems").reorderitems(items)
+    this.trigger("change")
 
   getPlayableItems: ->
-    results = this.getOrderedPLItems()
-    results = (plitem for plitem in this.get("plitems").models when not plitem.get("played"))
-    return results
+    this.get("plitems").getPlayableItems()
 
   getOrderedPLItems: ->
-    results = this.get("plitems").models
-    results = (plitem for plitem in this.get("plitems").models when not plitem.get("hidden"))
-    results = _(results).sortBy this.comparator
-    return results
+    this.get("plitems").getOrderedPLItems()
 
   getLastPlayed: ->
-    results = (plitem for plitem in this.get("plitems").models when plitem.get("played"))
-    results = _(results).sortBy (plitem) -> [plitem.get("played")]
-    return results.reverse()[0]
+    this.get("plitems").getLastPlayed()
 
   makeAllPlayable: ->
-    (plitem.set("played",false) for plitem in this.get("plitems").models)
+    this.get("plitems").makeAllPlayable()

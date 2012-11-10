@@ -9,11 +9,10 @@ class Plast.Views.Search extends Backbone.View
     'submit #searchyt' : 'searchyt'
     'input #serchtext' : 'searchyt'
 
-  el: $('#search')
 
-  constructor: (playlist) ->
-    super()
-    @playlist = playlist
+  initialize: ->
+    @playlist = this.model
+    this.render()
 
   render: ->
     console.log("render search")

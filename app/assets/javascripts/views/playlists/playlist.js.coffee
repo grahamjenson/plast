@@ -2,15 +2,13 @@ class Plast.Views.Playlist extends Backbone.View
 
   template: JST['playlists/playlist']
 
-  el: $('#playlist')
-
   events:
     'click .remove-btn' : (e) -> this.remove(e)
 
-  constructor: (playlist) ->
-    super()
-    @playlist = playlist
-    console.log(@playlist)
+  playlistSelector = @playlistSelector
+
+  initialize: ->
+    @playlist = this.model
 
     @playlist.bind('change', (e) =>
       this.render()
@@ -21,30 +19,23 @@ class Plast.Views.Playlist extends Backbone.View
       this.render()
     )
 
+    this.render()
+
   render: ->
     console.log("render playlist")
     lastplayed = @playlist.getLastPlayed()
 
     $(@el).html(@template(items: @playlist.getOrderedPLItems(), playingitem : lastplayed))
 
-    for plrow in $(@el).find("#playlist_list tbody tr")
+    for plrow in $(@el).find(@playlistSelector)
       $(plrow).data("plitem",@playlist.get("plitems").get(plrow.id))
     $(@el).find("#playlist_list tbody").sortable({"stop" : (e,ui) => this.droppedOrder(e,ui)}).disableSelection()
 
     this
 
   droppedOrder: (e,ui)->
-    i = 0
-    votes = {}
-    for plrow in $("#playlist_list tbody tr")
-      plitem = $(plrow).data("plitem")
-      i += 1
-      diff = plitem.attributes.order - i
-      if(diff != 0)
-        votes[plitem.id] = diff
-      plitem.attributes.order = i
-    @playlist.get("plitems").vote(votes)
-    @playlist.trigger("change")
+    items = ($(plrow).data("plitem") for plrow in $(@playlistSelector))
+    @playlist.reorderitems(items)
 
   remove: (e) ->
     plitem = $(e.target).parents("tr").data("plitem")

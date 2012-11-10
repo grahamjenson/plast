@@ -1,39 +1,40 @@
 class Plast.Models.Player extends Backbone.RelationalModel
   urlRoot: "/api/playlists"
 
+  #my own version of the youtube player
+
   relations: [{
       type: Backbone.HasOne,
       key: 'playlist',
       relatedModel: 'Plast.Models.Playlist',
       reverseRelation:
         key: 'player',
-        includeInJSON: 'uuid'
+      },
+      {
+      type: Backbone.HasOne,
+      key: 'ytplayer',
+      relatedModel: 'Plast.Models.YTPlayer',
+      reverseRelation:
+        key: 'player',
       }]
 
 
   initialize: ->
     this.set("repeat", true)
     this.set("state", Plast.Models.Player.STATE_NOTREADY)
-    window.onYouTubePlayerReady = (id) =>
-      console.log("onYouTubePlayerResadsadsady() Fired! #{id}");
-      this.set("state", Plast.Models.Player.STATE_READY)
-      ytplayer.addEventListener("onStateChange", "youtubePlayerStateChange");
-      this.timer = setInterval( =>
-        p = ytplayer.getCurrentTime()/ytplayer.getDuration()
-        this.set("progress", p*100)
-      ,1000)
+    this.set("playlist",pl)
 
-      #@ytplayer = $("#"+"#{id}")[0] #this is so slow
-    window.youtubePlayerStateChange = (state) =>
+    this.get("ytplayer").bind("change:state", (model,state) =>
       switch state
-        when Plast.Models.Player.YTSTATE_UNSTARTED then #do nothing
-        when Plast.Models.Player.YTSTATE_ENDED then this.playNext()
-        when Plast.Models.Player.YTSTATE_PLAYING then this.set("state",Plast.Models.Player.STATE_PLAYING)
-        when Plast.Models.Player.YTSTATE_PAUSED then this.set("state",Plast.Models.Player.STATE_PAUSED)
-        when Plast.Models.Player.YTSTATE_BUF then #do nothgin
-        when Plast.Models.Player.YTSTATE_CUED then #do nothing
-
-    swfobject.embedSWF("http://www.youtube.com/v/oHg5SJYRHA0?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1", "ytplayer", "600", "400", "9.0.0", null, null, { allowScriptAccess: "always", allowfullscreen: "true", wmode: "opaque"}, { id: "ytplayer" })
+        when Plast.Models.YTPlayer.READY then this.set("state", Plast.Models.Player.STATE_READY)
+        when Plast.Models.YTPlayer.UNSTARTED then #do nothing
+        when Plast.Models.YTPlayer.ENDED then this.playNext()
+        when Plast.Models.YTPlayer.PLAYING then this.set("state",Plast.Models.Player.STATE_PLAYING)
+        when Plast.Models.YTPlayer.PAUSED then this.set("state",Plast.Models.Player.STATE_PAUSED)
+        when Plast.Models.YTPlayer.BUF then #do nothgin
+        when Plast.Models.YTPlayer.CUED then #do nothing
+    )
+    this.get("ytplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
 
   playNext: (plitem = null) ->
     if not plitem
@@ -82,9 +83,3 @@ Plast.Models.Player.STATE_READY = 1
 Plast.Models.Player.STATE_PLAYING = 2
 Plast.Models.Player.STATE_PAUSED = 3
 
-Plast.Models.Player.YTSTATE_UNSTARTED = -1# (unstarted)
-Plast.Models.Player.YTSTATE_ENDED = 0 #(ended)
-Plast.Models.Player.YTSTATE_PLAYING = 1# (playing)
-Plast.Models.Player.YTSTATE_PAUSED = 2# (paused)
-Plast.Models.Player.YTSTATE_BUF = 3 #(buffering)
-Plast.Models.Player.YTSTATE_CUED = 5 #(video cued).
