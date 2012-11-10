@@ -9,9 +9,10 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #pause' : -> @player.pause()
     'click #showvideo': -> this.toggleVideo()
 
-  constructor: (player) ->
-    super()
-    @player = player
+
+  initialize: ->
+    @player = this.model
+
     @player.bind("change:state", (model,state) =>
       this.stateDirector(state)
     )
@@ -20,6 +21,7 @@ class Plast.Views.PlayerHead extends Backbone.View
         this.updateProgressBar(progress)
     )
 
+    this.render()
 
   stateDirector: (state)->
     switch state

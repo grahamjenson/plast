@@ -6,6 +6,10 @@ class Plast.Views.YoutubePlayer extends Backbone.View
 
   @animator
 
+  initialize: ->
+    @ytplayer = this.model
+    this.render()
+
   toggleVideo: ->
     if this.animator
       return
@@ -38,4 +42,5 @@ class Plast.Views.YoutubePlayer extends Backbone.View
   render: ->
     console.log("render youtubeplayer")
     $(@el).html(@template())
+    @ytplayer.embedYTPlayer()
     this
