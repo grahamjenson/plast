@@ -1,22 +1,27 @@
-%table.table.table-striped#playlist_list
+.progress.progress-striped.player-progress.active
+  .bar#bar{style:"z-index: 1; width: 100%; height: 100%"}
+    #progress-text{style: "z-index: 2;color: black; position: absolute;"}
+      %strong= @plitem.title if @plitem
+.clearfix
+
+%table.table.table-striped.table-row-bordered#playlist_list
   %thead
     %tr
+      %th Order
+      %th Title
+      %th Length
       %th
-      %th= "Order"
-      %th{width: "60%"}= "Title"
-      %th= "Length"
     %tbody{style: "cursor: move;"}
       - for plitem in @items
         - clazz = ""
         - if plitem == @playingitem
-          - clazz = "success"
+          - clazz = "playing"
         - else if plitem.get("played")
-          - clazz = "info"
+          - clazz = "played"
         %tr{id: plitem.id, "class" : "plitem-row #{clazz}"}
-          %td
-            %buttn.btn.btn-danger.btn-mini.remove-btn
-              %i.icon-remove-sign
           %td= plitem.get("order")
           %td= plitem.get("title")
           %td= plitem.get("length").toMinSec()
+          %td
+            %i.icon-remove
 

@@ -25,7 +25,10 @@ class Plast.Views.Playlist extends Backbone.View
 
     for plrow in $(@el).find("#playlist_list tbody tr")
       $(plrow).data("plitem",@playlist.get("plitems").get(plrow.id))
-    $(@el).find("#playlist_list tbody").sortable({"stop" : (e,ui) => this.droppedOrder(e,ui)}).disableSelection()
+    $(@el).find("#playlist_list tbody").sortable({
+      "stop" : (e,ui) => this.droppedOrder(e,ui),
+      "cursor": "pointer"
+    }).disableSelection()
 
     this
 

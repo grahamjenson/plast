@@ -1,0 +1,19 @@
+.table-row-bordered
+  border-bottom: 1px solid #DDD
+
+  tbody tr
+    border-left: 1px solid #DDD
+    border-right: 1px solid #DDD
+    cursor: 'pointer'
+
+    &.played
+      td
+        background-color: $DARKGREY
+
+
+    &.playing
+
+    &:hover
+      cursor: 'move'
+      td
+        background-color: lighten($blue, 50%) !important

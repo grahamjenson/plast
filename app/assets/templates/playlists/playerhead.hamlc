@@ -9,7 +9,3 @@
         %i.icon-play
       %button.btn.playerbtn#forward
         %i.icon-step-forward
-.progress.progress-striped.player-progress
-  .bar#bar{style:"z-index: 1; width: 100%; height: 100%"}
-    #progress-text{style: "z-index: 2;color: black; position: absolute;"}
-      %strong= @plitem.title if @plitem
