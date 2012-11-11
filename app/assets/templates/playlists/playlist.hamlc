@@ -1,9 +1,3 @@
-.progress.progress-striped.player-progress.active
-  .bar#bar{style:"z-index: 1; width: 100%; height: 100%"}
-    #progress-text{style: "z-index: 2;color: black; position: absolute;"}
-      %strong= @plitem.title if @plitem
-.clearfix
-
 %table.table.table-striped.table-row-bordered#playlist_list
   %thead
     %tr
@@ -15,13 +9,27 @@
       - for plitem in @items
         - clazz = ""
         - if plitem == @playingitem
-          - clazz = "playing"
-        - else if plitem.get("played")
-          - clazz = "played"
-        %tr{id: plitem.id, "class" : "plitem-row #{clazz}"}
-          %td= plitem.get("order")
-          %td= plitem.get("title")
-          %td= plitem.get("length").toMinSec()
-          %td
-            %i.icon-remove
+          %tr
+            %td.progress-bar-td{:colspan => '4'}
+              .progress.player-progress.active
+                .bar#bar
+                %table.playing-track-information
+                  %tr
+                    %td.order= plitem.get("order")
+                    %td= plitem.get("title")
+                    %td.length= plitem.get("length").toMinSec()
+                    %td.actions
+                      %i.icon-remove
+
+
+
+        - else
+          - clazz = if plitem.get("played") then "played" else "unplayed"
+          %tr{id: plitem.id, "class" : "plitem-row #{clazz}"}
+            %td.order= plitem.get("order")
+            %td= plitem.get("title")
+            %td.length= plitem.get("length").toMinSec()
+            %td.actions
+              %i.icon-remove
+
 

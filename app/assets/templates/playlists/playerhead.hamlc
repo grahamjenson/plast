@@ -1,11 +1,11 @@
 .mainplayercontrols
   .btn-toolbar.playercontrols
-    .btn-group.row-fluid{data-toggle: "buttons-checkbox"}
+    .btn-group{data-toggle: "buttons-checkbox"}
       %button.btn.playerbtn#back
         %i.icon-step-backward
-      %button.btn.playerbtn#pause
+      %button.btn.btn-large.playerbtn#pause
         %i.icon-pause
-      %button.btn.playerbtn#play
+      %button.btn.btn-large.playerbtn#play
         %i.icon-play
       %button.btn.playerbtn#forward
         %i.icon-step-forward

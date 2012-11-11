@@ -1,5 +1,3 @@
 #sideplayer
   #outerytplayer.pull-left
     #ytplayer
-  #showvideobtndiv.pull-right
-    %button#showvideobtn.btn.btn-primary= "Show Video"

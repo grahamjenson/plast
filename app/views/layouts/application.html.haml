@@ -10,14 +10,21 @@
   .navbar.navbar-inverse.navbar-fixed-top
     .navbar-inner
       .container
-        .row
-          .span2
-            %a.brand{href: "/"}
-              =image_tag "logo.png"
-          #search.span4.pullright
-          #playerhead.span4
+        .row-fluid
+          .span12.logo
+            %a{href: "/"}
+              = image_tag "logo.png"
+          .span12.search
+            #search
+            .clearfix
+          .span12.playerhead
+            #playerhead
   .container#body
-    .row
+    #show-video-btn.btn-primary
+      %i.icon-chevron-down.icon-white.pull-left
+      Show Video
+      %i.icon-chevron-down.icon-white.pull-right
+    .row.playlist-row
       .span9
         #playlist
       .span3

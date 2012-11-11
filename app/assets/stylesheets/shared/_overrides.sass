@@ -16,4 +16,55 @@
     &:hover
       cursor: 'move'
       td
-        background-color: lighten($blue, 50%) !important
+        background-color: lighten($blue, 50%)
+
+/* Progress Bar */
+.progress
+  margin: 0
+  -webkit-border-radius: 0
+  -moz-border-radius: 0
+  border-radius: 0
+  position: relative
+
+td.progress-bar-td
+  padding: 0
+  height: 36px
+
+.player-progress
+  min-height: 36px
+  width: 100%
+  height: 100%
+
+  .bar
+    z-index: 1
+    width: 100%
+    height: 100%
+
+.playing-track-information
+  width: 100%
+  position: absolute
+  tbody tr
+    border-left: none
+    border-right: none
+
+    &:hover
+      cursor: 'move'
+      td
+        background-color: lighten($blue, 50%)
+
+    td
+      background-color: transparent !important
+      border-top: none
+      border-bottom: none
+
+/* Track Table */
+td.order
+  width: 40px
+  text-align: center
+
+td.length
+  width: 50px
+  text-align: right
+
+td.actions
+  width: 40px
