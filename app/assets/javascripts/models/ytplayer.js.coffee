@@ -1,26 +1,32 @@
 class Plast.Models.YTPlayer extends Backbone.RelationalModel
-  #this is a wrapper around the
-
+  #this is a wrapper around the youtube object
+  #TODO replace swfobject with iframe https://developers.google.com/youtube/iframe_api_reference
   initialize: ->
     this.set("state", Plast.Models.YTPlayer.UNSTARTED)
 
     window.onYouTubePlayerReady = (id) =>
+      @youtubeplayerobject = globalYTPlayer
       console.log("YTPlayer loaded")
-      ytplayer.addEventListener("onStateChange", "youtubePlayerStateChange");
+      @youtubeplayerobject.addEventListener("onStateChange", "youtubePlayerStateChange");
       this.timer = setInterval( =>
-        p = ytplayer.getCurrentTime()/ytplayer.getDuration()
+        p = @youtubeplayerobject.getCurrentTime()/@youtubeplayerobject.getDuration()
         this.set("progress", p*100)
       ,1000)
+
 
       this.set("state", Plast.Models.YTPlayer.READY)
 
 
-      #@ytplayer = $("#"+"#{id}")[0] #this is so slow
+      #@youtubeplayerobject = $("#"+"#{id}")[0] #this is so slow
     window.youtubePlayerStateChange = (state) =>
       this.set("state",state)
 
   embedYTPlayer: ->
-    swfobject.embedSWF("http://www.youtube.com/v/oHg5SJYRHA0?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1",
+
+    embeddedplayer = "v/oHg5SJYRHA0"
+    chromelessplayer = "apiplayer"
+
+    swfobject.embedSWF("http://www.youtube.com/#{chromelessplayer}?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1",
       "ytplayer",
       "600",
       "400",
@@ -28,9 +34,18 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
       null,
       null,
       { allowScriptAccess: "always", allowfullscreen: "true", wmode: "opaque"},
-      { id: "ytplayer" })
+      { id: "globalYTPlayer" })
 
 
+
+  playVideo: ->
+    @youtubeplayerobject.playVideo()
+
+  pauseVideo: ->
+    @youtubeplayerobject.pauseVideo()
+
+  loadVideo: (id) ->
+    @youtubeplayerobject.loadVideoById(id)
 
 Plast.Models.YTPlayer.UNSTARTED = -1# (unstarted)
 Plast.Models.YTPlayer.ENDED = 0 #(ended)
