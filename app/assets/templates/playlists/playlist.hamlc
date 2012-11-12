@@ -5,31 +5,4 @@
       %th Title
       %th Length
       %th
-    %tbody{style: "cursor: move;"}
-      - for plitem in @items
-        - clazz = ""
-        - if plitem == @playingitem
-          %tr{id: plitem.id}
-            %td.progress-bar-td{:colspan => '4'}
-              .progress.player-progress.active
-                .bar#bar
-                %table.playing-track-information
-                  %tr
-                    %td.order= plitem.get("order")
-                    %td= plitem.get("title")
-                    %td.length= plitem.get("length").toMinSec()
-                    %td.actions
-                      %i.icon-remove
-
-
-
-        - else
-          - clazz = if plitem.get("played") then "played" else "unplayed"
-          %tr{id: plitem.id, "class" : "plitem-row #{clazz}"}
-            %td.order= plitem.get("order")
-            %td= plitem.get("title")
-            %td.length= plitem.get("length").toMinSec()
-            %td.actions
-              %i.icon-remove
-
-
+    %tbody#plitmeviews{style: "cursor: move;"}

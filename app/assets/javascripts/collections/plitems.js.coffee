@@ -45,7 +45,6 @@ class Plast.Collections.Plitems extends Backbone.Collection
   getOrderedPLItems: ->
     results = this.models
     results = (plitem for plitem in this.models when not plitem.get("hidden"))
-    results = _(results).sortBy this.comparator
     return results
 
   getLastPlayed: ->

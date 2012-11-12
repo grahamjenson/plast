@@ -34,8 +34,10 @@ class Plast.Views.YoutubePlayer extends Backbone.View
     else if divWidth > @maxWidth
       @ytplayer.setSize(@maxWidth,@maxWidth*@aspect)
     if @top
-      $(@playerSelector).css({"margin-top" : "#{-@ytplayer.height()}px"})
+      $(@playerSelector).css({"margin-top" : "#{this.shrinkTo()}px"})
 
+  shrinkTo: ->
+    return -@ytplayer.height()-2
 
   toggleVideo: =>
     return if @lock
@@ -57,7 +59,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
 
   toTop: ->
     complete = => @lock = false; @top = not @top
-    $(@playerSelector).animate({"margin-top" : "#{-@ytplayer.height()}px"}, complete)
+    $(@playerSelector).animate({"margin-top" : "#{this.shrinkTo()}px"}, complete)
       #REFACTOR change text and icons HACY
     $("#show-video-btn").html('
         <i class="icon-chevron-down icon-white pull-left"></i>

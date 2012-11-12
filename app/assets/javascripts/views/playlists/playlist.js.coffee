@@ -5,8 +5,6 @@ class Plast.Views.Playlist extends Backbone.View
   events:
     'click .remove-btn' : (e) -> this.remove(e)
 
-
-
   initialize: ->
     @playlist = this.model
 
@@ -27,17 +25,19 @@ class Plast.Views.Playlist extends Backbone.View
     console.log("render playlist")
     lastplayed = @playlist.getLastPlayed()
 
-    $(@el).html(@template(items: @playlist.getOrderedPLItems(), playingitem : lastplayed))
-
-    for plrow in $(@el).find(@playlistSelector)
-      $(plrow).data("plitem",@playlist.get("plitems").get(plrow.id))
+    $(@el).html(@template())
+    for plitem in @playlist.getOrderedPLItems()
+      @appendPlitem(plitem)
 
     $(@el).find("#playlist_list tbody:first").sortable({
       "stop" : (e,ui) => this.droppedOrder(e,ui),
       "cursor": "pointer"
     }).disableSelection()
-
     this
+
+  appendPlitem: (plitem) ->
+    view = new Plast.Views.Plitem({model: plitem})
+    $("#plitmeviews").append(view.render().el)
 
   droppedOrder: (e,ui)->
     console.log(e)

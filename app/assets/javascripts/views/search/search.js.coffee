@@ -66,7 +66,7 @@ class Plast.Views.Search extends Backbone.View
     item = $(e.currentTarget).data("yto")
     console.log(item)
     if item.video
-      this.addAnItem(item)
+      this.addAnItem(item.video)
     if item.playlist
       #TODO does not add videos in correct order
       $.getJSON("     https://gdata.youtube.com/feeds/api/playlists/#{item.playlist.id}?alt=jsonc&v=2&max-results=50", {}, (d) =>
