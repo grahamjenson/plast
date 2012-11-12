@@ -6,7 +6,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
     $("#show-video-btn").click(this.toggleVideo)
     @lock = false
     @top = true
-    @botpos = {"margin-top" :'0px'}
+    @botpos = {"margin-top" :'0'}
 
     @minWidth = 320
     @maxWidth = 1080
@@ -37,7 +37,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
       $(@playerSelector).css({"margin-top" : "#{this.shrinkTo()}px"})
 
   shrinkTo: ->
-    return -@ytplayer.height()-2
+    return -@ytplayer.height()-12
 
   toggleVideo: =>
     return if @lock

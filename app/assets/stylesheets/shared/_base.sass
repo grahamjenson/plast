@@ -1,11 +1,41 @@
+*
+  margin: 0
+
+html, body
+  height: 100%
+
 #body
   font-family: 'Lato'
+
+.wrapper
+  min-height: 100%
+  height: auto !important
+  height: 100%
+  margin: 0 auto -100px
+
+/* Footer */
+.footer, .push
+  height: 100px
+
+.footer
+  background-color: black 
+
+  .twitter-logo
+    +border-radius(6px)
+
+  .logo
+    margin-left: 10px
+
 
 /* Navbar */
 .navbar
   .logo
     text-align: center
     margin: 10px 0 5px 10px
+
+  .navbar-search .search-query
+    background-color: white
+
 
   .search, .playerhead
     margin-left: 0
@@ -25,12 +55,16 @@
   #play, #pause
     +border-radius(6px)
 
+/* Right hand nav */
+.right-hand-nav
+  margin-top: 35px
+
 /* Video Player */
 #show-video-btn
   +border-bottom-radius(6px)
   border: 1px solid #BBB
   border-top: none
-  background-color: blue
+  background-color: #08C
   padding: 5px
   height: 25px
   color: white
@@ -65,7 +99,11 @@
   padding: 0 0 0 0
   z-index: -1
   position: relative
-  margin-top: -392px
+  margin-top: -403px
+  border-left: 1px solid #BBB
+  border-right: 1px solid #BBB
+  background-color: #08C
+  padding-top: 8px
 
 /* Playlist */
 .playlist-row

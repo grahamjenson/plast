@@ -7,30 +7,44 @@
     = csrf_meta_tags
 
 %body
-  .navbar.navbar-inverse.navbar-fixed-top
-    .navbar-inner
-      .container
-        .row-fluid
-          .span12.logo
-            %a{href: "/"}
-              = image_tag "logo.png"
-          .span12.search
-            #search
-            .clearfix
-          .span12.playerhead
-            #playerhead
-  .container#body
-    #playerwrapper{align: "center"}
-      #youtubeplayer
-    #show-video-btn.btn-primary
-      %i.icon-chevron-down.icon-white.pull-left
-      Show Video
-      %i.icon-chevron-down.icon-white.pull-right
-    .row.playlist-row
-      .span9
-        #playlist
-      .span3
-        &nbsp;
+  .wrapper
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          .row-fluid
+            .span12.logo
+              %a{href: "/"}
+                = image_tag "logo.png"
+            .span12.search
+              #search
+              .clearfix
+            .span12.playerhead
+              #playerhead
+    .container#body
+      #playerwrapper{align: "center"}
+        #youtubeplayer
+      #show-video-btn.btn-primary
+        %i.icon-chevron-down.icon-white.pull-left
+        Show Video
+        %i.icon-chevron-down.icon-white.pull-right
+      .row.playlist-row
+        .span9
+          #playlist
+        .span3
+          .well.right-hand-nav
+            %h4 Links
+            &nbsp;
+
+    .push
+
+  .footer
+    .container
+      .row
+        %br
+        .span12
+          = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-right logo'
+
+          = link_to image_tag('facebook_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-right logo'
 
 
 = render 'shared/google_analytics'
