@@ -1,46 +1,68 @@
 class Plast.Views.YoutubePlayer extends Backbone.View
 
-  template: JST['playlists/youtubeplayer']
-  events:
-    'click #showvideobtn' : 'toggleVideo'
-
-  @animator
 
   initialize: ->
     @ytplayer = this.model
-    this.render()
+    $("#show-video-btn").click(this.toggleVideo)
+    @lock = false
+    @top = true
+    @botpos = {"margin-top" :'0px'}
 
-  toggleVideo: ->
-    if this.animator
-      return
-    endleft = -600
-    console.log("toggle view wvideo")
-    left = $("#sideplayer").position().left
-    invisible = (left == endleft)
-    frames = 10
-    frame = 0
+    @minWidth = 320
+    @maxWidth = 1080
+    @aspect = 0.609375
+    @ytplayer.bind("change:state", (model,state) =>
+      if state == Plast.Models.YTPlayer.READY
+        this.resizePlayer()
+    )
 
-    if invisible
-      goto = 0
+    @playerSelector = "#playerwrapper"
+
+    $(window).resize(this.resizePlayer)
+
+  resizePlayer: =>
+
+    divWidth = parseInt($('#show-video-btn').width())
+    newheight =
+    console.log("resize #{divWidth}")
+
+    #REFACTOR
+    if divWidth >= @minWidth and divWidth <= @maxWidth
+      @ytplayer.setSize(divWidth,divWidth*@aspect)
+    else if divWidth < @minWidth
+      @ytplayer.setSize(@minWidth,@minWidth*@aspect)
+    else if divWidth > @maxWidth
+      @ytplayer.setSize(@maxWidth,@maxWidth*@aspect)
+    if @top
+      $(@playerSelector).css({"margin-top" : "#{-@ytplayer.height()}px"})
+
+
+  toggleVideo: =>
+    return if @lock
+    console.log("toggle")
+    @lock = true
+    if @top
+      this.toBottom()
     else
-      goto = endleft
+      this.toTop()
 
-    @animator = setInterval( =>
-      nl = (frame/frames)
-      if invisible
-        nl = 1- nl
-      nl = nl*(endleft)
-      frame += 1
-      $("#sideplayer").css({left: "#{nl}px"})
+  toBottom: ->
+    complete = => @lock = false; @top = not @top
+    $(@playerSelector).animate(@botpos, complete)
+      #REFACTOR change text and icons
+    $("#show-video-btn").html('
+        <i class="icon-chevron-up icon-white pull-left"></i>
+        Hide Video
+        <i class="icon-chevron-up icon-white pull-right"></i>')
 
-      if frame == frames
-        $("#sideplayer").css({left: "#{goto}px"})
-        clearInterval(this.animator)
-        this.animator = null
-    , 25)
+  toTop: ->
+    complete = => @lock = false; @top = not @top
+    $(@playerSelector).animate({"margin-top" : "#{-@ytplayer.height()}px"}, complete)
+      #REFACTOR change text and icons HACY
+    $("#show-video-btn").html('
+        <i class="icon-chevron-down icon-white pull-left"></i>
+        Show Video
+        <i class="icon-chevron-down icon-white pull-right"></i>')
 
   render: ->
-    console.log("render youtubeplayer")
-    $(@el).html(@template())
-    @ytplayer.embedYTPlayer()
-    this
+    console.log("youtubeplayer controller")

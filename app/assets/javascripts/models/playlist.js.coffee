@@ -25,14 +25,15 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       thumbnail: ytitem.thumbnail.sqDefault,
       length: ytitem.duration
       })
+    pli.set({"order": this.get("plitems").size()})
+    @get("plitems").add(pli)
 
     pli.save({}, {
       success: =>
-        @get("plitems").add(pli)
-        pli.set({"order": this.get("plitems").size()})
         callbacks.success() if callbacks.success
         @trigger("change")
       error: (model,xhr) ->
+        @get("plitems").remove(pli)
         callbacks.error(model,xhr) if callbacks.error})
 
 

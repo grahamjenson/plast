@@ -9,7 +9,7 @@
       - for plitem in @items
         - clazz = ""
         - if plitem == @playingitem
-          %tr
+          %tr{id: plitem.id}
             %td.progress-bar-td{:colspan => '4'}
               .progress.player-progress.active
                 .bar#bar

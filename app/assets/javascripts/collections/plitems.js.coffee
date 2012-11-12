@@ -27,9 +27,11 @@ class Plast.Collections.Plitems extends Backbone.Collection
         for pli in this.getOrderedPLItems()
           if not pli.get("order")
             i += 1
-            pli.set({"order": i})
+            pli.attributes.order = i
           else
             i = pli.get("order")
+        console.log(this)
+        this.playlist.trigger("change")
         options.success() if options.success
       error: -> options.error
       }
