@@ -1,7 +1,22 @@
 - if not @items
-  = "Waiting for results..."
+  %li.results-loading
+    Sorry, no results were found.
 - else
   - for yto in @items
     %li
       %a.srlink{:id => yto.id, :tabindex => "0", href: "#", data: {title: yto.title}}
-        = "#{yto.size} -- #{yto.title}"
+        .media
+          .media-anchor.pull-left
+            %span.video-time
+              #{yto.size}
+            %img.media-object{:src => 'http://i.ytimg.com/vi/oHg5SJYRHA0/default.jpg'}
+
+          .media-body
+            %h4.media-heading
+              #{yto.title}
+            by
+            %strong DrDreVEVO
+            • 1 year ago • 110,364,557 views
+            %br
+            Music video by Dr. Dre performing I Need A Doctor featuring Eminem ...
+        .clearfix
