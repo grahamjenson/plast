@@ -17,7 +17,6 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
         align: "center",
         playerVars:
           autoplay : 0,
-          controls : 0,
           enablejsapi : 1,
           wmode : 'transparent',
           fs : 1,
@@ -43,23 +42,6 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
       state = event.data
       console.log("YT STATE CHANGE #{state}")
       this.set("state",state)
-
-  embedYTPlayer: ->
-
-    embeddedplayer = "v/oHg5SJYRHA0"
-    chromelessplayer = "apiplayer"
-
-    #swfobject.embedSWF("http://www.youtube.com/#{chromelessplayer}?version=3&enablejsapi=1&playerapiid=ytplayer&fs=1",
-    #  "ytplayer",
-    #  "600",
-    #  "400",
-    #  "9.0.0",
-    #  null,
-    #  null,
-    #  { allowScriptAccess: "always", allowfullscreen: "true", wmode: "opaque"},
-    #  { id: "globalYTPlayer" })
-
-
 
   playVideo: ->
     @youtubeplayerobject.playVideo()

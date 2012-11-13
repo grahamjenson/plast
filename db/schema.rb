@@ -11,19 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121107212421) do
-
-  create_table "playlist_sessions", :force => true do |t|
-    t.integer  "playlist_id"
-    t.integer  "session_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
+ActiveRecord::Schema.define(:version => 20121112202704) do
 
   create_table "playlists", :force => true do |t|
     t.string   "uuid",       :limit => 36
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+  end
+
+  create_table "plitem_ranks", :force => true do |t|
+    t.integer "session_id", :null => false
+    t.integer "plitem_id"
+    t.integer "rank"
   end
 
   create_table "plitems", :force => true do |t|

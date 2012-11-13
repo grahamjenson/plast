@@ -3,4 +3,4 @@ class Plast.Models.Plitem extends Backbone.RelationalModel
 
   remove: (plitemvotes) ->
     $.post("#{@url()}/#{this.id}/remove", {});
-    this.set("hidden",true)
+    this.collection.hidePlitem(this)

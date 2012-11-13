@@ -4,38 +4,12 @@ class Plast.Collections.Plitems extends Backbone.Collection
   url: -> "/api/playlists/#{@playlist.id}/plitems"
 
   reorderitems: (items) ->
-    votes = {}
-    i = 0
-    for plitem in items
-      i += 1
-      diff = plitem.attributes.order - i
-      if(diff != 0)
-        votes[plitem.id] = diff
-      plitem.attributes.order = i
-    this.vote(votes)
+    #newsort contains removed items
+    $.post("#{@url()}/reorder", {order: (item.id for item in items)});
 
-  vote: (plitemvotes) ->
-    if Object.keys(plitemvotes).length > 0
-      $.post("#{@url()}/vote", {votes: plitemvotes} );
+    this.reset(items)
+    this.vote(diffs)
 
-  fetch: (options = {}) ->
-    super(
-      {
-      add: true,
-      success: =>
-        i = 0
-        for pli in this.getOrderedPLItems()
-          if not pli.get("order")
-            i += 1
-            pli.attributes.order = i
-          else
-            i = pli.get("order")
-        console.log(this)
-        this.playlist.trigger("change")
-        options.success() if options.success
-      error: -> options.error
-      }
-      )
 
   getPlayableItems: ->
     results = this.getOrderedPLItems()
@@ -54,3 +28,7 @@ class Plast.Collections.Plitems extends Backbone.Collection
 
   makeAllPlayable: ->
     (plitem.set("played",false) for plitem in this.models)
+
+  hidePlitem: (plitem) ->
+    plitem.set(hidden,true)
+    plitem

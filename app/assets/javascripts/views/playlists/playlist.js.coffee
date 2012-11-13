@@ -8,14 +8,16 @@ class Plast.Views.Playlist extends Backbone.View
   initialize: ->
     @playlist = this.model
 
-    @playlistSelector = "#playlist_list tr"
-
     @playlist.bind('change', (e) =>
       this.render()
     )
 
     @playlist.get("plitems").bind('change', (e) =>
-      console.log(e.changedAttributes())
+      this.render()
+    )
+
+    @playlist.get("plitems").bind('reset', (e) =>
+      console.log("reset event")
       this.render()
     )
 
@@ -40,11 +42,5 @@ class Plast.Views.Playlist extends Backbone.View
     $("#plitmeviews").append(view.render().el)
 
   droppedOrder: (e,ui)->
-    console.log(e)
-    console.log(ui)
-    items = ($(plrow).data("plitem") for plrow in $(@playlistSelector))
+    items = ($(plrow).data("plitem") for plrow in $(".plitem-row"))
     @playlist.reorderitems(items)
-
-  remove: (e) ->
-    plitem = $(e.target).parents("tr").data("plitem")
-    plitem.remove()

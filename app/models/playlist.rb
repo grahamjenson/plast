@@ -7,10 +7,6 @@ class Playlist < ActiveRecord::Base
 
   has_many :plitems
 
-  has_many :playlist_sessions
-
-  has_many :sessions, :through => :playlist_sessions
-
   def generate_uuid
     self.uuid ||= rand(36**8).to_s(36)
   end
