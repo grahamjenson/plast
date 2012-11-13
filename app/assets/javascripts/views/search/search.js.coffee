@@ -22,21 +22,23 @@ class Plast.Views.Search extends Backbone.View
   refocusonsearch: ->
 
   searchyt: (event) =>
-    event.preventDefault()
-    #TODO make sure $("#searchresults") has been dropped
+    results_loading_string = "<div class='results-loading'><img src='/assets/loading.gif'></img><div>"
+    no_results_found_string = "<div class='results-loading'>Sorry, no results were found.</div>"
 
-    if not $("#searchresults").parent().hasClass('open')
-      $("#searchresults").parent().toggleClass('open')
+    event.preventDefault()
+
     lol = $("#serchtext").val()
     res = @results
     #https://developers.google.com/youtube/2.0/developers_guide_protocol
+
     #reset searchs
-    $("#videosearchresults").html("Waiting for results...")
+    $("#videosearchresults").html(results_loading_string)
+    $("#playlistsearchresults").html(results_loading_string)
 
     #launch video searchs
     $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=5&v=2&alt=jsonc", {}, (d) ->
       if not d.data.items
-        $("#videosearchresults").html("No results")
+        $("#videosearchresults").html(no_results_found_string)
         return
       srhtml = JST["search/videosearchresult"](items : d.data.items)
       $("#videosearchresults").html(srhtml)
@@ -47,7 +49,7 @@ class Plast.Views.Search extends Backbone.View
     #search playlists
     $.getJSON("https://gdata.youtube.com/feeds/api/playlists/snippets?q=#{lol}&orderby=relevance&max-results=5&v=2&alt=jsonc", {}, (d) ->
       if not d.data.items
-        $("#playlistsearchresults").html("No results")
+        $("#playlistsearchresults").html(no_results_found_string)
         return
       srhtml = JST["search/playlistsearchresult"](items : d.data.items)
       $("#playlistsearchresults").html(srhtml)

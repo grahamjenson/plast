@@ -83,13 +83,12 @@ td.actions
     text-align: center
 
   hr
-    margin: 10px 0
+    margin: 10px 0 0 0
 
-#videosearchresults
-  .media
-    padding-left: 20px
+.search-results
 
   .media-anchor
+    position: relative
     display: block
     padding: 3px 10px 3px 0
     clear: both
@@ -98,13 +97,23 @@ td.actions
     color: #333
     white-space: nowrap
 
+  .media-body
+    position: relative
+    margin-left: 130px
+
+  .results-loading
+    width: 100%
+    text-align: center
+    margin: 15px 0 10px 0
 
   a.srlink
-    padding: 3px 10px 10px 0
+    padding: 3px 10px 10px 10px
     white-space: normal
+    border-bottom: 1px solid #EEE
 
   span.video-time
-    margin-left: -37px
+    position: absolute
+    margin-left: 4px
     margin-top: 4px
     padding: 0 4px
     font-weight: bold
@@ -122,3 +131,4 @@ td.actions
     display: inline-block
     vertical-align: top
     zoom: 1
+    z-index: 2

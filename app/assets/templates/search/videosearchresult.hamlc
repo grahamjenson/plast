@@ -1,14 +1,15 @@
 - if not @items
-  = "Waiting for results..."
+  %li.results-loading
+    Sorry, no results were found.
 - else
   - for yto in @items
     %li
       %a.srlink{:id => yto.id, :tabindex => "0", href: "#"}
         .media
           .media-anchor.pull-left
-            %img.media-object{:src => yto.thumbnail.sqDefault}
             %span.video-time
               #{yto.duration.toMinSec()}
+            %img.media-object{:src => yto.thumbnail.sqDefault}
 
           .media-body
             %h4.media-heading
