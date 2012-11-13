@@ -4,7 +4,7 @@ Plast::Application.routes.draw do
     resources :playlists , :only => [:show, :create, :update] do
       resources :plitems, :only => [:show, :index, :create] do
         collection do
-          post 'vote'
+          post 'reorder'
         end
         member do
           post 'remove'

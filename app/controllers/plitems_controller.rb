@@ -2,29 +2,44 @@ class PlitemsController < ApplicationController
 
   respond_to :json
   INIT_RATING = 100
+  before_filter :get_playlist
+
+  def get_playlist
+    @pl = Playlist.where(:uuid => params[:playlist_id]).first
+  end
 
   def index
-    pl = Playlist.where(:uuid => params[:playlist_id]).first
-    plitems = pl.plitems.order(:rating).reverse()
-    plitems = plitems.select{|x| x.rating > 0}
+    #get plitems
+    plitems = @pl.plitems
+
+    #set rating with session information
+    plitems.each{|pli| pli.setRatingForSession(@session)}
+    plitems = plitems.sort{|pl1,pl2| pl1.rating - pl2.rating}
+    logger.debug("INDEX #{plitems.map{|x| [x.title,x.rating]}}")
+
+    #filter negative ratings, ensuring removed items do not return
+    plitems = plitems.select{|x| x.rating >= 0}
+
     render :json => plitems
   end
 
   def show
-    pl = Playlist.where(:uuid => params[:playlist_id]).first
-    pli = pl.plitems.select{|x| x.id == params[:id].to_i}.first
+    pli = @pl.plitems.select{|x| x.id == params[:id].to_i}.first
     render :json => pli
   end
 
   def create
-    pl = Playlist.where(:uuid => params[:playlist_id]).first
-    pitem = pl.plitems.create({
+    plsize = @pl.plitems.size()
+    pitem = @pl.plitems.create({
       youtubeid: params[:youtubeid],
       title: params[:title],
       thumbnail: params[:thumbnail],
       length: params[:length],
-      rating: INIT_RATING - pl.plitems.size
+      rating: plsize
       })
+
+    prank = pitem.plitem_ranks.build(:session => @session, :rank => pitem.rating)
+
     if pitem.save
       render :json => pitem
     else
@@ -32,31 +47,23 @@ class PlitemsController < ApplicationController
     end
   end
 
-  def vote
-    logger.debug("VOTING #{params}")
-    pl = Playlist.where(:uuid => params[:playlist_id]).first
-    votes = params[:votes]
-
-    for plitem in pl.plitems do
-      vote = votes["#{plitem.id}"]
-      if vote
-        votingAlgorithm(pl,plitem,vote.to_f)
-      end
+  def reorder
+    plitems = params[:order].map{|x| Plitem.find(x.to_i)}
+    logger.debug("REORDER #{plitems}")
+    i = 0
+    for plitem in plitems do
+      plrank = plitem.findOrCreatePlitemRank(@session)
+      plrank.rank = i
+      plrank.save()
+      i += 1
     end
     render :json => {success: "Votes counted"}
   end
 
-  def votingAlgorithm(pl,plitem,vote)
-    plitem.rating += (vote / pl.sessions.size())
-    plitem.save()
-  end
-
   def remove
-    pl = Playlist.where(:uuid => params[:playlist_id]).first
-    logger.debug("PLAYLIST #{pl}")
-    pli = pl.plitems.select{|x| x.id == params[:id].to_i}.first
-    logger.debug("PLAYLISTITEM #{pli}")
-    votingAlgorithm( pl, pli, -INIT_RATING)
-    render :json => {success: "removed"}
+    pli = @pl.plitems.select{|x| x.id == params[:id].to_i}.first
+    plrank = pli.findOrCreatePlitemRank(@session)
+    plrank.rank = -1
+    plrank.save()
   end
 end

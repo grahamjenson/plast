@@ -3,7 +3,4 @@ class Session < ActiveRecord::Base
 
   attr_accessible :data
 
-  has_many :playlist_sessions
-
-  has_many :playlists, :through => :playlist_sessions
 end

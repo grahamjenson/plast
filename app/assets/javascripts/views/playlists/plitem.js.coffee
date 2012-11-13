@@ -12,6 +12,7 @@ class Plast.Views.Plitem extends Backbone.View
     if @plitem.get("played")
       clazz = "played"
     $(@el).addClass("plitem-row").addClass(clazz).html(@template(plitem : @plitem))
+    $(@el).data("plitem",@plitem)
     this
 
   remove: (e) ->

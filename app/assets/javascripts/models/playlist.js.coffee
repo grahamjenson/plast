@@ -15,7 +15,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   initialize: ->
     setInterval(=>
       this.fetch()
-    ,10000)
+    ,5000)
 
   additem: (ytitem, callbacks = {}) =>
     pli = new Plast.Models.Plitem({
@@ -38,12 +38,14 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
 
   fetch: (options = {}) ->
-    console.log("FETCHING")
-    super({
+    console.log("FETCHING PLAYLIST")
+    super(
       success: =>
-        @get("plitems").fetch()
-        options.success() if options.success
-      })
+        @get("plitems").fetch(
+          success: ->
+            options.success() if options.success
+          )
+      )
 
 
   reorderitems: (items) ->
