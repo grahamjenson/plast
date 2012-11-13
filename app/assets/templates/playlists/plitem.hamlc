@@ -11,4 +11,9 @@
         %td= @plitem.get("title")
         %td.length= @plitem.get("length").toMinSec()
         %td.actions
-          %i.icon-remove
+          .remove-action
+            %i.icon-remove
+          .play-action
+            %i.icon-play
+          .pause-action
+            %i.icon-pause

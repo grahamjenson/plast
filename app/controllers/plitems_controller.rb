@@ -57,7 +57,7 @@ class PlitemsController < ApplicationController
       plrank.save()
       i += 1
     end
-    render :json => {success: "Votes counted"}
+    render :json => {success: "reordered"}
   end
 
   def remove
@@ -65,5 +65,6 @@ class PlitemsController < ApplicationController
     plrank = pli.findOrCreatePlitemRank(@session)
     plrank.rank = -1
     plrank.save()
+    render :json => {success: "removed"}
   end
 end

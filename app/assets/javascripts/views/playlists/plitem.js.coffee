@@ -1,5 +1,9 @@
 class Plast.Views.Plitem extends Backbone.View
 
+  events:
+    'click .remove-action' : (e) -> this.remove(e)
+    'click .play-action' : (e) -> this.play(e)
+    'click .pause-action' : (e) -> this.pause(e)
 
   template: JST['playlists/plitem']
   tagName: "tr"
@@ -22,5 +26,11 @@ class Plast.Views.Plitem extends Backbone.View
     this
 
   remove: (e) ->
-    plitem = $(e.target).parents("tr").data("plitem")
+    plitem = $(e.target).parents(".plitem-row").data("plitem")
+    console.log("remove #{plitem.get('title')}")
     plitem.remove()
+
+  play: (e) ->
+    console.log("play")
+
+  pause: (e) ->

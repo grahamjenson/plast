@@ -16,7 +16,6 @@ class Plast.Collections.Plitems extends Backbone.Collection
 
   getOrderedPLItems: ->
     results = this.models
-    results = (plitem for plitem in this.models when not plitem.get("hidden"))
     return results
 
   getLastPlayed: ->
@@ -26,7 +25,3 @@ class Plast.Collections.Plitems extends Backbone.Collection
 
   makeAllPlayable: ->
     (plitem.set("played",false) for plitem in this.models)
-
-  hidePlitem: (plitem) ->
-    plitem.set(hidden,true)
-    plitem

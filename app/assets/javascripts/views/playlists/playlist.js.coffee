@@ -2,9 +2,6 @@ class Plast.Views.Playlist extends Backbone.View
 
   template: JST['playlists/playlist']
 
-  events:
-    'click .remove-btn' : (e) -> this.remove(e)
-
   initialize: ->
     @playlist = this.model
     @player = @attributes.player
@@ -15,6 +12,11 @@ class Plast.Views.Playlist extends Backbone.View
 
     @playlist.bind('change', (e) =>
       console.log("change event")
+      this.render()
+    )
+
+    @playlist.get("plitems").bind('remove', (e) =>
+      console.log("remove event")
       this.render()
     )
 
