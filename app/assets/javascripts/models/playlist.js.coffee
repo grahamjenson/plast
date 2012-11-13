@@ -15,7 +15,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   initialize: ->
     setInterval(=>
       this.fetch()
-    ,5000)
+    ,10000)
 
   additem: (ytitem, callbacks = {}) =>
     pli = new Plast.Models.Plitem({

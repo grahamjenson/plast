@@ -29,7 +29,17 @@ class Plast.Views.Playlist extends Backbone.View
       this.render()
     )
 
+
+    @player.bind("change:progress", (model,progress) =>
+        this.updateProgressBar(progress)
+      )
+
     this.render()
+
+  updateProgressBar: (progress) ->
+    if (progress == 0 or isNaN(progress))
+      progress = 0
+    $("#bar").width("#{progress}%")
 
   render: ->
     console.log("render playlist")

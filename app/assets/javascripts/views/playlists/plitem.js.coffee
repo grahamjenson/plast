@@ -8,16 +8,7 @@ class Plast.Views.Plitem extends Backbone.View
     @plitem = this.model
     @player = @attributes.player
 
-    @player.bind("change:progress", (model,progress) =>
-        this.updateProgressBar(progress)
-      )
-
     this.render()
-
-  updateProgressBar: (progress) ->
-    if (progress == 0 or isNaN(progress))
-      progress = 0
-    $("#bar").width("#{progress}%")
 
   render: ->
     state = 0

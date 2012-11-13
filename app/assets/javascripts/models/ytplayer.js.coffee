@@ -33,7 +33,7 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
       this.timer = setInterval( =>
         p = @youtubeplayerobject.getCurrentTime()/@youtubeplayerobject.getDuration()
         this.set("progress", p*100)
-      ,300)
+      ,1000)
 
       #@youtubeplayerobject = $("#"+"#{id}")[0] #this is so slow
     window.onPlayerStateChange = (event) =>
