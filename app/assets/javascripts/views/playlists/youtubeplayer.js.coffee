@@ -6,7 +6,6 @@ class Plast.Views.YoutubePlayer extends Backbone.View
     $("#show-video-btn").click(this.toggleVideo)
     @lock = false
     @top = true
-    @botpos = {"margin-top" :'0'}
 
     @minWidth = 320
     @maxWidth = 1080
@@ -49,8 +48,12 @@ class Plast.Views.YoutubePlayer extends Backbone.View
       this.toTop()
 
   toBottom: ->
-    complete = => @lock = false; @top = not @top
-    $(@playerSelector).animate(@botpos, complete)
+    complete = =>
+      @lock = false;
+      @top = not @top;
+      $(@playerSelector).css({"z-index": 1})
+    $(@playerSelector).animate({"margin-top" :'0'}, complete)
+
       #REFACTOR change text and icons
     $("#show-video-btn").html('
         <i class="icon-chevron-up icon-white pull-left"></i>
@@ -59,6 +62,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
 
   toTop: ->
     complete = => @lock = false; @top = not @top
+    $(@playerSelector).css({"z-index": -1})
     $(@playerSelector).animate({"margin-top" : "#{this.shrinkTo()}px"}, complete)
       #REFACTOR change text and icons HACY
     $("#show-video-btn").html('

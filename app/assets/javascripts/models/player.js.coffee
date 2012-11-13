@@ -53,6 +53,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
 
     console.log("Playing #{plitem.get('title')}")
     this.get("ytplayer").loadVideo(plitem.get("youtubeid"))
+    this.set("playing", plitem)
 
   back: ->
     this.playingitem.set("played", false)

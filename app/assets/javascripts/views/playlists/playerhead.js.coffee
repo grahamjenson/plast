@@ -17,10 +17,6 @@ class Plast.Views.PlayerHead extends Backbone.View
       this.stateDirector(state)
     )
 
-    @player.bind("change:progress", (model,progress) =>
-        this.updateProgressBar(progress)
-    )
-
     this.render()
 
   stateDirector: (state)->
@@ -49,11 +45,6 @@ class Plast.Views.PlayerHead extends Backbone.View
   paused: ->
     $("#pause").hide()
     $("#play").show()
-
-  updateProgressBar: (progress) ->
-    if (progress == 0 or isNaN(progress))
-      progress = 100
-    $("#bar").width("#{progress}%")
 
   toggleVideo: ->
     $("#showvideo").popover({

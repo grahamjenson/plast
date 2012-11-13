@@ -37,7 +37,7 @@ class Plast.Routers.Playlists extends Backbone.Router
 
       #views
       console.log("rendering views")
-      plview = new Plast.Views.Playlist({el: $('#playlist'), model : pl})
+      plview = new Plast.Views.Playlist({el: $('#playlist'), model : pl, attributes: {player: player}})
       plsearch = new Plast.Views.Search({el: $('#search'), model : pl})
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
       youtubeplayerview = new Plast.Views.YoutubePlayer({model: ytplayer})

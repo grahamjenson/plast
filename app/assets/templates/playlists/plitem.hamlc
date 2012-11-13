@@ -1,6 +1,10 @@
 %td.progress-bar-td{:colspan => '4'}
   .progress.player-progress.active
-    .bar#bar
+    - if @state == 1
+      .bar.#bar
+    - else if @state == 2
+      .bar.fullbar
+
     %table.playing-track-information
       %tr
         %td.order= @plitem.collection.indexOf(@plitem) + 1

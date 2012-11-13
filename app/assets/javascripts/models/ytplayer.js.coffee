@@ -12,15 +12,12 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     window.onYouTubeIframeAPIReady = () =>
-      console.log("API READY")
       @youtubeplayerobject = new YT.Player('youtubeplayer', {
         align: "center",
         playerVars:
-          autoplay : 0,
           enablejsapi : 1,
           wmode : 'transparent',
           fs : 1,
-          showinfo : 0,
           theme : 'light',
           modestbranding : 1,
         events: {
@@ -32,15 +29,15 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
       window.globalytplayer = @youtubeplayerobject
 
     window.onPlayerReady = () =>
-      console.log("YT RDY")
-      console.log("YTPlayer loaded")
       this.set("state", Plast.Models.YTPlayer.READY)
-
+      this.timer = setInterval( =>
+        p = @youtubeplayerobject.getCurrentTime()/@youtubeplayerobject.getDuration()
+        this.set("progress", p*100)
+      ,300)
 
       #@youtubeplayerobject = $("#"+"#{id}")[0] #this is so slow
     window.onPlayerStateChange = (event) =>
       state = event.data
-      console.log("YT STATE CHANGE #{state}")
       this.set("state",state)
 
   playVideo: ->

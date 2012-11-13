@@ -6,9 +6,7 @@ class Plast.Collections.Plitems extends Backbone.Collection
   reorderitems: (items) ->
     #newsort contains removed items
     $.post("#{@url()}/reorder", {order: (item.id for item in items)});
-
     this.reset(items)
-    this.vote(diffs)
 
 
   getPlayableItems: ->

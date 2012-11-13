@@ -21,9 +21,9 @@ class Plitem < ActiveRecord::Base
 
   def aggregateRating
     #main ranking function
-    removes = plitem_ranks.select{|r| r < 0}.size()
+    removes = plitem_ranks.select{|r| r.rank < 0}.size()
 
-    ranks = plitem_ranks.select{|r| r >= 0}.each{|r| r.rank}
+    ranks = plitem_ranks.select{|r| r.rank >= 0}.map{|r| r.rank}
 
     total = plitem_ranks.size
 
@@ -31,7 +31,7 @@ class Plitem < ActiveRecord::Base
     if removes > (0.25 * total)
       return -1
     else
-      return ranks.sum / ranks.size
+      return ranks.sum / total #this takes into account the removes
     end
   end
 

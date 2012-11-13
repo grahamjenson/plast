@@ -25,7 +25,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       thumbnail: ytitem.thumbnail.sqDefault,
       length: ytitem.duration
       })
-    pli.set({"order": this.get("plitems").size()})
     @get("plitems").add(pli)
 
     pli.save({}, {
@@ -39,11 +38,15 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   fetch: (options = {}) ->
     console.log("FETCHING PLAYLIST")
+    previousSize = @get("plitems").size()
     super(
       success: =>
         @get("plitems").fetch(
-          success: ->
+          success: =>
+            if previousSize != @get("plitems").size()
+              @trigger("change")
             options.success() if options.success
+          silent: true
           )
       )
 
