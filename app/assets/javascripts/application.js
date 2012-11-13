@@ -16,6 +16,7 @@
 //= require swfobject
 //= require hamlcoffee
 //= require bootstrap
+//= require bootstrap-dropdown.js
 //= require underscore
 //= require backbone
 //= require backbone-relational

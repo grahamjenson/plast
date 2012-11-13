@@ -1,25 +1,14 @@
 !!!
 %html
   %head
-    %title= "PLYSIT"
+    %title= "Plysit - Playlist Collaboration"
     = favicon_link_tag "/assets/icon.ico"
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
 
 %body
   .wrapper
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          .row-fluid
-            .span12.logo
-              %a{href: "/"}
-                = image_tag "logo.png"
-            .span12.search
-              #search
-              .clearfix
-            .span12.playerhead
-              #playerhead
+    = render 'shared/top_navigation'
     .container#body
       #playerwrapper{align: "center"}
         #youtubeplayer
