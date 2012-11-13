@@ -23,7 +23,6 @@ class Plast.Views.YoutubePlayer extends Backbone.View
 
     divWidth = parseInt($('#show-video-btn').width())
     newheight =
-    console.log("resize #{divWidth}")
 
     #REFACTOR
     if divWidth >= @minWidth and divWidth <= @maxWidth

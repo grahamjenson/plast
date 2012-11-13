@@ -6,8 +6,8 @@ class Plast.Views.Search extends Backbone.View
   events:
     'click .srlink' : 'srclick'
     'keydown .srlink' : 'srkey'
-    'submit #searchyt' : 'searchyt'
-    'input #serchtext' : 'searchyt'
+    'submit #searchyt' : 'delaysearch'
+    'input #serchtext' : 'delaysearch'
 
 
   initialize: ->
@@ -21,11 +21,18 @@ class Plast.Views.Search extends Backbone.View
 
   refocusonsearch: ->
 
+  delaysearch: (e) ->
+    e.preventDefault()
+    clearTimeout(@t)
+    @t = setTimeout(
+      => @searchyt(e)
+    , 500)
+
   searchyt: (event) =>
+    console.log("searching")
     results_loading_string = "<div class='results-loading'><img src='/assets/loading.gif'></img><div>"
     no_results_found_string = "<div class='results-loading'>Sorry, no results were found.</div>"
 
-    event.preventDefault()
 
     lol = $("#serchtext").val()
     res = @results

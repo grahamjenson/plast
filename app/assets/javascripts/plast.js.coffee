@@ -22,5 +22,20 @@ Number::pad = (size) ->
 Number::toMinSec = ->
   sb = "#{(this / 60).truncate()}:#{(this % 60).truncate().pad(2) }"
 
+Number::addCommas = ->
+  nStr = "#{this}";
+  x = nStr.split('.');
+  x1 = x[0];
+  if  x.length > 1
+    x2 = '.#{x[1]}'
+  else
+    x2 = ''
+
+  rgx = /(\d+)(\d{3})/;
+  while rgx.test(x1)
+    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  return x1 + x2;
+
+
 $(document).ready ->
   Plast.init()

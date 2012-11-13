@@ -9,14 +9,14 @@
           .media-anchor.pull-left
             %span.video-time
               #{yto.size}
-            %img.media-object{:src => 'http://i.ytimg.com/vi/oHg5SJYRHA0/default.jpg'}
+            %img.media-object{:src => yto.thumbnail.sqDefault}
 
           .media-body
             %h4.media-heading
               #{yto.title}
             by
-            %strong DrDreVEVO
-            • 1 year ago • 110,364,557 views
+            %strong #{yto.author}
+            = "• #{$.timeago(yto.updated)}"
             %br
-            Music video by Dr. Dre performing I Need A Doctor featuring Eminem ...
+            #{yto.description.trunc(255)}
         .clearfix
