@@ -34,3 +34,4 @@ class Plast.Views.Plitem extends Backbone.View
     console.log("play")
 
   pause: (e) ->
+    console.log("pause")

@@ -44,6 +44,12 @@ class Plast.Views.Playlist extends Backbone.View
     $("#bar").width("#{progress}%")
 
   render: ->
+    clearTimeout(@t)
+    @t = setTimeout(
+      => @delayedrender()
+    , 500)
+
+  delayedrender: ->
     console.log("render playlist")
     lastplayed = @playlist.getLastPlayed()
 
