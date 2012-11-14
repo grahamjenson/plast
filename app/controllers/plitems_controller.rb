@@ -10,16 +10,7 @@ class PlitemsController < ApplicationController
 
   def index
     #get plitems
-    plitems = @pl.plitems
-
-    #set rating with session information
-    plitems.each{|pli| pli.setRatingForSession(@session)}
-    plitems = plitems.sort{|pl1,pl2| pl1.rating - pl2.rating}
-    logger.debug("INDEX #{plitems.map{|x| [x.title,x.rating]}}")
-
-    #filter negative ratings, ensuring removed items do not return
-    plitems = plitems.select{|x| x.rating >= 0}
-
+    plitems = @pl.orderedplitems(@session)
     render :json => plitems
   end
 
@@ -29,18 +20,21 @@ class PlitemsController < ApplicationController
   end
 
   def create
-    plsize = @pl.plitems.size()
-    pitem = @pl.plitems.create({
-      youtubeid: params[:youtubeid],
-      title: params[:title],
-      thumbnail: params[:thumbnail],
-      length: params[:length],
-      rating: plsize
-      })
+    #check if it exists
+    pitem = @pl.plitems.where(youtubeid: params[:youtubeid]).first
+    if not pitem
+      pitem = @pl.plitems.create({
+        youtubeid: params[:youtubeid],
+        title: params[:title],
+        thumbnail: params[:thumbnail],
+        length: params[:length],
+        })
+    end
 
-    prank = pitem.plitem_ranks.build(:session => @session, :rank => pitem.rating)
+    prank = pitem.buildRank(@session,@pl.plitems.size())
 
     if pitem.save
+      prank.save()
       render :json => pitem
     else
       render :json => { :errors => pitem.errors.full_messages }, :status => 422
@@ -48,11 +42,12 @@ class PlitemsController < ApplicationController
   end
 
   def reorder
+    #If the session has a plitem it has a rank
     plitems = params[:order].map{|x| Plitem.find(x.to_i)}
     logger.debug("REORDER #{plitems}")
     i = 0
     for plitem in plitems do
-      plrank = plitem.findOrCreatePlitemRank(@session)
+      plrank = plitem.find_plitem_rank(@session)
       plrank.rank = i
       plrank.save()
       i += 1
@@ -62,7 +57,7 @@ class PlitemsController < ApplicationController
 
   def remove
     pli = @pl.plitems.select{|x| x.id == params[:id].to_i}.first
-    plrank = pli.findOrCreatePlitemRank(@session)
+    plrank = pli.find_plitem_rank(@session)
     plrank.rank = -1
     plrank.save()
     render :json => {success: "removed"}
