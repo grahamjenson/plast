@@ -2,6 +2,8 @@
 %html
   %head
     %title= "Plysit - Playlist Collaboration"
+    %meta{name: "description", content: "PLYSIT is a collaborative playlist creator. Step 1: Create a playlist. Step 2: Collaborate creating and ordering it. Step 3: Share it with the world. PLYSIT simplifies the creation of playlists that must satisfy many people, e.g. in shared workspaces. It also solves the NP-Hard problem posed in XKCD http://xkcd.com/920/ "}
+    %meta{name: "keywords",content: "Playlist, Youtube, Video, Collaborate, Share, Player, Music"}
     = favicon_link_tag "/assets/icon.ico"
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
@@ -23,10 +25,26 @@
           .well.right-hand-nav.sharing
             %h4 Share
             %hr
-            = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo' 
+            = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             = link_to image_tag('facebook_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             .clearfix
 
+      .row
+        .span3
+          Step 1: Create
+          %br
+          Add items to your playlist using the search a the top.
+          Reorder, the items into how you want to listen to them.
+        .span3
+          Step 2: Collaborate
+          %br
+          Send the URL to your followers on Twitter or friends on Facebook.
+          The people you choose to collaborate with will be able to edit the playlist by adding, removing, and reordering the items.
+        .span3
+          Step 3: Share
+          %br
+          Tell people about the list you (and others) have made.
+          These people will be able to listen to your playlist.
     .push
 
   .footer

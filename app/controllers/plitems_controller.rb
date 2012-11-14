@@ -1,7 +1,6 @@
 class PlitemsController < ApplicationController
 
   respond_to :json
-  INIT_RATING = 100
   before_filter :get_playlist
 
   def get_playlist

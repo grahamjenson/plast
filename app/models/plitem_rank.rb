@@ -6,4 +6,6 @@ class PlitemRank < ActiveRecord::Base
   validates :rank, :presence => true
 
   validates_uniqueness_of :session_id, :scope => :plitem_id
+
+
 end

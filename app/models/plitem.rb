@@ -20,9 +20,11 @@ class Plitem < ActiveRecord::Base
   end
 
   def find_plitem_rank(session)
-    plitem_ranks.select{|x| x.session_id == session.id}.first
+    plitem_ranks.where(:session_id => session.id, :plitem_id => self.id).first
   end
-  #get the rank of the item
+
+  #If session then return either number, or nil
+  #session = nil then aggregateRank
   def rank(session = nil)
     if session
       #if there is a session we return the rank
@@ -38,12 +40,19 @@ class Plitem < ActiveRecord::Base
     end
   end
 
+  def getAllRemovalPlitemRanks
+    plitem_ranks.all(:conditions => ["plitem_ranks.rank < 0"])
+  end
+
+  def getAllPositiveRanks
+    plitem_ranks.all(:conditions => ["plitem_ranks.rank >= 0"])
+  end
 
   def aggregateRank
     #main ranking function
-    removes = plitem_ranks.select{|r| r.rank < 0}.size()
-    ranks =  plitem_ranks.select{|r| r.rank >= 0}.map{|r| r.rank}
-    total = plitem_ranks.size
+    removes = getAllRemovalPlitemRanks.size()
+    ranks =  getAllPositiveRanks.map{|r| r.rank}
+    total = ranks.size + removes
 
     #25% of pple want it removed it is removed, can come back with more pple
     if removes > (0.25 * total)

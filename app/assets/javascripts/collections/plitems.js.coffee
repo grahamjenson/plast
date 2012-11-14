@@ -8,7 +8,6 @@ class Plast.Collections.Plitems extends Backbone.Collection
     $.post("#{@url()}/reorder", {order: (item.id for item in items)});
     this.reset(items)
 
-
   getPlayableItems: ->
     results = this.getOrderedPLItems()
     results = (plitem for plitem in this.models when not plitem.get("played"))
