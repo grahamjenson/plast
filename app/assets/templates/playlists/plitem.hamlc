@@ -1,9 +1,9 @@
 %td.progress-bar-td{:colspan => '4'}
   .progress.player-progress.active
     - if @state == 1
-      .bar.#bar
+      .bar#js-progress-bar
     - else if @state == 2
-      .bar.fullbar
+      .bar.already-played
 
     %table.playing-track-information
       %tr
@@ -11,9 +11,8 @@
         %td= @plitem.get("title")
         %td.length= @plitem.get("length").toMinSec()
         %td.actions
-          .remove-action
-            %i.icon-remove
-          .play-action
-            %i.icon-play
-          .pause-action
-            %i.icon-pause
+          %i.icon-remove.action.remove
+          - if @state == 1
+            %i.icon-pause.action.pause
+          - else
+            %i.icon-play.action.play

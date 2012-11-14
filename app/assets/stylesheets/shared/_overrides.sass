@@ -42,9 +42,15 @@ td.progress-bar-td
     z-index: 1
     width: 0%
     height: 100%
+    background-image: none
+    background-color: rgba(0, 118, 230, 0.2)
 
-  .fullbar
+  .already-played
+    z-index: 1
     width: 100%
+    height: 100%
+    background-image: none
+    background-color: rgba(0, 118, 230, 0.2)
 
 .playing-track-information
   width: 100%
@@ -64,6 +70,19 @@ td.progress-bar-td
       border-bottom: none
 
 /* Track Table */
+th.order
+  width: 40px
+
+th.title
+  padding-left: 5px
+
+th.length
+  width: 50px
+
+th.actions
+  width: 40px
+
+
 td.order
   width: 40px
   text-align: center
@@ -74,6 +93,14 @@ td.length
 
 td.actions
   width: 40px
+
+  .action
+    float: right
+    cursor: pointer
+    margin-left: 5px
+
+    &.remove
+      margin-top: 2px
 
 /* Search Bar */
 #searchresults.dropdown-menu

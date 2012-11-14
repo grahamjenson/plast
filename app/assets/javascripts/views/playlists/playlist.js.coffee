@@ -41,7 +41,7 @@ class Plast.Views.Playlist extends Backbone.View
   updateProgressBar: (progress) ->
     if (progress == 0 or isNaN(progress))
       progress = 0
-    $("#bar").width("#{progress}%")
+    $("#js-progress-bar").width("#{progress}%")
 
   render: ->
     clearTimeout(@t)
