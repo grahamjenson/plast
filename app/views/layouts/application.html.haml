@@ -60,7 +60,13 @@
     .container
       .row
         %br
-        .span12
+        .span2.pull-left
+          About
+          Bugs
+          Feedback
+        .span2.pull-right
+          = link_to image_tag('hashbang.png'), 'http://hashbang.co.nz/', :target => "_blank"
+
         /%button.btn
         /%i.icon-fork
 
