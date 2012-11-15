@@ -11,6 +11,10 @@ Plast::Application.routes.draw do
         end
       end
     end
+    resources :read_only_playlists, :only =>[:show] do
+      resources :read_only_plitems, :only => [:index] do
+      end
+    end
   end
 
   match "/p/:id" => "main#index"

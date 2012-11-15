@@ -8,12 +8,23 @@ class Playlist < ActiveRecord::Base
   has_many :plitems
   has_many :plitem_ranks, :through => :plitems
 
+  def aggregated_order
+    plis_to_be_ranked = plitems.map{|x| {plitem: x, rank: x.rank} }
+    #filter those out removed
+    plis_to_be_ranked = plis_to_be_ranked.select{|x| x[:rank] >= 0}
+    #sort based on rank
+    plis_to_be_ranked = plis_to_be_ranked.sort{ |pl1,pl2| pl1[:rank] - pl2[:rank]}
+
+    plis_to_be_ranked = plis_to_be_ranked.map{|x| x[:plitem]}
+  end
+
   def orderedplitems(session)
     #THIS METHOD IS VERRY INEFFICIENT
     #ITEMS THAT HAVE BEEN RANKED
     all_pli_ranks = self.plitem_ranks.where(:session_id => session.id) #all ranks
     ranks_notRemoved = all_pli_ranks.select{|x| x.rank >= 0} #all non removed ranks
     logger.debug("PLAYLIST ITEM 0")
+
     plitems_notRemoved = ranks_notRemoved.sort{ |pl1,pl2| pl1.rank - pl2.rank}.map{|x| x.plitem} #
     logger.debug("PLAYLIST ITEM 1")
     if all_pli_ranks.size() == plitems.size() #if ranked everything
@@ -34,7 +45,7 @@ class Playlist < ActiveRecord::Base
       br.save()
     end
 
-    #filter those out
+    #filter those out removed
     plis_to_be_ranked = plis_to_be_ranked.select{|x| x[:rank] >= 0}
     #sort based on rank
     plis_to_be_ranked = plis_to_be_ranked.sort{ |pl1,pl2| pl1[:rank] - pl2[:rank]}
