@@ -14,5 +14,6 @@
           %i.icon-remove.action.remove
           - if @state == 1
             %i.icon-pause.action.pause
+            %i.icon-play.action.resume.hide
           - else
             %i.icon-play.action.play

@@ -36,6 +36,14 @@ class Plast.Models.Player extends Backbone.RelationalModel
     )
     this.get("ytplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
 
+  playItem: (plitem) ->
+    plitem.set("played", (new Date()).getTime())
+    this.playingitem = plitem
+
+    console.log("Playing #{plitem.get('title')}")
+    this.get("ytplayer").loadVideo(plitem.get("youtubeid"))
+    this.set("playing", plitem)
+
   playNext: (plitem = null) ->
     if not plitem
       plitem = this.get("playlist").getPlayableItems()[0]
@@ -48,12 +56,8 @@ class Plast.Models.Player extends Backbone.RelationalModel
         else
           plitem = this.get("playlist").getPlayableItems()[0]
 
-    plitem.set("played", (new Date()).getTime())
-    this.playingitem = plitem
+    playItem(plitem)
 
-    console.log("Playing #{plitem.get('title')}")
-    this.get("ytplayer").loadVideo(plitem.get("youtubeid"))
-    this.set("playing", plitem)
 
   back: ->
     this.playingitem.set("played", false)

@@ -2,7 +2,7 @@ class Plast.Routers.Playlists extends Backbone.Router
   routes:
     '': 'newpl'
     'playlist/:uuid' : 'showpl'
-
+    'p/:id' : 'readonlypl'
 
   initialize: ->
     @bind 'all', @_trackPageview
@@ -26,6 +26,9 @@ class Plast.Routers.Playlists extends Backbone.Router
       console.log(error)
       @navigate("");
       })
+
+  readonlypl: ->
+    npl = new Plast.Models.ReadonlyPlaylist()
 
   renderpl: (pl) ->
     window.pl = pl

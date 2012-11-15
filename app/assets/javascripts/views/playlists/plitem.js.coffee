@@ -1,9 +1,10 @@
 class Plast.Views.Plitem extends Backbone.View
 
   events:
-    'click .remove-action' : (e) -> this.remove(e)
-    'click .play-action' : (e) -> this.play(e)
-    'click .pause-action' : (e) -> this.pause(e)
+    'click .action.remove' : (e) -> this.remove(e)
+    'click .action.play' : (e) -> this.play(e)
+    'click .action.pause' : (e) -> this.pause(e)
+    'click .action.resume' : (e) -> this.resume(e)
 
   template: JST['playlists/plitem']
   tagName: "tr"
@@ -12,7 +13,26 @@ class Plast.Views.Plitem extends Backbone.View
     @plitem = this.model
     @player = @attributes.player
 
+    @player.bind("change:state", (model,state) =>
+      this.stateDirector(state)
+    )
+
     this.render()
+
+  stateDirector: (state) =>
+    switch state
+      when Plast.Models.Player.STATE_NOTREADY then
+      when Plast.Models.Player.STATE_READY then
+      when Plast.Models.Player.STATE_PLAYING then this.isplaying()
+      when Plast.Models.Player.STATE_PAUSED then this.ispaused()
+
+  isplaying: ->
+    $(".action.pause").removeClass("hide")
+    $(".action.resume").addClass("hide")
+
+  ispaused: ->
+    $(".action.pause").addClass("hide")
+    $(".action.resume").removeClass("hide")
 
   render: ->
     state = 0
@@ -31,7 +51,10 @@ class Plast.Views.Plitem extends Backbone.View
     plitem.remove()
 
   play: (e) ->
-    console.log("play")
+    @player.playItem(@plitem)
 
   pause: (e) ->
-    console.log("pause")
+    @player.pause()
+
+  resume: (e) ->
+    @player.resumeplaying()
