@@ -70,7 +70,8 @@ class Plitem < ActiveRecord::Base
   def as_json(options)
     jsond = super(options)
     #fix uuid
-    jsond["playlist_id"] = playlist.uuid
+    #jsond["playlist_id"] = playlist.uuid
+    jsond.delete("playlist_id")
     return jsond
   end
 end

@@ -56,7 +56,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
         else
           plitem = this.get("playlist").getPlayableItems()[0]
 
-    playItem(plitem)
+    this.playItem(plitem)
 
 
   back: ->

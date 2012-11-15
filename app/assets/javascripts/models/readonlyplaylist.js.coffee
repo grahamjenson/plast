@@ -1,14 +1,14 @@
 class Plast.Models.ReadOnlyPlaylist extends Backbone.RelationalModel
-  urlRoot: "/api/playlists"
+  urlRoot: "/api/read_only_playlists"
 
   relations: [{
       type: Backbone.HasMany,
       key: 'plitems',
-      relatedModel: 'Plast.Models.Plitem',
-      collectionType: 'Plast.Collections.Plitems',
+      relatedModel: 'Plast.Models.ReadOnlyPlitem',
+      collectionType: 'Plast.Collections.ReadOnlyPlitems',
       reverseRelation:
         key: 'playlist',
-        includeInJSON: 'uuid'
+        includeInJSON: 'id'
       }]
 
 
@@ -17,27 +17,9 @@ class Plast.Models.ReadOnlyPlaylist extends Backbone.RelationalModel
       this.fetch()
     ,10000)
 
-  additem: (ytitem, callbacks = {}) =>
-    pli = new Plast.Models.Plitem({
-      "youtubeid" : ytitem.id,
-      playlist_id: this.id,
-      title: ytitem.title,
-      thumbnail: ytitem.thumbnail.sqDefault,
-      length: ytitem.duration
-      })
-    @get("plitems").add(pli)
-
-    pli.save({}, {
-      success: =>
-        callbacks.success() if callbacks.success
-        @trigger("change")
-      error: (model,xhr) ->
-        @get("plitems").remove(pli)
-        callbacks.error(model,xhr) if callbacks.error})
-
 
   fetch: (options = {}) ->
-    console.log("FETCHING PLAYLIST")
+    console.log("FETCHING READONLY PLAYLIST")
     previousSize = @get("plitems").size()
     super(
       success: =>
@@ -49,11 +31,6 @@ class Plast.Models.ReadOnlyPlaylist extends Backbone.RelationalModel
           silent: true
           )
       )
-
-
-  reorderitems: (items) ->
-    this.get("plitems").reorderitems(items)
-    this.trigger("change")
 
   getPlayableItems: ->
     this.get("plitems").getPlayableItems()
