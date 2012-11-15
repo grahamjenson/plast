@@ -12,7 +12,7 @@
   .wrapper
     = render 'shared/top_navigation'
     .container#body
-      #playerwrapper{align: "center"}
+      #playerwrapper
         #youtubeplayer
       #show-video-btn.btn-primary
         %i.icon-chevron-down.icon-white.pull-left
@@ -23,47 +23,29 @@
           #playlist
         .span3
           .well.right-hand-nav.sharing
+            #step-2-icon.step-icon
             %h4 Collaborate
-            %h5 Allows users to edit playlist
+            .clearfix
             %hr
             = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             = link_to image_tag('facebook_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             .clearfix
+            %br
+            Allows users to edit playlist
+
           .well.right-hand-nav.sharing
+            #step-3-icon.step-icon
             %h4 Share
-            %h5 Allows users to play playlist
+            .clearfix
             %hr
             = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             = link_to image_tag('facebook_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
             .clearfix
-          .well.right-hand-nav.sharing
-            %h4 Adverts
-      .row
-        .span3
-          %strong
-            Step 1: Create
-          %br
-          Add Youtube video to your playlist using the search a the top (either individually or from existing Youtube playlists).
-          Reorder, the items into how you want to watch them.
-          Have fun watching the videos.
-        .span3
-          %strong
-            Step 2: Collaborate
-          %br
-          Send this playlist to your followers on Twitter, friends on Facebook or anyone you want.
-          The people you choose will become collaborators with you, and will be able to edit the playlist by adding, removing, and reordering the videos.
-          They can also invite more people to collaborate with.
-          It will no longer be your playlist but a playlist owned by everyone.
-          This collaboration solves the 'Youtube party problem' posed by
-          %a{href: "http://xkcd.com/920/", :target => "_blank"}
-            xkcd
-        .span3
-          %strong
-            Step 3: Share
-          %br
-          Tell people about the list you (and others) have made.
-          These people will be able to watch the videos in your playlist, and see it grow and change.
-          The order of the videos will be a democratized version of all the collaborators orders of the list.
+            %br
+            Allows users to play playlist
+
+          //.well.right-hand-nav.sharing
+          //%h4 Adverts
     .push
   .footer
     .container

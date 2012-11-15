@@ -8,6 +8,7 @@ class Plast.Views.Search extends Backbone.View
     'keydown .srlink' : 'srkey'
     'submit #searchyt' : 'delaysearch'
     'input #serchtext' : 'delaysearch'
+    "click #serchtext" : 'openDropDown'
 
 
   initialize: ->
@@ -16,6 +17,10 @@ class Plast.Views.Search extends Backbone.View
 
   render: ->
     console.log("render search")
+
+    $('#searchyt').on('show', (e) ->
+      console.log 'hello'
+    )
     $(@el).html(@template())
     this
 
@@ -110,3 +115,8 @@ class Plast.Views.Search extends Backbone.View
   select: ->
     console.log("select")
 
+  openDropDown: ->
+    $('#js-help-container .step').animate(
+      { opacity: 0, height: 0, 'margin-top': '-50px' }, 1000, ->
+        $('#js-help-container').css('display', 'none')
+    )

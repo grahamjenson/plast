@@ -19,6 +19,7 @@
 //= require bootstrap
 //= require bootstrap-dropdown.js
 //= require underscore
+//= require raphael-min
 //= require backbone
 //= require backbone-relational
 //= require plast

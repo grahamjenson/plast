@@ -1,7 +1,7 @@
-%form#searchyt.navbar-search.form-search.dropdown-toggle{data-toggle: "dropdown"}
+%a#searchyt.navbar-search.form-search.dropdown-toggle{'data-toggle':"dropdown"}
   %input#serchtext.search-query.span{type: "text", placeholder:"Begin your search here."}
 
-%ul#searchresults.dropdown-menu.srddm{'data-toggle':"dropdown", role: "menu", "aria-labelledby": "searchyt"}
+%ul#searchresults.dropdown-menu.srddm{role: "menu", "aria-labelledby": "searchyt"}
   %li.category
     %h4
       Videos

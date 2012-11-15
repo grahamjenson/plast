@@ -69,3 +69,5 @@ class Plast.Views.PlayerHead extends Backbone.View
     this.stateDirector(@player.get("state"))
     this
 
+
+
