@@ -40,30 +40,131 @@
             %h4 Adverts
       .row
         .span3
-          Step 1: Create
+          %strong
+            Step 1: Create
           %br
           Add items to your playlist using the search a the top.
+          The items are youtube videos.
+          You can also add all items in a Youtube playlist.
           Reorder, the items into how you want to listen to them.
         .span3
-          Step 2: Collaborate
+          %strong
+            Step 2: Collaborate
           %br
           Send the URL to your followers on Twitter or friends on Facebook.
           The people you choose to collaborate with will be able to edit the playlist by adding, removing, and reordering the items.
+          They will also be able to invite more people to collaborate.
+          This collaboration solves the 'Youtube party problem' posed by
+          %a{href: "http://xkcd.com/920/"}
+            xkcd
         .span3
-          Step 3: Share
+          %strong
+            Step 3: Share
           %br
           Tell people about the list you (and others) have made.
           These people will be able to listen to your playlist.
+          As the playlist changes their list will be updated.
     .push
 
   .footer
     .container
       .row
         %br
-        .span2.pull-left
-          About
-          Bugs
-          Feedback
+        .span3.pull-left
+          %a.btn{href: "#FAQModal", role: "button", "data-toggle" => "modal"}
+            = "FAQ"
+          #FAQModal.modal.hide.fade{tabindex: "-1",role:"dialog", "aria-labelledby" => "FAQModal", "aria-hidden" => "true"}
+            .modal-header
+              %button.close{type: "button", "data-dismiss" => "modal", "aria-hidden" => "true"}
+                ="×"
+
+              %h3
+                = "FAQ PLYSIT"
+            .modal-body
+              %h4
+                = "There are no users, what is the security?"
+              %p
+                = "People cannot see playlists you create because they do not have it's URL."
+                = "If you do not want to collaborate then "
+              %h4
+                = "How are the items ordered?"
+              %p
+                = "When you order the items on the playlist, this order is saved to the server."
+                = "The orders of all the people collaborating on the playlist are taken into account to produce the shared order."
+              %h4
+                = "What happens when a collaborator removes and item?"
+              %p
+                = "If a collaborator removes and item this is also considered in the order."
+                = "If enough collaborators remove an item it will no longer be in the list."
+              %h4
+                = "Why youtube (and not SoundCloud)?"
+              %p
+                = "The vast amount of videos on youtube means that the song/video you want will probably be there."
+
+            .modal-footer
+              = link_to image_tag('hashbang-alt.png'), 'http://hashbang.co.nz/', :target => "_blank"
+
+          %a.btn{href: "#aboutModal", role: "button", "data-toggle" => "modal"}
+            = "About"
+          #aboutModal.modal.hide.fade{tabindex: "-1",role:"dialog", "aria-labelledby" => "aboutModal", "aria-hidden" => "true"}
+            .modal-header
+              %button.close{type: "button", "data-dismiss" => "modal", "aria-hidden" => "true"}
+                ="×"
+
+              %h3
+                = "About PLYSIT"
+            .modal-body
+              %h4
+                = "Inspiration"
+              %p
+                %strong
+                  = "PLYSIT"
+                = "was created in response to the dictatorial selection of music that John had at our shared work environment, BizDojo."
+                = "After we had an entire day of 90's pop that inspired the thought that there should be a site for collaborative playlist creation."
+              %hr
+              %h4
+                = "Pronunciation"
+              %p
+                %strong
+                  = "PLYSIT"
+                = "is pronounced like the word 'explicit' minus the 'ex'"
+              %hr
+              %h4
+                = "HashBang + MaoriGeek"
+              %p
+                %strong
+                  = "PLYSIT"
+                = "was developed under the roof of HashBang by a Maori.Geek"
+              %hr
+              %h4
+                = "Beta Experiment"
+              %p
+                %strong
+                  = "PLYSIT"
+                = "is still in beta, there are bugs, it will be slow."
+              %p
+                = "User feedback is important for the development and perfection"
+                %strong
+                  = "PLYSIT"
+
+            .modal-footer
+              = link_to image_tag('hashbang-alt.png'), 'http://hashbang.co.nz/', :target => "_blank"
+
+          %a.btn{href: "#feedbackModal", role: "button", "data-toggle" => "modal"}
+            = "Feedback"
+          #feedbackModal.modal.hide.fade{tabindex: "-1",role:"dialog", "aria-labelledby" => "feedbackModal", "aria-hidden" => "true"}
+            .modal-header
+              %button.close{type: "button", "data-dismiss" => "modal", "aria-hidden" => "true"}
+                ="×"
+
+              %h3
+                = "Feedback PLYSIT"
+            .modal-body
+              %p
+                = "This is where the form goes"
+
+            .modal-footer
+              = link_to image_tag('hashbang-alt.png'), 'http://hashbang.co.nz/', :target => "_blank"
         .span2.pull-right
           = link_to image_tag('hashbang.png'), 'http://hashbang.co.nz/', :target => "_blank"
 
