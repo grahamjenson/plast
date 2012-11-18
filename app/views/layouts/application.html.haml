@@ -7,7 +7,8 @@
     = favicon_link_tag "/assets/icon.ico"
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
-
+    %script
+    //this is here because google stuff inserts above first script element
 %body
   .wrapper
     = render 'shared/top_navigation'
@@ -43,9 +44,8 @@
             .clearfix
             %br
             Allows users to play playlist
-
-          //.well.right-hand-nav.sharing
-          //%h4 Adverts
+          .well.right-hand-nav.sharing
+            = render 'shared/google_ads'
     .push
   .footer
     .container
