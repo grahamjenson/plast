@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114010829) do
+ActiveRecord::Schema.define(:version => 20121117021828) do
 
   create_table "playlists", :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -31,8 +31,10 @@ ActiveRecord::Schema.define(:version => 20121114010829) do
     t.string   "thumbnail"
     t.integer  "length"
     t.integer  "playlist_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.float    "rating"
+    t.boolean  "rating_dirty"
   end
 
   create_table "sessions", :force => true do |t|

@@ -1,7 +1,7 @@
 class Plitem < ActiveRecord::Base
   belongs_to :playlist
 
-  attr_accessible :youtubeid, :title, :thumbnail, :length
+  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty
 
   validates :youtubeid, :title, :playlist, :presence => true
 
@@ -10,6 +10,12 @@ class Plitem < ActiveRecord::Base
   has_many :plitem_ranks
 
   validate :has_plitem_ranks?
+
+  before_save :default_values
+
+  def default_values
+    self.rating_dirty = true if self.rating_dirty == nil
+  end
 
   def has_plitem_ranks?
     errors.add(:plitem_ranks, "Model must have one rank.") if self.plitem_ranks.blank?
@@ -49,20 +55,29 @@ class Plitem < ActiveRecord::Base
   end
 
   def aggregateRank
-    #main ranking function
-    removes = getAllRemovalPlitemRanks.size()
-    ranks =  getAllPositiveRanks.map{|r| r.rank}
-    total = ranks.size + removes
+    if self.rating_dirty
+      #main ranking function
+      removes = getAllRemovalPlitemRanks.size()
+      ranks =  getAllPositiveRanks.map{|r| r.rank}
+      total = ranks.size + removes
 
-    #25% of pple want it removed it is removed, can come back with more pple
-    if removes > (0.25 * total)
-      return -1
-    else
-      return ranks.sum / total #this takes into account the removes
+      #25% of pple want it removed it is removed, can come back with more pple
+      ret = 0
+      if removes > (0.25 * total)
+        ret = -1
+      else
+        ret = ranks.sum / total #this takes into account the removes
+      end
+      self.rating = ret
+      self.rating_dirty = false
+      self.save()
     end
+    return self.rating
   end
 
   def buildRank(session,rank)
+    self.rating_dirty = true
+    self.save()
     return plitem_ranks.build(:session => session, :rank => rank)
   end
 
