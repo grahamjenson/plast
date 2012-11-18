@@ -22,7 +22,6 @@ class Plast.Views.Playlist extends Backbone.View
 
     @playlist.get("plitems").bind('change', (e) =>
       console.log("plitems change event")
-      console.log(e.changedAttributes())
       this.render()
     )
 
@@ -57,10 +56,12 @@ class Plast.Views.Playlist extends Backbone.View
     for plitem in @playlist.getOrderedPLItems()
       @appendPlitem(plitem)
 
-    $(@el).find("#playlist_list tbody:first").sortable({
-      "stop" : (e,ui) => this.droppedOrder(e,ui),
-      "cursor": "pointer"
-    }).disableSelection()
+    if not @playlist.get("readonly")
+      $(@el).find("#playlist_list tbody:first").sortable({
+        "stop" : (e,ui) => this.droppedOrder(e,ui),
+        "cursor": "pointer"
+      }).disableSelection()
+
     this
 
   appendPlitem: (plitem) ->

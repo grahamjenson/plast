@@ -1,5 +1,10 @@
 class Plast.Models.Playlist extends Backbone.RelationalModel
-  urlRoot: "/api/playlists"
+  urlRoot: ->
+    if this.get("readonly")
+      return "/api/read_only_playlists/"
+    else
+      return "/api/playlists/"
+
 
   relations: [{
       type: Backbone.HasMany,
@@ -41,13 +46,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     previousSize = @get("plitems").size()
     super(
       success: =>
-        @get("plitems").fetch(
-          success: =>
-            if previousSize != @get("plitems").size()
-              @trigger("change")
-            options.success() if options.success
-          silent: true
-          )
+        @get("plitems").fetch(options)
       )
 
 

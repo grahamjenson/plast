@@ -71,6 +71,7 @@ class Playlist < ActiveRecord::Base
     jsond = super(options)
     #fix uuid
     jsond["id"] = uuid
+    jsond["read_only_id"] = self.id
     jsond.delete("uuid")
     return jsond
   end

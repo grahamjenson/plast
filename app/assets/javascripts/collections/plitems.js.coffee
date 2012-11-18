@@ -1,7 +1,29 @@
 class Plast.Collections.Plitems extends Backbone.Collection
   model: Plast.Models.Plitem
 
-  url: -> "/api/playlists/#{@playlist.id}/plitems"
+  url: ->
+    if @playlist.get("readonly")
+      return "/api/read_only_playlists/#{@playlist.id}/read_only_plitems"
+    else
+      return "/api/playlists/#{@playlist.id}/plitems"
+
+  fetch: (options = {}) ->
+    console.log("FETCHING PLAYLIST ITEMS")
+    prevmodels = this.getOrderedPLItems()
+    super(success: =>
+            console.log("#{this.models}")
+            if not _.isEqual(prevmodels,this.models)
+              console.log("#{prevmodels}")
+              console.log("#{this.models}")
+              console.log("NOT EQUAL MODELS")
+              @trigger("change")
+
+            options.success() if options.success
+          error: ->
+            options.error() if options.error
+          add: true
+          silent: true
+      )
 
   reorderitems: (items) ->
     #newsort contains removed items

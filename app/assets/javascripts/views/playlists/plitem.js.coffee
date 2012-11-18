@@ -35,13 +35,13 @@ class Plast.Views.Plitem extends Backbone.View
     $(".action.resume").removeClass("hide")
 
   render: ->
-    state = 0
+    state = Plast.Views.Plitem.NOT_PLAYED_STATE
     if @plitem == @player.get("playing")
-      state = 1
+      state = Plast.Views.Plitem.PLAYING_STATE
     else if @plitem.get("played")
-      state = 2
+      state = Plast.Views.Plitem.PLAYED_STATE
 
-    $(@el).addClass("plitem-row").html(@template(plitem : @plitem, state: state))
+    $(@el).addClass("plitem-row").html(@template(plitem : @plitem, state: state, player: @player))
     $(@el).data("plitem",@plitem)
     this
 
@@ -58,3 +58,7 @@ class Plast.Views.Plitem extends Backbone.View
 
   resume: (e) ->
     @player.resumeplaying()
+
+Plast.Views.Plitem.NOT_PLAYED_STATE = 0
+Plast.Views.Plitem.PLAYING_STATE = 1
+Plast.Views.Plitem.PLAYED_STATE = 2

@@ -3,10 +3,10 @@ class ReadOnlyPlaylistsController < ApplicationController
 
   def show
     pl = Playlist.find(params[:id])
-    pljson = pl.to_json
+    plson = pl.as_json({})
     #hide uuid
-    plson[:id] = pl.id
-    render :json => pl
+    plson["id"] = pl.id.to_s
+    render :json => plson
   end
 
 end

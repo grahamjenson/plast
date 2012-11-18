@@ -1,8 +1,8 @@
 %td.progress-bar-td{:colspan => '4'}
   .progress.player-progress.active
-    - if @state == 1
-      .bar#js-progress-bar
-    - else if @state == 2
+    - if @state == Plast.Views.Plitem.PLAYING_STATE
+      .bar#js-progress-bar{style: "width: #{@player.get('progress')}"+'%'}
+    - else if @state == Plast.Views.Plitem.PLAYED_STATE
       .bar.already-played
 
     %table.playing-track-information
@@ -11,8 +11,9 @@
         %td= @plitem.get("title")
         %td.length= @plitem.get("length").toMinSec()
         %td.actions
-          %i.icon-remove.action.remove
-          - if @state == 1
+          - if not @plitem.collection.playlist.get("readonly")
+            %i.icon-remove.action.remove
+          - if @state == Plast.Views.Plitem.PLAYING_STATE
             %i.icon-pause.action.pause
             %i.icon-play.action.resume.hide
           - else
