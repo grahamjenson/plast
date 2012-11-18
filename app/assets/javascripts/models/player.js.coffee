@@ -36,6 +36,17 @@ class Plast.Models.Player extends Backbone.RelationalModel
     )
     this.get("ytplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
 
+  skipToItem: (plitem) ->
+    this.get("playlist").makeAllPlayable()
+    for pli in this.get("playlist").getPlayableItems()
+      console.log(pli)
+      if pli == plitem
+        break
+      else
+        console.log("set played")
+        pli.set("played", (new Date()).getTime())
+    this.playItem(plitem)
+
   playItem: (plitem) ->
     plitem.set("played", (new Date()).getTime())
     this.playingitem = plitem

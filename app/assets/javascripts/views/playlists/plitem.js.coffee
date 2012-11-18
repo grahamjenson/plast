@@ -51,7 +51,7 @@ class Plast.Views.Plitem extends Backbone.View
     plitem.remove()
 
   play: (e) ->
-    @player.playItem(@plitem)
+    @player.skipToItem(@plitem)
 
   pause: (e) ->
     @player.pause()
