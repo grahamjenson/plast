@@ -46,7 +46,7 @@ class Plast.Views.Playlist extends Backbone.View
     clearTimeout(@t)
     @t = setTimeout(
       => @delayedrender()
-    , 500)
+    , 100)
 
   delayedrender: ->
     console.log("render playlist")

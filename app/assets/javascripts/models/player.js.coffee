@@ -2,7 +2,6 @@ class Plast.Models.Player extends Backbone.RelationalModel
   urlRoot: "/api/playlists"
 
   #my own version of the youtube player
-
   relations: [{
       type: Backbone.HasOne,
       key: 'playlist',

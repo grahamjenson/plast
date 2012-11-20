@@ -11,13 +11,8 @@ class Plast.Collections.Plitems extends Backbone.Collection
     console.log("FETCHING PLAYLIST ITEMS")
     prevmodels = this.getOrderedPLItems()
     super(success: =>
-            console.log("#{this.models}")
             if not _.isEqual(prevmodels,this.models)
-              console.log("#{prevmodels}")
-              console.log("#{this.models}")
-              console.log("NOT EQUAL MODELS")
               @trigger("change")
-
             options.success() if options.success
           error: ->
             options.error() if options.error

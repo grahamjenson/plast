@@ -1,5 +1,5 @@
 class Plast.Models.Plitem extends Backbone.RelationalModel
-  url: ->
+  url: =>
     if @collection.playlist.get("readonly")
       return "/api/read_only_playlists/#{@collection.playlist.id}/read_only_plitems"
     else
