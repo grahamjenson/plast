@@ -19,6 +19,8 @@ gem "swfobject-rails"
 
 gem 'haml_coffee_assets'
 
+gem 'newrelic_rpm'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -32,6 +34,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'debugger'
 end
 
 group :development do

@@ -44,10 +44,12 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   fetch: (options = {}) ->
     console.log("FETCHING PLAYLIST")
     previousSize = @get("plitems").size()
-    super(
-      success: =>
-        @get("plitems").fetch(options)
-      )
+    @get("plitems").fetch(options)
+    #NO NEED TO FETCH PLAYLIST WHAT CHANGES?
+    #super(
+    #  success: =>
+    #    @get("plitems").fetch(options)
+    #  )
 
 
   reorderitems: (items) ->
