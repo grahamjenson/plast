@@ -30,7 +30,7 @@ class PlitemsController < ApplicationController
         })
     end
 
-    prank = pitem.buildRank(@session,@pl.plitems.size())
+    prank = pitem.buildRank(@session,@pl.plitems.size()-1)
 
     if pitem.save
       prank.save()
