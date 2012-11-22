@@ -1,4 +1,6 @@
 class Plitem < ActiveRecord::Base
+  REMOVAL_RATE = 0.25
+
   belongs_to :playlist
 
   attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty
@@ -63,10 +65,10 @@ class Plitem < ActiveRecord::Base
 
       #25% of pple want it removed it is removed, can come back with more pple
       ret = 0
-      if removes > (0.25 * total)
+      if removes >= (Plitem::REMOVAL_RATE * total)
         ret = -1
       else
-        ret = ranks.sum / total #this takes into account the removes
+        ret = (1.0* ranks.sum) / total #this takes into account the removes
       end
       self.rating = ret
       self.rating_dirty = false

@@ -3,7 +3,9 @@ class PlaylistsController < ApplicationController
 
   def show
     pl = Playlist.where(:uuid => params[:id]).first
-    render :json => pl
+    pljson = pl.as_json
+    pljson["plitems"] = pl.orderedplitems(@session)
+    render :json => pljson
   end
 
   def create

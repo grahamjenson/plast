@@ -23,6 +23,15 @@ describe PlaylistsController do
       res = ActiveSupport::JSON.decode(response.body)
       res["id"].should eq uuid
     end
+
+    it "will return the playlists proper id for readonly" do
+      pl = Playlist.create()
+      uuid = pl.uuid
+      set_session("a")
+      get :show, id: uuid
+      res = ActiveSupport::JSON.decode(response.body)
+      res["id"].should eq uuid
+    end
   end
 
 end

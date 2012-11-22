@@ -67,11 +67,12 @@ class Playlist < ActiveRecord::Base
     self.uuid ||= rand(36**8).to_s(36)
   end
 
-  def as_json(options)
+  def as_json(options = {})
     jsond = super(options)
     #fix uuid
     jsond["id"] = uuid
     jsond["read_only_id"] = self.id
+
     jsond.delete("uuid")
     return jsond
   end
