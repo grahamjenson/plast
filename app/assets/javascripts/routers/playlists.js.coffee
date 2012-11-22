@@ -20,11 +20,9 @@ class Plast.Routers.Playlists extends Backbone.Router
     npl = new Plast.Models.Playlist()
     npl.save({},{
     success: =>
-      @navigate("playlist/#{npl.get('id')}",{replace: true, trigger: false});
-      @renderpl(npl)
+      @navigate("playlist/#{npl.get('id')}",{replace: true, trigger: true});
     error: =>
       console.log(error)
-      @navigate("");
       })
 
   readonlypl: (id) ->
