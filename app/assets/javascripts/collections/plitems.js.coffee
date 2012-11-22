@@ -7,19 +7,6 @@ class Plast.Collections.Plitems extends Backbone.Collection
     else
       return "/api/playlists/#{@playlist.id}/plitems"
 
-  fetch: (options = {}) ->
-    console.log("FETCHING PLAYLIST ITEMS")
-    prevmodels = this.getOrderedPLItems()
-    super(success: =>
-            if not _.isEqual(prevmodels,this.models)
-              @trigger("change")
-            options.success() if options.success
-          error: ->
-            options.error() if options.error
-          add: true
-          silent: true
-      )
-
   reorderitems: (items) ->
     #newsort contains removed items
     $.post("#{@url()}/reorder", {order: (item.id for item in items)});

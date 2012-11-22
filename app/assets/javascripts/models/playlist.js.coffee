@@ -16,12 +16,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
         includeInJSON: 'uuid'
       }]
 
-
-  initialize: ->
-    setInterval(=>
-      this.fetch()
-    ,10000)
-
   additem: (ytitem, callbacks = {}) =>
     pli = new Plast.Models.Plitem({
       "youtubeid" : ytitem.id,
@@ -40,17 +34,15 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
         @get("plitems").remove(pli)
         callbacks.error(model,xhr) if callbacks.error})
 
+  parse: (data) ->
+    newplis = (pli.id for pli in data.plitems)
+    oldplis = this.getOrderedPLItems().map((p) -> p.id)
+    changed = not _.isEqual(newplis,oldplis)
+    if changed
+      this.get("plitems").reset(data.plitems)
 
-  fetch: (options = {}) ->
-    console.log("FETCHING PLAYLIST")
-    previousSize = @get("plitems").size()
-    @get("plitems").fetch(options)
-    #NO NEED TO FETCH PLAYLIST WHAT CHANGES?
-    #super(
-    #  success: =>
-    #    @get("plitems").fetch(options)
-    #  )
-
+    delete data.plitems #Never let it handle this
+    return super(data)
 
   reorderitems: (items) ->
     this.get("plitems").reorderitems(items)

@@ -56,5 +56,7 @@ class Plast.Routers.Playlists extends Backbone.Router
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
       youtubeplayerview = new Plast.Views.YoutubePlayer({model: ytplayer})
 
-
+      setInterval(=>
+        pl.fetch()
+      ,10000)
     })
