@@ -1,0 +1,145 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  .navbar-inner
+    padding: 5px
+
+  #js-help-icon
+    float: right
+    margin-top: 5px
+
+  .logo
+    text-align: center
+    margin-top: 10px
+    margin-bottom: 15px
+    cursor: pointer
+
+  .help-container-row
+    margin-bottom: 10px
+    #plysit-instructions
+      margin: 25px
+
+    ul.nav
+      width: 100%
+      margin-top: -40px
+      margin-right: 0
+
+      li
+        float: right !important
+        text-align: center
+        a
+          margin-right: 0
+          width: 55px
+          padding: 9px 12px
+          cursor: pointer
+
+          i
+            margin-left: 5px
+            margin-top: 1px
+
+          &.btn-mode
+            border-bottom: 1px #EEE solid
+            +border-bottom-radius(4px)
+
+    .tab-content
+      margin-left: 0
+      border: 1px #EEE solid
+      border-top: none
+      padding: 0 15px
+      min-height: 0
+      +border-bottom-radius(6px)
+      background-color: #111
+
+    .step
+      text-align: center
+      color: white
+      padding: 20px 0
+
+      &#step-1
+        margin-left: 0
+
+    .help-image
+      width: 131px
+      height: 108px
+      margin: auto
+      background-repeat: no-repeat
+
+    .lock-image
+      background-image: image-url('lock.png')
+    .create-woman-image
+      background-image: image-url('create-woman.png')
+    .create-man-image
+      background-image: image-url('create-man.png')
+    .collaborate-image
+      background-image: image-url('collaborate.png')
+
+  .search-bar
+    height: 40px
+    .navbar-form, .search-input
+      width: 100%
+
+    .search-results
+      position: relative
+      width: 100%
+      top: 0
+      overflow-y: scroll
+
+      li.category
+        text-align: center
+
+      hr
+        margin: 10px 0 0 0
+
+      .results-loading
+        width: 100%
+        text-align: center
+        margin: 15px 0 10px 0
+
+      a.srlink
+        padding: 3px 10px 10px 10px
+        white-space: normal
+        border-bottom: 1px solid #EEE
+
+      .media-body
+        position: relative
+        margin-left: 130px
+
+      .media-anchor
+        position: relative
+        display: block
+        padding: 3px 10px 3px 0
+        clear: both
+        font-weight: normal
+        line-height: 20px
+        color: #333
+        white-space: nowrap
+
+        span.video-time
+          position: absolute
+          margin-left: 4px
+          margin-top: 4px
+          padding: 0 4px
+          font-weight: bold
+          font-size: 11px
+          +border-radius(3px)
+          background-color: black
+          color: white!important
+          height: 14px
+          line-height: 14px
+          opacity: 0.75
+          filter: alpha(opacity=75)
+          display: -moz-inline-stack
+          display: inline-block
+          vertical-align: top
+          zoom: 1
+          z-index: 2
+
+
+
+
+  .player-head
+    #player-controls
+      text-align: center
+      margin-bottom: 12px
+
+    #play, #pause
+      +border-radius(6px)
+

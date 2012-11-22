@@ -1,6 +1,5 @@
 @media (max-width: 480px)
-  .navbar-fixed-top
-    margin-bottom: 0
+
   .footer
     padding-left: 20px
     padding-right: 20px
@@ -8,8 +7,7 @@
     margin-right: -20px
 
 @media (max-width: 767px)
-  .navbar-fixed-top
-    margin-bottom: 0
+
   .footer
     padding-left: 20px
     padding-right: 20px
@@ -17,10 +15,15 @@
     margin-right: -20px
 
 @media (min-width: 768px) and (max-width: 979px)
-  .navbar-fixed-top
-    margin-bottom: 0
 
 @media (min-width: 979px) and (max-width: 1199px)
-
+  .navbar-static-top .container,
+  .navbar-fixed-top .container,
+  .navbar-fixed-bottom .container
+    width: 940px
 
 @media (min-width: 1200px)
+  .navbar-static-top .container,
+  .navbar-fixed-top .container,
+  .navbar-fixed-bottom .container,
+    width: 940px

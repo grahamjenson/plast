@@ -16,8 +16,9 @@
 //= require jquery-ui
 //= require swfobject
 //= require hamlcoffee
-//= require bootstrap
-//= require bootstrap-dropdown.js
+//= require bootstrap-modal
+//= require bootstrap-tab
+//= require bootstrap-hackdown.js
 //= require underscore
 //= require raphael-min
 //= require backbone
