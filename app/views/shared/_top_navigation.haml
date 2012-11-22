@@ -1,43 +1,22 @@
-#js-navigation-view.navbar.navbar-inverse.navbar-fixed-top
+#js-fixed-header.navbar.navbar-inverse.navbar-fixed-top
+
   .navbar-inner
     .container
       .row-fluid
         .span12.logo
-          %a#js-help-toggle
-            = image_tag "logo.png"
-        #js-help-container
-          .span4#step-1.step
-            - if (rand(2)) < 1
-              = image_tag 'create-man.png', :width => 131, :height => 108
-            - else
-              = image_tag 'create-woman.png', :width => 131, :height => 108
-            %h2
-              1: Create
-            Add some Youtube videos to your playlist using the search bar below.
-            %br
-            %br
-            Reorder, the items into how you want to watch them.
+          %i#js-help-icon.icon-question-sign.icon-white
+          %a#js-logo= image_tag "logo.png"
 
-          .span4#step-2.step
-            = image_tag 'collaborate.png', :width => 131, :height => 108
-            %h2
-              2: Collaborate
-            Invite anyone to edit the playlist by giving them the URL.
-            %br
-            %br
-            Anyone with your unique URL is able to add/edit/remove tracks as they please.
+      .row-fluid.help-container-row
+        %ul.nav.nav-tabs.pull-right
+          %li.active.pull-right
+            %a#js-help-btn
+              Help
+              %i.icon-remove
+        .span12.tab-content.tab-pane#js-help-container
 
-          .span4#step-3.step
-            = image_tag 'lock.png', :width => 131, :height => 108
-            %h2
-              3: Lock &amp; Listen
-            Share a locked version of the list so others listen to your list and see it grow and change.
-            %br
-            %br
-            The order of the videos will be a mixture of everyones personalized plysits.
+      .row-fluid
+        .span12.search-bar#search
 
-        .span12.search
-          #search
-          .clearfix
-        .span12.playerhead
-          #playerhead
+      .row-fluid
+        .span12.player-head#playerhead

@@ -6,9 +6,8 @@ class Plast.Views.Search extends Backbone.View
   events:
     'click .srlink' : 'srclick'
     'keydown .srlink' : 'srkey'
-    'submit #searchyt' : 'delaysearch'
-    'input #serchtext' : 'delaysearch'
-    "click #serchtext" : 'openDropDown'
+    'submit #js-search-form' : 'delaysearch'
+    'input #js-search-input' : 'delaysearch'
 
 
   initialize: ->
@@ -16,36 +15,32 @@ class Plast.Views.Search extends Backbone.View
     this.render()
 
   render: ->
-    console.log("render search")
-
-    $('#searchyt').on('show', (e) ->
-      console.log 'hello'
-    )
     $(@el).html(@template())
     this
 
-  refocusonsearch: ->
-
   delaysearch: (e) ->
     e.preventDefault()
+    @dropdownResults()
     clearTimeout(@t)
     @t = setTimeout(
-      => @searchyt(e)
+      => @searchYouTube(e)
     , 500)
 
-  searchyt: (event) =>
+  searchYouTube: (event) =>
     console.log("searching")
     results_loading_string = "<div class='results-loading'><img src='/assets/loading.gif'></img><div>"
     no_results_found_string = "<div class='results-loading'>Sorry, no results were found.</div>"
 
 
-    lol = $("#serchtext").val()
+    lol = $("#js-search-input").val()
     res = @results
     #https://developers.google.com/youtube/2.0/developers_guide_protocol
 
     # Reset Searchs
     $("#videosearchresults").html(results_loading_string)
     $("#playlistsearchresults").html(results_loading_string)
+    @dropdownResults
+    $('.search-bar .search-results').css('height', window.innerHeight - 190)
 
     # Search Videos
     $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=5&v=2&alt=jsonc", {}, (d) =>
@@ -83,9 +78,10 @@ class Plast.Views.Search extends Backbone.View
 
   srclick: (e) =>
     e.preventDefault()
+    e.stopPropagation()
     item = $(e.currentTarget).data("yto")
     $(e.currentTarget).parent().remove()
-    @searchyt(e)
+    @searchYouTube(e)
     if item.video
       this.addAnItem(item.video)
     if item.playlist
@@ -96,14 +92,12 @@ class Plast.Views.Search extends Backbone.View
           this.addAnItem(item)
       )
 
-
-
   addAnItem: (item) ->
     @playlist.additem(item,
       {
       success: ->
-        $("#serchtext").focus()
-        $("#serchtext").select()
+        $("#js-search-input").focus()
+        $("#js-search-input").select()
       error: (model, xhr) =>
         errors = $.parseJSON(xhr.responseText).errors
         console.log(errors)
@@ -115,8 +109,6 @@ class Plast.Views.Search extends Backbone.View
   select: ->
     console.log("select")
 
-  openDropDown: ->
-    $('#js-help-container .step').animate(
-      { opacity: 0, height: 0, 'margin-top': '-50px' }, 1000, ->
-        $('#js-help-container').css('display', 'none')
-    )
+  dropdownResults: (e) ->
+    if !$('.search-bar.open').is('*')
+      $('.dropdown-toggle').dropdown('toggle')
