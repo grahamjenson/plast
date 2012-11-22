@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117021828) do
+ActiveRecord::Schema.define(:version => 20121122022104) do
 
   create_table "playlists", :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -19,11 +19,16 @@ ActiveRecord::Schema.define(:version => 20121117021828) do
     t.datetime "updated_at",               :null => false
   end
 
+  add_index "playlists", ["uuid"], :name => "index_playlists_on_uuid"
+
   create_table "plitem_ranks", :force => true do |t|
     t.integer "session_id", :null => false
     t.integer "plitem_id"
     t.integer "rank"
   end
+
+  add_index "plitem_ranks", ["plitem_id"], :name => "index_plitem_ranks_on_plitem_id"
+  add_index "plitem_ranks", ["session_id"], :name => "index_plitem_ranks_on_session_id"
 
   create_table "plitems", :force => true do |t|
     t.string   "youtubeid"
@@ -36,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20121117021828) do
     t.float    "rating"
     t.boolean  "rating_dirty"
   end
+
+  add_index "plitems", ["playlist_id"], :name => "index_plitems_on_playlist_id"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
