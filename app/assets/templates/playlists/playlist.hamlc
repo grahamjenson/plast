@@ -1,8 +1,11 @@
-%table.table.table-striped.table-row-bordered#playlist_list
-  %thead
-    %tr
-      %th.order Order
-      %th.title Title
-      %th.length Length
-      %th.actions
-    %tbody#plitmeviews{style: "cursor: move;"}
+%ul#playlist_list.playlist-header
+  %li.order
+    Order
+  %li.title
+    Title
+  %li.length
+    Length
+  %li.actions
+    &nbsp;
+
+#plitmeviews

@@ -12,7 +12,7 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     window.onYouTubeIframeAPIReady = () =>
-      @youtubeplayerobject = new YT.Player('youtubeplayer', {
+      @youtubeplayerobject = new YT.Player('js-youtube-player', {
         align: "center",
         playerVars:
           enablejsapi : 1,

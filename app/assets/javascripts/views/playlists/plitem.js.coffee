@@ -7,7 +7,7 @@ class Plast.Views.Plitem extends Backbone.View
     'click .action.resume' : (e) -> this.resume(e)
 
   template: JST['playlists/plitem']
-  tagName: "tr"
+  tagName: "ul"
 
   initialize: ->
     @plitem = this.model
@@ -41,12 +41,12 @@ class Plast.Views.Plitem extends Backbone.View
     else if @plitem.get("played")
       state = Plast.Views.Plitem.PLAYED_STATE
 
-    $(@el).addClass("plitem-row").html(@template(plitem : @plitem, state: state, player: @player))
+    $(@el).addClass("js-plitem-row").html(@template(plitem : @plitem, state: state, player: @player))
     $(@el).data("plitem",@plitem)
     this
 
   remove: (e) ->
-    plitem = $(e.target).parents(".plitem-row").data("plitem")
+    plitem = $(e.target).parents(".js-plitem-row").data("plitem")
     console.log("remove #{plitem.get('title')}")
     plitem.remove()
 

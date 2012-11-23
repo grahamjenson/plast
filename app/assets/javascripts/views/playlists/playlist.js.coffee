@@ -72,5 +72,5 @@ class Plast.Views.Playlist extends Backbone.View
     $("#plitmeviews").append(view.render().el)
 
   droppedOrder: (e,ui)->
-    items = ($(plrow).data("plitem") for plrow in $(".plitem-row"))
+    items = ($(plrow).data("plitem") for plrow in $(".js-plitem-row"))
     @playlist.reorderitems(items)

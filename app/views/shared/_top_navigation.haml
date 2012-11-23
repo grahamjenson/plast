@@ -4,19 +4,19 @@
     .container
       .row-fluid
         .span12.logo
-          %i#js-help-icon.icon-question-sign.icon-white
           %a#js-logo= image_tag "logo.png"
-
-      .row-fluid.help-container-row
-        %ul.nav.nav-tabs.pull-right
-          %li.active.pull-right
-            %a#js-help-btn
-              Help
-              %i.icon-remove
-        .span12.tab-content.tab-pane#js-help-container
 
       .row-fluid
         .span12.search-bar#search
 
       .row-fluid
         .span12.player-head#playerhead
+
+  .player-outer-wrapper
+    #js-player-wrapper.player-wrapper
+      .player-inner-wrapper
+        #js-youtube-player
+    #show-video-btn.btn-primary
+      %i.icon-chevron-down.icon-white.pull-left
+      Show Video
+      %i.icon-chevron-down.icon-white.pull-right

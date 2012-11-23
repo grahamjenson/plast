@@ -15,7 +15,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
         this.resizePlayer()
     )
 
-    @playerSelector = "#playerwrapper"
+    @playerSelector = "#js-player-wrapper"
 
     $(window).resize(this.resizePlayer)
 
@@ -35,7 +35,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
       $(@playerSelector).css({"margin-top" : "#{this.shrinkTo()}px"})
 
   shrinkTo: ->
-    return -@ytplayer.height()-12
+    return -@ytplayer.height()-8
 
   toggleVideo: =>
     return if @lock
