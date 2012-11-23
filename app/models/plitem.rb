@@ -3,7 +3,7 @@ class Plitem < ActiveRecord::Base
 
   belongs_to :playlist
 
-  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty
+  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty, :playlist_id
 
   validates :youtubeid, :title, :playlist, :presence => true
 
@@ -11,7 +11,7 @@ class Plitem < ActiveRecord::Base
 
   has_many :plitem_ranks
 
-  validate :has_plitem_ranks?
+  #validate :has_plitem_ranks?
 
   before_save :default_values
 

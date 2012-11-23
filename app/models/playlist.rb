@@ -8,6 +8,32 @@ class Playlist < ActiveRecord::Base
   has_many :plitems
   has_many :plitem_ranks, :through => :plitems
 
+  def create_or_get_plitem(session, ytitem)
+    pitem = self.plitems.where(youtubeid: ytitem[:youtubeid]).first
+    if not pitem
+      pitem = self.plitems.create({
+        youtubeid: ytitem[:youtubeid],
+        title: ytitem[:title],
+        thumbnail: ytitem[:thumbnail],
+        length: ytitem[:length],
+        })
+    end
+    if not pitem.save()
+      return nil
+    end
+    prank = pitem.find_plitem_rank(session)
+    if not prank
+      prank = pitem.buildRank(session,ytitem[:rank])
+    prank.rank = ytitem[:rank]
+    end
+
+    if not prank.save()
+      return nil
+    end
+    return pitem
+  end
+
+
   def aggregated_order
     plis_to_be_ranked = plitems.map{|x| {plitem: x, rank: x.rank} }
     #filter those out removed

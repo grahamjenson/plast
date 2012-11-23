@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20121122022104) do
   end
 
   add_index "plitems", ["playlist_id"], :name => "index_plitems_on_playlist_id"
+  add_index "plitems", ["youtubeid"], :name => "index_plitems_on_youtubeid"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

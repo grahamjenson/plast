@@ -87,27 +87,21 @@ class Plast.Views.Search extends Backbone.View
     $(e.currentTarget).parent().remove()
     @searchyt(e)
     if item.video
-      this.addAnItem(item.video)
+      @addAnItem(item.video)
     if item.playlist
-      #TODO does not add videos in correct order
-      $.getJSON("https://gdata.youtube.com/feeds/api/playlists/#{item.playlist.id}?alt=jsonc&v=2&max-results=50", {}, (d) =>
-        for yto in d.data.items
-          item = yto.video
-          this.addAnItem(item)
+      $.getJSON("https://gdata.youtube.com/feeds/api/playlists/#{item.playlist.id}?alt=jsonc&v=2&max-results=50", {}, (d) => @addManyItems((yto.video for yto in d.data.items))
       )
 
 
+  addManyItems: (items) ->
+    @playlist.add_yt_items(items)
+    $("#serchtext").focus()
+    $("#serchtext").select()
 
   addAnItem: (item) ->
-    @playlist.additem(item,
-      {
-      success: ->
-        $("#serchtext").focus()
-        $("#serchtext").select()
-      error: (model, xhr) =>
-        errors = $.parseJSON(xhr.responseText).errors
-        console.log(errors)
-        })
+    @playlist.add_yt_item(item)
+    $("#serchtext").focus()
+    $("#serchtext").select()
 
   change: ->
     console.log("change")

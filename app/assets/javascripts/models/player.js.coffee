@@ -21,7 +21,6 @@ class Plast.Models.Player extends Backbone.RelationalModel
   initialize: ->
     this.set("repeat", true)
     this.set("state", Plast.Models.Player.STATE_NOTREADY)
-    this.set("playlist",pl)
 
     this.get("ytplayer").bind("change:state", (model,state) =>
       switch state

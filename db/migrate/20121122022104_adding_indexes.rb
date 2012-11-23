@@ -4,5 +4,6 @@ class AddingIndexes < ActiveRecord::Migration
     add_index :plitems, :playlist_id
     add_index :plitem_ranks, :session_id
     add_index :plitem_ranks, :plitem_id
+    add_index :plitems, :youtubeid
   end
 end

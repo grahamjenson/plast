@@ -21,13 +21,13 @@ class Plast.Routers.Playlists extends Backbone.Router
     npl.save({},{
     success: =>
       @navigate("playlist/#{npl.get('id')}",{replace: true, trigger: true});
-    error: =>
+    error:(error) =>
       console.log(error)
       })
 
   readonlypl: (id) ->
     npl = new Plast.Models.Playlist({id: id, readonly: true})
-    window.pl = npl
+    window.global_pl = npl
     npl.fetch({success: =>
       #create and render ytPlayer
       #models
@@ -42,7 +42,7 @@ class Plast.Routers.Playlists extends Backbone.Router
     })
 
   renderpl: (pl) ->
-    window.pl = pl
+    window.global_pl = pl
     pl.fetch({success: =>
       #create and render ytPlayer
       #models
@@ -56,7 +56,4 @@ class Plast.Routers.Playlists extends Backbone.Router
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
       youtubeplayerview = new Plast.Views.YoutubePlayer({model: ytplayer})
 
-      setInterval(=>
-        pl.fetch()
-      ,10000)
     })

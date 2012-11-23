@@ -6,6 +6,7 @@ class ReadOnlyPlaylistsController < ApplicationController
     plson = pl.as_json({})
     #hide uuid
     plson["id"] = pl.id.to_s
+    plson["plitems"] = pl.aggregated_order
     render :json => plson
   end
 

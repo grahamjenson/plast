@@ -25,6 +25,11 @@ class Plast.Views.Playlist extends Backbone.View
       this.render()
     )
 
+    @playlist.get("plitems").bind('add', (e) =>
+      console.log("plitems add event")
+      this.render()
+    )
+
     @playlist.get("plitems").bind('reset', (e) =>
       console.log("plitems reset event")
       this.render()
