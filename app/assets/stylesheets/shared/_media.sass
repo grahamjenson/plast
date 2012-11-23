@@ -6,6 +6,9 @@
     margin-left: -20px
     margin-right: -20px
 
+  .body-wrapper .container
+    margin-top: 50px
+
 @media (max-width: 767px)
 
   .footer
@@ -14,7 +17,15 @@
     margin-left: -20px
     margin-right: -20px
 
+  .body-wrapper .container
+    margin-top: 50px
+
 @media (min-width: 768px) and (max-width: 979px)
+  .player-outer-wrapper
+    max-width: 600px
+
+  .body-wrapper .container
+    margin-top: 50px
 
 @media (min-width: 979px) and (max-width: 1199px)
   .navbar-static-top .container,
@@ -22,8 +33,37 @@
   .navbar-fixed-bottom .container
     width: 940px
 
+  .player-outer-wrapper
+    width: 600px
+
+  .body-wrapper .container
+    margin-top: 220px
+
+  .span9
+    width: 700px
+
+  .span3
+    width: 220px
+
 @media (min-width: 1200px)
   .navbar-static-top .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container,
+  .body-wrapper .container
     width: 940px
+
+  .player-outer-wrapper
+    width: 600px
+
+  .body-wrapper .container
+    margin-top: 220px
+
+  .span9
+    width: 700px
+
+  .span3
+    width: 220px
+
+  [class*="span"]
+    float: left
+    margin-left: 20px
