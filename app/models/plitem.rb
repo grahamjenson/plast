@@ -27,6 +27,15 @@ class Plitem < ActiveRecord::Base
     errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli != self and pli.youtubeid == youtubeid}
   end
 
+  def find_create_rank(session,rank)
+    prank = self.find_plitem_rank(session)
+    if not prank
+      prank = self.buildRank(session,rank)
+    end
+    prank.rank = rank
+    prank.save()
+  end
+
   def find_plitem_rank(session)
     plitem_ranks.where(:session_id => session.id, :plitem_id => self.id).first
   end

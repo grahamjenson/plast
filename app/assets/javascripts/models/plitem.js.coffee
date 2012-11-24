@@ -5,6 +5,13 @@ class Plast.Models.Plitem extends Backbone.RelationalModel
     else
       return "/api/playlists/#{@collection.playlist.id}/plitems"
 
-  remove: () ->
-    $.post("#{@url()}/#{this.id}/remove", {});
-    this.collection.remove(this)
+  as_json: ->
+    plitem = this
+    console.log("asd")
+    console.log(plitem)
+    return {
+      youtubeid: plitem.get("youtubeid"),
+      title: plitem.get("title"),
+      thumbnail: plitem.get("thumbnail"),
+      length: plitem.get("length")
+    }

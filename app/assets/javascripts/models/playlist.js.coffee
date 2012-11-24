@@ -34,16 +34,17 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       length: ytitem.duration
       })
     @get("plitems").add(pli)
+    return pli
 
   add_yt_item: (ytitem) =>
     @resetRefresh()
-    @add_yt_item_no_save(ytitem)
-    this.save()
+    pli = @add_yt_item_no_save(ytitem)
+    this.add_post([pli])
 
   add_yt_items: (ytitems) ->
     @resetRefresh()
-    (@add_yt_item_no_save(ytitem) for ytitem in ytitems)
-    this.save()
+    plis = (@add_yt_item_no_save(ytitem) for ytitem in ytitems)
+    this.add_post(plis)
 
     #pli.save({}, {
     #  success: =>
@@ -72,6 +73,17 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     @resetRefresh()
     this.get("plitems").reorderitems(items)
     this.save()
+
+  remove: (plitem) ->
+    @resetRefresh()
+    this.get("plitems").remove(plitem)
+    $.post("#{@url()}/remove", {plitem_id: plitem.id});
+
+  add_post: (plis) ->
+    json_plis = (pli.as_json() for pli in plis)
+    posted = { plitems: json_plis}
+    console.log(posted)
+    $.post("#{@url()}/add_plitems", {plitems: json_plis});
 
   getPlayableItems: ->
     this.get("plitems").getPlayableItems()
