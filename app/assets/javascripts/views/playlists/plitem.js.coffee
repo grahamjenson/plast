@@ -41,7 +41,7 @@ class Plast.Views.Plitem extends Backbone.View
     else if @plitem.get("played")
       state = Plast.Views.Plitem.PLAYED_STATE
 
-    $(@el).addClass("js-plitem-row").html(@template(plitem : @plitem, state: state, player: @player))
+    $(@el).addClass("js-plitem-row playlist").html(@template(plitem : @plitem, state: state, player: @player))
     $(@el).data("plitem",@plitem)
     this
 

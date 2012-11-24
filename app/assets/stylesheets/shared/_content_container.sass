@@ -1,5 +1,81 @@
 /* Playlist Table */
+ul.playlist-header, ul.playlist
+  +horizontal-list-container
+  position: relative
+
+  li
+    +horizontal-list-item(false)
+
+  li.draggable
+    width: 20px
+    height: 20px
+    margin-right: 15px
+
+  li.order
+    width: 30px
+
+  li.length
+    width: 50px
+    text-align: right
+
+  li.title
+    white-space: normal
+
+  li.actions
+    width: 50px
+    text-align: right
+
+    i
+      cursor: pointer
+
+  li.length, li.actions
+    float: right
+
+  .progress-bar-wrapper
+    position: absolute
+    left: 0px
+    right: 0px
+    top: 0px
+    bottom: 0px
+
+    .progress-bar
+      height: 100%
+      +background-image(linear-gradient(#08C, #04C))
+      opacity: .35
+
 ul.playlist-header
+
+ul.playlist
+  cursor: move
+  border: 1px solid #DDD
+  border-top: none
+
+  .playlist-item-wrapper
+    padding: 10px
+
+  .already-played
+    background-color: #ebebeb
+
+  li.draggable
+    background-image: image-url('draggable.png')
+
+  &.active-sortable
+    border-top: 1px solid #DDD
+    +background-image(linear-gradient(#08C, #04C))
+    color: white
+    i
+      background-image: url(/assets/glyphicons-halflings-white.png)
+
+  &:first-child
+    border-top: 1px solid #DDD
+    +border-top-radius(6px)
+
+  &:last-child
+    +border-bottom-radius(6px)
+
+.playlist-row
+  margin-top: 10px
+
 
 /* Help Container */
 .help-container-row

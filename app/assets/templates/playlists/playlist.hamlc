@@ -1,11 +1,13 @@
 %ul#playlist_list.playlist-header
+  %li.draggable
   %li.order
-    Order
+    #
   %li.title
     Title
-  %li.length
-    Length
   %li.actions
     &nbsp;
+  %li.length
+    Length
 
-#plitmeviews
+
+#js-plitem-container

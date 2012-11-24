@@ -1,11 +1,21 @@
-%li.order= @plitem.collection.indexOf(@plitem) + 1
-%li= @plitem.get("title")
-%li.length= @plitem.get("length").toMinSec()
-%li.actions
-  - if not @plitem.collection.playlist.get("readonly")
-    %i.icon-remove.action.remove
-  - if @state == Plast.Views.Plitem.PLAYING_STATE
-    %i.icon-pause.action.pause
-    %i.icon-play.action.resume.hide
-  - else
-    %i.icon-play.action.play
+- already_played = if @state == Plast.Views.Plitem.PLAYED_STATE then 'already-played' else ''
+
+%div.playlist-item-wrapper{:class => "#{already_played}"}
+  %li.draggable
+  %li.order= @plitem.collection.indexOf(@plitem) + 1
+  %li.title= @plitem.get("title")
+  %li.actions
+    - if @state == Plast.Views.Plitem.PLAYING_STATE
+      %i.icon-pause.action.pause
+      %i.icon-play.action.resume.hide
+    - else
+      %i.icon-play.action.play
+
+    - if not @plitem.collection.playlist.get("readonly")
+      %i.icon-remove.action.remove
+  %li.length= @plitem.get("length").toMinSec()
+  .clearfix
+
+- if @state == Plast.Views.Plitem.PLAYING_STATE
+  %div.progress-bar-wrapper
+    .progress-bar#js-progress-bar{style: "width: #{@player.get('progress')}"+'%'}
