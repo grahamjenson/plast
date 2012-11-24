@@ -46,6 +46,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    chunky_png (1.2.6)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -54,7 +55,16 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+<<<<<<< HEAD
     columnize (0.3.6)
+=======
+    compass (0.13.alpha.0)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.2.0.alpha.93)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
+>>>>>>> Added draggable setup to ul/li, fixed heights and setup progress-bar
     daemons (1.1.9)
     debugger (1.2.1)
       columnize (>= 0.3.1)
@@ -83,6 +93,7 @@ GEM
     faker (1.1.2)
       i18n (~> 0.5)
     ffi (1.1.5)
+    fssm (0.2.9)
     google-webfonts (0.1.2)
       actionpack (>= 3.0.0)
     guard (1.5.3)
@@ -227,7 +238,12 @@ DEPENDENCIES
   bootstrap-sass (~> 2.1.0.0)
   capybara
   coffee-rails (~> 3.2.1)
+<<<<<<< HEAD
   debugger
+=======
+  compass (~> 0.12.rc.0)
+  compass-rails (~> 1.0.1)
+>>>>>>> Added draggable setup to ul/li, fixed heights and setup progress-bar
   execjs
   factory_girl_rails
   faker
