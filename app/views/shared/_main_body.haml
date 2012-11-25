@@ -7,22 +7,11 @@
       .span9
         #playlist
 
-      .span3
-        .well.right-hand-nav.sharing
-          #step-1-icon.step-icon
-          %h4 Create
-          .clearfix
-          Branch
-        .well.right-hand-nav.sharing
-          #step-2-icon.step-icon
-          %h4 Collaborate
-          .clearfix
-          %hr
-          = link_to image_tag('twitter_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
-          = link_to image_tag('facebook_logo.png', :height => 50, :width => 50, :class => 'twitter-logo'), '', :class => 'pull-left logo'
-          .clearfix
-          %br
-          Allows users to edit playlist
+      .span3#js-right-side-bar.right-side-bar
+        #js-google-ad
+        #js-create-container
+        #js-collaborate-container
+        #js-share-container
 
 
     .push

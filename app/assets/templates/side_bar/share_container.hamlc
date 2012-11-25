@@ -1,0 +1,3 @@
+.well.side-bar-container
+  %h4 Branch
+  #step-2-icon.step-icon
