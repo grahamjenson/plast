@@ -1,0 +1,7 @@
+.well.side-bar-container
+  %h4 Collaborate
+  .clearfix
+  %hr
+  .clearfix
+  %br
+  Allows users to edit playlist
