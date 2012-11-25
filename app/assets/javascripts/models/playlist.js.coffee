@@ -56,7 +56,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   parse: (data) ->
     console.log("Parsing Playlist")
-    console.log(data.plitems)
 
     if data.plitems
       newplis = (pli.id for pli in data.plitems)
@@ -82,7 +81,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   add_post: (plis) ->
     json_plis = (pli.as_json() for pli in plis)
     posted = { plitems: json_plis}
-    console.log(posted)
     $.post("#{@url()}/add_plitems", {plitems: json_plis});
 
   getPlayableItems: ->

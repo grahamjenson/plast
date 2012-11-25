@@ -7,8 +7,6 @@ class Plast.Models.Plitem extends Backbone.RelationalModel
 
   as_json: ->
     plitem = this
-    console.log("asd")
-    console.log(plitem)
     return {
       youtubeid: plitem.get("youtubeid"),
       title: plitem.get("title"),

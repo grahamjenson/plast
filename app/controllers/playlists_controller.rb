@@ -42,7 +42,6 @@ class PlaylistsController < ApplicationController
     prank = plitem.find_plitem_rank(@session)
     prank.rank = -1
     prank.save()
-
     render :json => {success: true}
   end
 
