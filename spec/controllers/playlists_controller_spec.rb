@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'session_helper'
+require_relative './session_helper.rb'
 require 'json_helper'
 
 
@@ -8,23 +8,19 @@ describe PlaylistsController do
   include JSONHelper
 
   before :each do
-    @pl = Playlist.create()
     @plitem1 = {
-      :playlist_id => @pl.uuid,
       youtubeid: "1",
       title: "1",
       thumbnail: "1",
       length: 1,
       }
     @plitem2 = {
-      :playlist_id => @pl.uuid,
       youtubeid: "2",
       title: "2",
       thumbnail: "2",
       length: 2,
       }
     @plitem3 = {
-      :playlist_id => @pl.uuid,
       youtubeid: "3",
       title: "3",
       thumbnail: "3",
@@ -33,12 +29,16 @@ describe PlaylistsController do
   end
 
   describe "GET create" do
-    it "will return a playlist with uuid" do
+    it "will create a playlist with correct uuid" do
       set_session("a")
-      get :create
-      res = ActiveSupport::JSON.decode(response.body)
-      res["id"].should_not eq nil
-      res["id"].length.should eq 8
+      post :create
+      json = get_response
+
+      json["read_only_id"].should_not eq nil
+      pl = Playlist.find(json["read_only_id"])
+
+      json["id"].should_not eq nil
+      json["id"].should eq pl.uuid
     end
   end
 
@@ -48,285 +48,149 @@ describe PlaylistsController do
       uuid = pl.uuid
       set_session("a")
       get :show, id: uuid
-      res = ActiveSupport::JSON.decode(response.body)
-      res["id"].should eq uuid
-    end
 
-    it "will return the playlists proper id for readonly" do
-      pl = Playlist.create()
-      uuid = pl.uuid
-      set_session("a")
-      get :show, id: uuid
-      res = ActiveSupport::JSON.decode(response.body)
-      res["id"].should eq uuid
-    end
-
-    it "will return the plitems for a playlist" do
-      set_session("a")
-      post :create, @plitem1
-      post :create, @plitem2
-      get :index, :playlist_id => @pl.uuid
       json = get_response
-      json.length.should eq 2
-      json[0]["title"].should eq "1"
-      json[1]["title"].should eq "2"
+      json["read_only_id"].should_not eq nil
+      json["read_only_id"].should eq pl.id
+
+      json["id"].should_not eq nil
+      json["id"].should eq uuid
     end
 
-    it "will return the plitems when another session adds" do
-      set_session("a")
-      post :create, @plitem1
+    describe "with plitems" do
 
-      set_session("b")
-      post :create, @plitem2
+      it "will return the plitems for a playlist" do
+        pl = Playlist.create()
+        pli1 = pl.plitems.create(@plitem1)
+        pli2 = pl.plitems.create(@plitem2)
 
-      set_session("a")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json.length.should eq 2
-      json[0]["title"].should eq "1"
-      json[1]["title"].should eq "2"
+        session = set_session("a")
+
+        pli1.find_create_rank(session,0)
+        pli2.find_create_rank(session,1)
+
+        pl.save()
+
+        get :show, :id => pl.uuid
+
+        json = get_response
+
+        puts json
+
+        json["plitems"].length.should eq 2
+        json["plitems"][0]["title"].should eq pli1.title
+        json["plitems"][1]["title"].should eq pli2.title
+      end
 
     end
-
-    it "will add ranks to when fetched " do
-      set_session("a")
-      post :create, @plitem1
-      post :create, @plitem2
-
-      PlitemRank.all.length.should eq 2
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      PlitemRank.all.length.should eq 4
-      json = get_response
-    end
-
   end
 
-  describe "POST update" do
-
-it "will add created item to playlist" do
+  describe "POST add_plitems" do
+    before :each do
       set_session("a")
-      post :create, @plitem1
-      @pl.reload()
-      @pl.plitems.length.should eq 1
+      post :create
+      json = get_response
+
+      @pl = Playlist.find(json["read_only_id"])
     end
 
-    it "will build and set rank incrementally" do
-      session = set_session("a")
-      post :create, @plitem1
-      json = get_response
-      rank = Plitem.find(json["id"]).find_plitem_rank(session)
-      rank.rank.should eq 0
+    it "will add a single plitem" do
+      set_session("a")
+      post :add_plitems, :id => @pl.uuid, :plitems => {0 => @plitem1}
 
-      post :create, @plitem2
+      get :show, id: @pl.uuid
+
       json = get_response
-      rank = Plitem.find(json["id"]).find_plitem_rank(session)
-      rank.rank.should eq 1
+      json[:plitems].length.should eq 1
+
+      json[:plitems][0][:title].should eq @plitem1[:title]
+    end
+
+    it "will add multiple items" do
+      set_session("a")
+      post :add_plitems, :id => @pl.uuid, :plitems => {0 => @plitem1, 1=> @plitem2}
+
+      get :show, id: @pl.uuid
+
+      json = get_response
+
+      json[:plitems].length.should eq 2
+      json[:plitems][0][:title].should eq @plitem1[:title]
+      json[:plitems][1][:title].should eq @plitem2[:title]
     end
 
     it "will not create plitem with same youtube id" do
-      set_session("a")
-      post :create, @plitem1
-      response.should be_success
-      post :create, @plitem1
-      response.should_not be_success
-      json = get_response
-      json["errors"].should_not eq nil
-    end
-
-
-    it "will reorder for one session" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli1.id
-      json[1]["id"].should eq pli2.id
-
-      post :reorder, :playlist_id => @pl.uuid, :order => [pli2.id, pli1.id]
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json[1]["id"].should eq pli1.id
-    end
-
-    it "will reorder items for a new sessions" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-      post :reorder, :playlist_id => @pl.uuid, :order => [pli2.id, pli1.id]
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json[1]["id"].should eq pli1.id
-    end
-
-    it "will not change someone elses order" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-      post :create, @plitem3
-      pli3 = Plitem.find(get_response()["id"])
-
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      post :reorder, :playlist_id => @pl.uuid, :order => [pli3.id, pli2.id, pli1.id]
-
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli3.id
-      json[1]["id"].should eq pli2.id
-      json[2]["id"].should eq pli1.id
-
-      set_session("a")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli1.id
-      json[1]["id"].should eq pli2.id
-      json[2]["id"].should eq pli3.id
 
     end
 
-    it "will average orders of two sessions for a new session" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-      post :create, @plitem3
-      pli3 = Plitem.find(get_response()["id"])
+    describe "multiple sessions" do
 
-      #pli1, pli2, pli3 is 0,1,2
+      it "will return the plitems when another session adds" do
 
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      post :reorder, :playlist_id => @pl.uuid, :order => [pli3.id, pli1.id, pli2.id]
-      #pli1, pli2, pli3 is 1,2,0
+      end
 
-
-      set_session("c")
-      #Ranks should be
-      #pli1, pli2, pli3 is 1,3,2
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli1.id
-      json[1]["id"].should eq pli3.id
-      json[2]["id"].should eq pli2.id
-    end
-
-        it "will remove item from playlist when requested" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      post :remove, :playlist_id => @pl.uuid, :id => pli1.id
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json.length.should eq 1
-    end
-
-    it "will not remove item from  someone elses playlist if they have it" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      post :remove, :playlist_id => @pl.uuid, :id => pli1.id
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json.length.should eq 1
-
-      set_session("a")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli1.id
-      json[1]["id"].should eq pli2.id
-      json.length.should eq 2
-    end
-
-    it "will remove item from someone elses gotten playlist" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      post :remove, :playlist_id => @pl.uuid, :id => pli1.id
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json.length.should eq 1
-    end
-
-    it "if #{Plitem::REMOVAL_RATE} of people remove item it is removed" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      set_session("c")
-      get :index, :playlist_id => @pl.uuid
-      set_session("d")
-      get :index, :playlist_id => @pl.uuid
-      post :remove, :playlist_id => @pl.uuid, :id => pli1.id
-
-      set_session("e")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli2.id
-      json.length.should eq 1
-    end
-
-    it "if less than #{Plitem::REMOVAL_RATE} of people remove item it is NOT removed" do
-      set_session("a")
-      post :create, @plitem1
-      pli1 = Plitem.find(get_response()["id"])
-      post :create, @plitem2
-      pli2 = Plitem.find(get_response()["id"])
-
-      set_session("b")
-      get :index, :playlist_id => @pl.uuid
-      set_session("c")
-      get :index, :playlist_id => @pl.uuid
-      set_session("d")
-      get :index, :playlist_id => @pl.uuid
-      set_session("e")
-      get :index, :playlist_id => @pl.uuid
-
-      post :remove, :playlist_id => @pl.uuid, :id => pli1.id
-
-      set_session("f")
-      get :index, :playlist_id => @pl.uuid
-      json = get_response
-      json[0]["id"].should eq pli1.id
-      json[1]["id"].should eq pli2.id
-      json.length.should eq 2
     end
 
   end
+
+  describe "POST remove" do
+    before :each do
+      set_session("a")
+      post :create
+
+      json = get_response
+      @pl = Playlist.find(json["read_only_id"])
+
+      post :add_plitems, :id => @pl.uuid, :plitems => {0 => @plitem1, 1=> @plitem2}
+    end
+
+    it "will remove a plitem" do
+      get :show, id: @pl.uuid
+      json = get_response
+      json[:plitems][0][:title].should eq @plitem1[:title]
+
+      post :remove, :id => @pl.uuid, :plitem_id => json[:plitems][0][:id]
+
+      get :show, id: @pl.uuid
+      json = get_response
+
+      json[:plitems].length.should eq 1
+      json[:plitems][0][:title].should eq @plitem2[:title]
+    end
+
+    describe "with multiple sessions" do
+
+      it "will not remove item from  someone elses playlist if they have it" do
+      end
+
+      it "will remove item from someone elses gotten playlist" do
+      end
+    end
+  end
+
+  describe "POST Update" do
+
+    it "will reorder items for a new sessions" do
+    end
+
+    describe "with multiple sessions" do
+
+      it "will not change someone elses order" do
+      end
+
+      it "if #{Plitem::REMOVAL_RATE} of people remove item it is removed" do
+      end
+
+      it "if less than #{Plitem::REMOVAL_RATE} of people remove item it is NOT removed" do
+      end
+
+
+      it "will average orders of two sessions for a new session" do
+      end
+
+    end
+
+  end
+
 
 end
