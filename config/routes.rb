@@ -19,4 +19,7 @@ Plast::Application.routes.draw do
   match "/playlist/:uuid" => "main#index"
   root to: "main#index"
 
+  match "/faq" => "main#faq"
+  match "/about" => "main#about"
+  match "/feedback" => "main#feedback"
 end

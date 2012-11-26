@@ -15,26 +15,16 @@ class PlaylistsController < SharedPlaylistsController
     pl = Playlist.where(:uuid => params[:id]).first
     i = 0
     #adds and ranks all
-    for pli in params[:plitems]
-      begin
-        plitem = Plitem.where(youtubeid: pli[:youtubeid], playlist_id: pl.id).first_or_create!(
-          {
-          playlist_id: pl.id,
-          youtubeid: pli[:youtubeid],
-          title: pli[:title],
-          thumbnail: pli[:thumbnail],
-          length: pli[:length],
-          count: i
-          }
-        )
-        plitem.find_create_rank(@session,i)
-        i += 1
-      rescue
-        errors ||= []
-        errors << "ERROR"
+    if params[:plitems]
+      errors = find_or_create_plitems(pl,params[:plitems],i)
+      if errors
+        render :json => {errors: errors}
+      else
+        render :json => as_json_pl(pl)
       end
+    else
+      render :json => as_json_pl(pl)
     end
-    render :json => {success: true}
   end
 
   def remove
@@ -48,28 +38,17 @@ class PlaylistsController < SharedPlaylistsController
   def add_plitems
     pl = Playlist.where(:uuid => params[:id]).first
     i = pl.plitems.size()
-    for index, pli in params[:plitems]
-      begin
-        plitem = Plitem.where(youtubeid: pli[:youtubeid], playlist_id: pl.id).first_or_create!(
-          {
-          playlist_id: pl.id,
-          youtubeid: pli[:youtubeid],
-          title: pli[:title],
-          thumbnail: pli[:thumbnail],
-          length: pli[:length],
-          count: i+index.to_i
-          }
-        )
-        plitem.find_create_rank(@session,i+index.to_i)
-      rescue
-        errors ||= []
-        errors << "ERROR"
+    plitems = []
+    if params[:plitems]
+      params[:plitems].each{|index, pli| plitems[index.to_i] = pli}
+      errors = find_or_create_plitems(pl,plitems,i)
+      if errors
+        render :json => {errors: errors}
+      else
+        render :json => {sucess: "Success"}
       end
-    end
-    if errors
-      render :json => as_json_pl(pl)
     else
-      render :json => {success: true}
+      render :json => {sucess: "Success"}
     end
   end
 

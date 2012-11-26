@@ -91,13 +91,13 @@ class Plast.Views.Search extends Backbone.View
 
   addManyItems: (items) ->
     @playlist.add_yt_items(items)
-    $("#serchtext").focus()
-    $("#serchtext").select()
+    $("#js-search-input").focus()
+    $("#js-search-input").select()
 
   addAnItem: (item) ->
     @playlist.add_yt_item(item)
-    $("#serchtext").focus()
-    $("#serchtext").select()
+    $("#js-search-input").focus()
+    $("#js-search-input").select()
 
   change: ->
     console.log("change")

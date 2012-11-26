@@ -6,31 +6,44 @@ class SharedPlaylistsController < ApplicationController
     return pljson
   end
 
+  def find_or_create_plitems(pl,plitems,initialRank)
+    i = initialRank
+    for pli in plitems
+      begin
+        plitem = Plitem.where(youtubeid: pli[:youtubeid], playlist_id: pl.id).first_or_create!(
+          {
+          playlist_id: pl.id,
+          youtubeid: pli[:youtubeid],
+          title: pli[:title],
+          thumbnail: pli[:thumbnail],
+          length: pli[:length],
+          count: i
+          }
+        )
+        plitem.find_create_rank(@session,i)
+        i += 1
+      rescue
+        errors ||= []
+        errors << "ERROR"
+      end
+    end
+    return errors
+  end
 
   def branch
     pl = Playlist.create
-    i = 0
+    plitems = []
     if params[:plitems]
-      for index, pli in params[:plitems]
-        begin
-          plitem = Plitem.where(youtubeid: pli[:youtubeid], playlist_id: pl.id).first_or_create!(
-            {
-            playlist_id: pl.id,
-            youtubeid: pli[:youtubeid],
-            title: pli[:title],
-            thumbnail: pli[:thumbnail],
-            length: pli[:length],
-            count: i+index.to_i
-            }
-          )
-          plitem.find_create_rank(@session,i+index.to_i)
-        rescue
-          errors ||= []
-          errors << "ERROR"
-        end
+      params[:plitems].each{|index, pli| plitems[index.to_i] = pli}
+      errors = find_or_create_plitems(pl,plitems,0)
+      if errors
+        render :json => {errors: errors}
+      else
+        render :json => as_json_pl(pl)
       end
+    else
+      render :json => as_json_pl(pl)
     end
-    render :json => as_json_pl(pl)
   end
 
 end

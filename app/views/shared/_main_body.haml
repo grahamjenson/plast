@@ -18,17 +18,5 @@
         #js-create-container
         #js-collaborate-container
         #js-share-container
+        = yield
 
-.footer
-  .container
-    .row-fluid
-      .span12
-        %h4
-          = link_to 'FAQ', '#'
-          \/
-          = link_to 'About', '#'
-          \/
-          = link_to 'Feedback', '#'
-        .hashbang-logo.pull-right
-          = link_to image_tag('hashbang.png', :height => 31, :width => 140), 'http://hashbang.co.nz/', :target => "_blank"
-      .clearfix
