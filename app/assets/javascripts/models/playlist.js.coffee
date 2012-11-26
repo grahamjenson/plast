@@ -17,13 +17,17 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       }]
 
   initialize: ->
-    @resetRefresh()
+    if @get("readonly")
+      refresh_time = 40000
+    else
+      refresh_time = 20000
+    @resetRefresh(refresh_time)
 
-  resetRefresh: ->
+  resetRefresh: (time)->
     clearInterval(@refresh)
     @refresh = setInterval(=>
       this.fetch()
-    ,20000)
+    ,time)
 
   check_ytitem: (ytitem) ->
     if not ytitem
@@ -80,7 +84,13 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
   reorderitems: (items) ->
     @resetRefresh()
     this.get("plitems").reorderitems(items)
-    this.save()
+    @delay_save()
+
+  delay_save: ->
+    clearTimeout(@delayed_save)
+    @delayed_save = setTimeout(
+      => @save()
+    , 2000)
 
   remove: (plitem) ->
     @resetRefresh()
