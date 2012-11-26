@@ -33,6 +33,7 @@ ul.playlist-header, ul.playlist
 
   .progress-bar-wrapper
     position: absolute
+    z-index: 10
     left: 0px
     right: 0px
     top: 0px
@@ -53,6 +54,9 @@ ul.playlist
 
   .playlist-item-wrapper
     padding: 10px
+    position: relative
+    z-index: 20
+    background-color: transparent
 
   .already-played
     background-color: #ebebeb
@@ -122,6 +126,7 @@ ul.playlist
 
 /* Sharing */
 .right-side-bar
+  padding-top: 5px
 
   .side-bar-container
     margin-top: 35px
@@ -161,9 +166,6 @@ ul.playlist
         +border-radius(6px)
 
 /* Footer */
-.footer, .push
-  height: 100px
-
 .footer
   background-color: black
 

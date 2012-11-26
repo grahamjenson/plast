@@ -1,7 +1,6 @@
 .body-wrapper
   .container
-    .row-fluid.help-container-row
-      .span12#js-help-container
+    .row-fluid.help-container-row#js-help-container-wrapper
 
     .row-fluid
       .span9
@@ -20,18 +19,16 @@
         #js-collaborate-container
         #js-share-container
 
-
-    .push
-  .footer
-    .container
-      .row-fluid
-        .span12
-          %h4
-            = link_to 'FAQ', '#'
-            \/
-            = link_to 'About', '#'
-            \/
-            = link_to 'Feedback', '#'
-          .hashbang-logo.pull-right
-            = link_to image_tag('hashbang.png', :height => 31, :width => 140), 'http://hashbang.co.nz/', :target => "_blank"
-        .clearfix
+.footer
+  .container
+    .row-fluid
+      .span12
+        %h4
+          = link_to 'FAQ', '#'
+          \/
+          = link_to 'About', '#'
+          \/
+          = link_to 'Feedback', '#'
+        .hashbang-logo.pull-right
+          = link_to image_tag('hashbang.png', :height => 31, :width => 140), 'http://hashbang.co.nz/', :target => "_blank"
+      .clearfix
