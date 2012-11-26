@@ -89,7 +89,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   add_post: (plis) ->
     $.post("#{@url()}/add_plitems", {plitems: (pli.as_json() for pli in plis)}).success((data) =>
-      console.log(data)
       this.set(this.parse(data))
     );
 
