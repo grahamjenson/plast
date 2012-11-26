@@ -45,10 +45,10 @@ class PlaylistsController < SharedPlaylistsController
       if errors
         render :json => {errors: errors}
       else
-        render :json => {sucess: "Success"}
+        render :json => as_json_pl(pl)
       end
     else
-      render :json => {sucess: "Success"}
+      render :json => as_json_pl(pl)
     end
   end
 
