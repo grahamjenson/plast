@@ -5,14 +5,16 @@
   #step-2-icon.step-icon
   .clearfix
   .url-share
-    %input.js-copybox{type: "textbox", width: "100%", value: @share_link}
-  .twitter-share
-    %a.pull-left.logo{href: "http://twitter.com/home?status=#{text} at #{@share_link}", target: "_blank"}
-      %img.twitter-logo{src:"/assets/twitter_logo.png"}
-  .facebook-share
-    %a.pull-left.logo{href: "http://www.facebook.com/sharer.php?u=#{@share_link}&t=#{text}", target: "_blank"}
-      %img.facebook-logo{src:"/assets/facebook_logo.png"}
-  .googleplus-share
-    %a.pull-left.logo{href: "https://plus.google.com/share?url=#{@share_link}", target: "_blank"}
+    %input.js-copybox.span{type: "textbox", width: "100%", value: @share_link}
+  .share-icons
+    %a.pull-right.logo{href: "https://plus.google.com/share?url=#{@share_link}", target: "_blank"}
       %img.googleplus-logo{src:"/assets/googleplus_logo.png"}
-  .clearfix
+    %a.pull-right.logo{href: "http://www.facebook.com/sharer.php?u=#{@share_link}&t=#{text}", target: "_blank"}
+      %img.facebook-logo{src:"/assets/facebook_logo.png"}
+    %a.pull-right.logo{href: "http://twitter.com/home?status=#{text} at #{@share_link}", target: "_blank"}
+      %img.twitter-logo{src:"/assets/twitter_logo.png"}
+
+
+
+
+    .clearfix

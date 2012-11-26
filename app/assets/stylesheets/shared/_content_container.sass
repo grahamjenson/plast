@@ -33,6 +33,7 @@ ul.playlist-header, ul.playlist
 
   .progress-bar-wrapper
     position: absolute
+    z-index: 10
     left: 0px
     right: 0px
     top: 0px
@@ -53,6 +54,9 @@ ul.playlist
 
   .playlist-item-wrapper
     padding: 10px
+    position: relative
+    z-index: 20
+    background-color: transparent
 
   .already-played
     background-color: #ebebeb
@@ -122,9 +126,13 @@ ul.playlist
 
 /* Sharing */
 .right-side-bar
+  padding-top: 5px
 
   .side-bar-container
     margin-top: 35px
+
+    a
+      cursor: pointer
 
     hr
       margin: 5px 0 10px 0
@@ -138,13 +146,42 @@ ul.playlist
       float: left
 
     .url-share
+      margin-bottom: 10px
       .js-copybox
         width: 100%
 
+    .share-icons
+      text-align: center
+
+    &#google-ad
+      padding: 8px
+
+
     .logo
-      padding-right: 5px
+      padding-left: 5px
 
       img
         width: 40px
         height: 40px
         +border-radius(6px)
+
+/* Footer */
+.footer
+  background-color: black
+
+  a, h4
+    color: white
+
+  h4
+    display: inline
+    padding-bottom: 5px
+
+  .container
+    margin-top: 0
+
+  .row-fluid
+    margin-top: 20px
+    padding-bottom: 20px
+
+
+

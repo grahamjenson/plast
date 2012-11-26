@@ -8,7 +8,7 @@ class Plast.Views.HelpContainer extends Backbone.View
 
 
   initialize: ->
-    $('#js-help-container').html(@template())
+    $('#js-help-container-wrapper').html(@template())
     this
     @time_to_close = 500
 

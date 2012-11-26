@@ -1,26 +1,34 @@
 .body-wrapper
   .container
-    .row-fluid.help-container-row
-      .span12#js-help-container
+    .row-fluid.help-container-row#js-help-container-wrapper
 
     .row-fluid
       .span9
         #playlist
 
       .span3#js-right-side-bar.right-side-bar
-        #js-google-ad
-          //Does not work dynamically
-          .side-bar-container
-            :javascript
-              google_ad_client = "ca-pub-0536735597863899";
-              google_ad_slot = "4732149507";
-              google_ad_width = 200;
-              google_ad_height = 200;
+        .side-bar-container.well#google-ad
+          :javascript
+            google_ad_client = "ca-pub-0536735597863899";
+            google_ad_slot = "4732149507";
+            google_ad_width = 200;
+            google_ad_height = 200;
 
-            = javascript_include_tag "http://pagead2.googlesyndication.com/pagead/show_ads.js"
+          = javascript_include_tag "http://pagead2.googlesyndication.com/pagead/show_ads.js"
         #js-create-container
         #js-collaborate-container
         #js-share-container
 
-
-    .push
+.footer
+  .container
+    .row-fluid
+      .span12
+        %h4
+          = link_to 'FAQ', '#'
+          \/
+          = link_to 'About', '#'
+          \/
+          = link_to 'Feedback', '#'
+        .hashbang-logo.pull-right
+          = link_to image_tag('hashbang.png', :height => 31, :width => 140), 'http://hashbang.co.nz/', :target => "_blank"
+      .clearfix
