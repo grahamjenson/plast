@@ -5,6 +5,7 @@ class Playlist < ActiveRecord::Base
   validates :uuid, :presence => true
   before_validation :generate_uuid
 
+
   has_many :plitems
   has_many :plitem_ranks, :through => :plitems
 

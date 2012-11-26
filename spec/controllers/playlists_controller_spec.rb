@@ -7,25 +7,21 @@ describe PlaylistsController do
   include SessionHelper
   include JSONHelper
 
+  def mockPlItem(i)
+    {
+      youtubeid: "#{i}",
+      title: "#{i}",
+      thumbnail: "#{i}",
+      length: i,
+      }
+  end
   before :each do
-    @plitem1 = {
-      youtubeid: "1",
-      title: "1",
-      thumbnail: "1",
-      length: 1,
-      }
-    @plitem2 = {
-      youtubeid: "2",
-      title: "2",
-      thumbnail: "2",
-      length: 2,
-      }
-    @plitem3 = {
-      youtubeid: "3",
-      title: "3",
-      thumbnail: "3",
-      length: 3,
-      }
+    @plitem1 = mockPlItem(1)
+    @plitem2 = mockPlItem(2)
+    @plitem3 = mockPlItem(3)
+    @plitem4 = mockPlItem(4)
+    @plitem5 = mockPlItem(5)
+    @plitem6 = mockPlItem(6)
   end
 
   describe "GET create" do
@@ -60,26 +56,18 @@ describe PlaylistsController do
     describe "with plitems" do
 
       it "will return the plitems for a playlist" do
-        pl = Playlist.create()
-        pli1 = pl.plitems.create(@plitem1)
-        pli2 = pl.plitems.create(@plitem2)
-
         session = set_session("a")
+        @pl = Playlist.create()
+        post :add_plitems, :id => @pl.uuid, :plitems => {0 => @plitem1}
+        post :add_plitems, :id => @pl.uuid, :plitems => {0 => @plitem2}
 
-        pli1.find_create_rank(session,0)
-        pli2.find_create_rank(session,1)
-
-        pl.save()
-
-        get :show, :id => pl.uuid
+        get :show, :id => @pl.uuid
 
         json = get_response
 
-        puts json
-
         json["plitems"].length.should eq 2
-        json["plitems"][0]["title"].should eq pli1.title
-        json["plitems"][1]["title"].should eq pli2.title
+        json["plitems"][0]["title"].should eq @plitem1[:title]
+        json["plitems"][1]["title"].should eq @plitem2[:title]
       end
 
     end
@@ -117,6 +105,44 @@ describe PlaylistsController do
       json[:plitems].length.should eq 2
       json[:plitems][0][:title].should eq @plitem1[:title]
       json[:plitems][1][:title].should eq @plitem2[:title]
+    end
+
+    it "will not add over the limit if added one-at-a-time" do
+      set_session("a")
+      Plitem::MAX_ITEMS = 5
+      post :add_plitems, :id => @pl.uuid, :plitems =>
+      {
+        0 => @plitem1,
+        1 => @plitem2,
+        2 => @plitem3,
+      }
+      post :add_plitems, :id => @pl.uuid, :plitems =>
+      {
+        0 => @plitem4,
+        1 => @plitem5,
+        2 => @plitem6
+      }
+      get :show, id: @pl.uuid
+      json = get_response
+      json[:plitems].length.should eq 5
+    end
+
+    it "will add to the limit all items" do
+      set_session("a")
+      Plitem::MAX_ITEMS = 5
+      post :add_plitems, :id => @pl.uuid, :plitems =>
+      {
+        0 => @plitem1,
+        1=> @plitem2,
+        2 => @plitem3,
+        3 => @plitem4,
+        4 => @plitem5,
+        5 => @plitem6
+      }
+
+      get :show, id: @pl.uuid
+      json = get_response
+      json[:plitems].length.should eq 5
     end
 
     it "will not create plitem with same youtube id" do

@@ -1,9 +1,9 @@
 class Plitem < ActiveRecord::Base
   REMOVAL_RATE = 0.25
-
+  MAX_ITEMS = 100
   belongs_to :playlist
 
-  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty, :playlist_id
+  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty, :playlist_id, :count
 
   validates :youtubeid, :title, :playlist, :presence => true
 
@@ -12,8 +12,17 @@ class Plitem < ActiveRecord::Base
   has_many :plitem_ranks
 
   #validate :has_plitem_ranks?
+  attr_accessor :count
+
+  validates :count, :presence => true
 
   before_save :default_values
+
+  validate :plitems_count_within_bounds?, :on => :create
+
+  def plitems_count_within_bounds?
+    errors.add(:playlist, "Too many plitems") if count >= Plitem::MAX_ITEMS
+  end
 
   def default_values
     self.rating_dirty = true if self.rating_dirty == nil
