@@ -9,6 +9,9 @@ Plast::Application.routes.draw do
       end
     end
     resources :read_only_playlists, :only =>[:show] do
+      member do
+        post :branch
+      end
     end
   end
 

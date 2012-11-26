@@ -1,4 +1,4 @@
-class ReadOnlyPlaylistsController < ApplicationController
+class ReadOnlyPlaylistsController < SharedPlaylistsController
   respond_to :json
 
   def show
