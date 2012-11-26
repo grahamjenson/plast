@@ -49,6 +49,8 @@ class Plast.Views.Plitem extends Backbone.View
     plitem = $(e.target).parents(".js-plitem-row").data("plitem")
     console.log("remove #{plitem.get('title')}")
     @plitem.get("playlist").remove(plitem)
+    if plitem == @player.get("playing")
+      @player.playNext()
 
   play: (e) ->
     @player.skipToItem(@plitem)
