@@ -30,7 +30,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       return false
     if not ytitem.status
       return true
-    if ytitem.status.value == 'rejected' or ytitem.status.value == "restricted"
+    if ytitem.status.value == 'rejected' or ytitem.status.value == "restricted" or ytitem.status.value == "deleted"
       return false
     return true
 
@@ -90,6 +90,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   add_post: (plis) ->
     $.post("#{@url()}/add_plitems", {plitems: (pli.as_json() for pli in plis)}).success((data) =>
+      console.log(data)
       this.set(this.parse(data))
     );
 

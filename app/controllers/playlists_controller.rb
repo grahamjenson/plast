@@ -18,7 +18,7 @@ class PlaylistsController < SharedPlaylistsController
     if params[:plitems]
       errors = find_or_create_plitems(pl,params[:plitems],i)
       if errors
-        render :json => {errors: errors}
+        render :json => as_json_pl(pl)
       else
         render :json => as_json_pl(pl)
       end
@@ -43,7 +43,7 @@ class PlaylistsController < SharedPlaylistsController
       params[:plitems].each{|index, pli| plitems[index.to_i] = pli}
       errors = find_or_create_plitems(pl,plitems,i)
       if errors
-        render :json => {errors: errors}
+        render :json => as_json_pl(pl)
       else
         render :json => as_json_pl(pl)
       end
