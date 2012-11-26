@@ -25,6 +25,15 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       this.fetch()
     ,20000)
 
+  check_ytitem: (ytitem) ->
+    if not ytitem
+      return false
+    if not ytitem.status
+      return true
+    if ytitem.status.value == 'rejected' or ytitem.status.value == "restricted"
+      return false
+    return true
+
   add_yt_item_no_save: (ytitem) ->
     pli = new Plast.Models.Plitem({
       "youtubeid" : ytitem.id,
@@ -37,13 +46,14 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     return pli
 
   add_yt_item: (ytitem) =>
-    @resetRefresh()
-    pli = @add_yt_item_no_save(ytitem)
-    this.add_post([pli])
+    if @check_ytitem(ytitem)
+      @resetRefresh()
+      pli = @add_yt_item_no_save(ytitem)
+      this.add_post([pli])
 
   add_yt_items: (ytitems) ->
     @resetRefresh()
-    plis = (@add_yt_item_no_save(ytitem) for ytitem in ytitems)
+    plis = (@add_yt_item_no_save(ytitem) for ytitem in ytitems when @check_ytitem(ytitem))
     this.add_post(plis)
 
     #pli.save({}, {
