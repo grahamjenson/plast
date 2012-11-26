@@ -30,7 +30,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       return false
     if not ytitem.status
       return true
-    if ytitem.status.value == 'rejected' or ytitem.status.value == "restricted" or ytitem.status.value == "deleted"
+    if not ytitem.thumbnail
       return false
     return true
 
@@ -73,7 +73,6 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       changed = not _.isEqual(newplis,oldplis)
       if changed
         this.get("plitems").reset(data.plitems)
-
       delete data.plitems #Never let it handle this
 
     return super(data)
