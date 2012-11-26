@@ -126,6 +126,9 @@ ul.playlist
   .side-bar-container
     margin-top: 35px
 
+    a
+      cursor: pointer
+
     hr
       margin: 5px 0 10px 0
 
@@ -138,13 +141,45 @@ ul.playlist
       float: left
 
     .url-share
+      margin-bottom: 10px
       .js-copybox
         width: 100%
 
+    .share-icons
+      text-align: center
+
+    &#google-ad
+      padding: 8px
+
+
     .logo
-      padding-right: 5px
+      padding-left: 5px
 
       img
         width: 40px
         height: 40px
         +border-radius(6px)
+
+/* Footer */
+.footer, .push
+  height: 100px
+
+.footer
+  background-color: black
+
+  a, h4
+    color: white
+
+  h4
+    display: inline
+    padding-bottom: 5px
+
+  .container
+    margin-top: 0
+
+  .row-fluid
+    margin-top: 20px
+    padding-bottom: 20px
+
+
+
