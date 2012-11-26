@@ -5,6 +5,7 @@ Plast::Application.routes.draw do
       member do
         post :remove
         post :add_plitems
+        post :branch
       end
     end
     resources :read_only_playlists, :only =>[:show] do

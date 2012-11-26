@@ -39,6 +39,7 @@ class Plast.Routers.Playlists extends Backbone.Router
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : npl, attributes: {player: player}})
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
       youtubeplayerview = new Plast.Views.YoutubePlayer({model: ytplayer})
+      full_side_bar = new Plast.Views.FullSideBar({model: npl, el: $('#js-right-side-bar')})
     })
 
   renderpl: (pl) ->
@@ -56,6 +57,6 @@ class Plast.Routers.Playlists extends Backbone.Router
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
       youtubeplayerview = new Plast.Views.YoutubePlayer({model: ytplayer})
       help_view = new Plast.Views.HelpContainer({el: $('.wrapper')})
-      full_side_bar = new Plast.Views.FullSideBar({el: $('#js-right-side-bar')})
+      full_side_bar = new Plast.Views.FullSideBar({model: pl, el: $('#js-right-side-bar')})
 
     })

@@ -1,7 +1,18 @@
+- text = "Help me create this playlist"
 .well.side-bar-container
-  %h4 Collaborate
+  %h4= "Collaborate"
+  %h6= "Let others edit your plysit"
+  #step-2-icon.step-icon
   .clearfix
-  %hr
+  .url-share
+    %input.js-copybox{type: "textbox", width: "100%", value: @share_link}
+  .twitter-collaborate
+    %a.pull-left.logo{href: "http://twitter.com/home?status=#{text} at #{@share_link}", target: "_blank"}
+      %img.twitter-logo{src:"/assets/twitter_logo.png"}
+  .facebook-collaborate
+    %a.pull-left.logo{href: "http://www.facebook.com/sharer.php?u=#{@share_link}&t=#{text}", target: "_blank"}
+      %img.facebook-logo{src:"/assets/facebook_logo.png"}
+  .googleplus-collaborate
+    %a.pull-left.logo{href: "https://plus.google.com/share?url=#{@share_link}", target: "_blank"}
+      %img.googleplus-logo{src:"/assets/googleplus_logo.png"}
   .clearfix
-  %br
-  Allows users to edit playlist

@@ -1,3 +1,14 @@
 .well.side-bar-container
-  %h4 Create
+  %h4= "Create"
+  .clearfix
+  %h6= "Create your own plysit"
+  .clearfix
+  .new-playlist
+    %a{href: "/"}
+      %i.icon-plus
+      = "New plysit"
+  .branch
+    %a.js-branch-link
+      %i.icon-share
+      = "Copy items to new plysit"
   .clearfix

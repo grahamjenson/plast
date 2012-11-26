@@ -79,9 +79,12 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
     $.post("#{@url()}/remove", {plitem_id: plitem.id});
 
   add_post: (plis) ->
-    json_plis = (pli.as_json() for pli in plis)
-    posted = { plitems: json_plis}
-    $.post("#{@url()}/add_plitems", {plitems: json_plis});
+    $.post("#{@url()}/add_plitems", {plitems: (pli.as_json() for pli in plis)});
+
+  branch: ->
+    $.post("#{@url()}/branch", {plitems: (pli.as_json() for pli in @.get('plitems').models)}, (e) ->
+      window.location = "/playlist/#{e.id}"
+    )
 
   getPlayableItems: ->
     this.get("plitems").getPlayableItems()

@@ -63,11 +63,10 @@ class Plast.Views.Playlist extends Backbone.View
 
     if not @playlist.get("readonly")
       $(@el).find("#js-plitem-container").sortable({
-        "stop" : (e,ui) => this.droppedOrder(e,ui),
         "cursor": "pointer",
         'containment': $('#js-plitem-container'),
-        'start': (e, ui) => @highlightListItem(e),
-        'stop': (e, ui) => @deHighlightListItem(e)
+        'start': (e, ui) => @startDrop(e),
+        'stop': (e, ui) => @stopDrop(e)
       }).disableSelection()
 
     this
@@ -83,15 +82,22 @@ class Plast.Views.Playlist extends Backbone.View
     items = ($(plrow).data("plitem") for plrow in $(".js-plitem-row"))
     @playlist.reorderitems(items)
 
+  startDrop: (e) ->
+    @playlist.resetRefresh()
+    @highlightListItem(e)
+
+  stopDrop: (e) ->
+    @deHighlightListItem(e)
+    @droppedOrder(e)
+
   highlightListItem: (e) ->
-    console.log e.target
     ul_item = $(e.target).closest('ul')
     ul_item.addClass('active-sortable')
 
 
   deHighlightListItem: (e) ->
-    console.log e.target
     ul_item = $(e.target).closest('ul')
     ul_item.css('background-color', '#04C')
     ul_item.removeClass('active-sortable')
     ul_item.animate({'background-color' : 'white', 'color' : 'black'}, 400)
+
