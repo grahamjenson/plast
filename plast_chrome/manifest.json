@@ -1,18 +1,25 @@
 {
-   "manifest_version": 2,
-   "background": {
+  "manifest_version": 2,
+  "background": {
       "scripts": [
         "jquery-1.8.3.min.js",
         "plysit_right_click.js"
         ]
       },
-
-   "description": "Add a youtube link to plysit playlist",
-   "icons": {
-      "16": "icon.ico"
-   },
-   "minimum_chrome_version": "6",
-   "name": "Plysit",
-   "permissions": [ "contextMenus", "tabs" ],
-   "version": "0.1"
+  "content_scripts": [
+      {
+        "matches": ["http://plysit.com/*"],
+        "js": ["plysit_content_script.js"]
+      }
+    ],
+  "description": "Add a youtube link to plysit playlist",
+  "icons": {
+    "16": "icon.ico",
+    "48": "logo48.png",
+    "128": "logo128.png"
+  },
+  "minimum_chrome_version": "6",
+  "name": "Plysit",
+  "permissions": [ "contextMenus", "tabs", "http://plysit.com/*" ],
+  "version": "0.1"
 }

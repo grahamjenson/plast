@@ -19,17 +19,17 @@ class PlysitPlugin
   plysit_url: (url) ->
     /.*:\/\/.*plysit.com\/playlist\/.*/.test(url)
 
-  targetPatterns: ['*://*.youtube.com/watch?v=*','*://*.youtu.be/*']
+  targetPatterns: ['*://*.youtube.com/watch?*v=*','*://*.youtu.be/*']
 
   createContextMenu: ->
     chrome.contextMenus.removeAll()
 
-    chrome.contextMenus.create(
-          title: "Add to new Plysit"
-          contexts: ["link"]
-          targetUrlPatterns: @targetPatterns
-          onclick: (info) => @createNewPlysit(info.linkUrl)
-        )
+    #chrome.contextMenus.create(
+    #      title: "Add to new Plysit"
+    #      contexts: ["link"]
+    #      targetUrlPatterns: @targetPatterns
+    #      onclick: (info) => @createNewPlysit(info.linkUrl)
+    #    )
 
     __this = this
     @forEachTab((t) =>
@@ -38,7 +38,7 @@ class PlysitPlugin
           title: "Add to #{t.url}"
           contexts: ["link"]
           targetUrlPatterns: @targetPatterns
-          onclick: (info) => __this.addToPlysit(t.url,info.linkUrl)
+          onclick: (info) => __this.addToPlysit(t.url,info.linkUrl, t.id)
         )
     )
 
@@ -55,16 +55,16 @@ class PlysitPlugin
     ytid = @youtube_parser(yturl)
     if ytid
       $.getJSON("https://gdata.youtube.com/feeds/api/videos/#{ytid}?alt=jsonc&v=2", (d) ->
-        console.log(d)
+        console.log(d.data)
         )
 
 
-  addToPlysit: (plyurl, yturl) ->
+  addToPlysit: (plyurl, yturl, tabid) ->
     ytid = @youtube_parser(yturl)
     if ytid
       $.getJSON("https://gdata.youtube.com/feeds/api/videos/#{ytid}?alt=jsonc&v=2", (d) ->
-        console.log(d)
-        )
+        chrome.tabs.sendMessage(tabid,{type: "plysit_plugin", ytitem: d.data})
+      )
 
   forEachTab: (fun) ->
     chrome.windows.getAll((w) ->

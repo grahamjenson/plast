@@ -20,20 +20,12 @@
       return /.*:\/\/.*plysit.com\/playlist\/.*/.test(url);
     };
 
-    PlysitPlugin.prototype.targetPatterns = ['*://*.youtube.com/watch?v=*', '*://*.youtu.be/*'];
+    PlysitPlugin.prototype.targetPatterns = ['*://*.youtube.com/watch?*v=*', '*://*.youtu.be/*'];
 
     PlysitPlugin.prototype.createContextMenu = function() {
       var __this,
         _this = this;
       chrome.contextMenus.removeAll();
-      chrome.contextMenus.create({
-        title: "Add to new Plysit",
-        contexts: ["link"],
-        targetUrlPatterns: this.targetPatterns,
-        onclick: function(info) {
-          return _this.createNewPlysit(info.linkUrl);
-        }
-      });
       __this = this;
       return this.forEachTab(function(t) {
         if (_this.plysit_url(t.url)) {
@@ -42,7 +34,7 @@
             contexts: ["link"],
             targetUrlPatterns: _this.targetPatterns,
             onclick: function(info) {
-              return __this.addToPlysit(t.url, info.linkUrl);
+              return __this.addToPlysit(t.url, info.linkUrl, t.id);
             }
           });
         }
@@ -65,14 +57,22 @@
       ytid = this.youtube_parser(yturl);
       if (ytid) {
         return $.getJSON("https://gdata.youtube.com/feeds/api/videos/" + ytid + "?alt=jsonc&v=2", function(d) {
-          return console.log(d);
+          return console.log(d.data);
         });
       }
     };
 
-    PlysitPlugin.prototype.addToPlysit = function(plyurl, yturl) {
-      console.log(yturl);
-      return console.log(this.youtube_parser(yturl));
+    PlysitPlugin.prototype.addToPlysit = function(plyurl, yturl, tabid) {
+      var ytid;
+      ytid = this.youtube_parser(yturl);
+      if (ytid) {
+        return $.getJSON("https://gdata.youtube.com/feeds/api/videos/" + ytid + "?alt=jsonc&v=2", function(d) {
+          return chrome.tabs.sendMessage(tabid, {
+            type: "plysit_plugin",
+            ytitem: d.data
+          });
+        });
+      }
     };
 
     PlysitPlugin.prototype.forEachTab = function(fun) {
