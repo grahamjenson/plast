@@ -1,0 +1,21 @@
+<script type="text/javascript">// <![CDATA[
+    //
+    // first declare the function we want to run when our menu item is clicked
+    //
+    function addToPlysit(info) 
+    {
+        var highlightedtext = info.selectionText;
+        console.log(info)
+        console.log(chrome.tabs)
+    }
+ 
+    //
+    // Now that we have a function to call (searchwiktionary)
+    // Add a menu item to the contextMenu...
+    //
+    chrome.contextMenus.create(
+        {title: "Add to Plysit", // the title to add to the menu
+        contexts:["link"], // only add if there is a selection
+        onclick: addToPlysit}); // the code to run when the title is clicked
+ 
+// ]]></script>

@@ -1,0 +1,18 @@
+{
+   "manifest_version": 2,
+   "background": {
+      "scripts": [
+        "jquery-1.8.3.min.js",
+        "plysit_right_click.js"
+        ]
+      },
+
+   "description": "Add a youtube link to plysit playlist",
+   "icons": {
+      "16": "icon.ico"
+   },
+   "minimum_chrome_version": "6",
+   "name": "Plysit",
+   "permissions": [ "contextMenus", "tabs" ],
+   "version": "0.1"
+}
