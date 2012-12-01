@@ -18,16 +18,16 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   initialize: ->
     if @get("readonly")
-      refresh_time = 40000
+      @refresh_time = 40000
     else
-      refresh_time = 20000
-    @resetRefresh(refresh_time)
+      @refresh_time = 20000
+    @resetRefresh()
 
   resetRefresh: (time)->
     clearInterval(@refresh)
-    @refresh = setInterval(=>
+    @refresh = setInterval( =>
       this.fetch()
-    ,time)
+    ,@refresh_time)
 
   check_ytitem: (ytitem) ->
     if not ytitem
