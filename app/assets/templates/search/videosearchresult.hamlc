@@ -16,7 +16,9 @@
               #{yto.title}
             by
             %strong #{yto.uploader}
-            ="• #{$.timeago(yto.uploaded)} • #{yto.viewCount.addCommas()} views"
+            ="• #{$.timeago(yto.uploaded)}"
+            - if yto.viewCount
+              = " • #{yto.viewCount.addCommas()} views"
             %br
             #{yto.description.trunc(255)}
         .clearfix

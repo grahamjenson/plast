@@ -45,6 +45,7 @@ end
 group :development do
   # To use debugger
   gem "heroku_san"
+  gem 'heroku'
 end
 
 
