@@ -5,7 +5,6 @@ class Playlist < ActiveRecord::Base
   validates :uuid, :presence => true
   before_validation :generate_uuid
 
-
   has_many :plitems
   has_many :plitem_ranks, :through => :plitems
 
@@ -34,6 +33,9 @@ class Playlist < ActiveRecord::Base
     return pitem
   end
 
+  def cacheAllPlitems
+    plitems.map{|pli| pli.aggregateRank}
+  end
 
   def aggregated_order
     plis_to_be_ranked = plitems.map{|x| {plitem: x, rank: x.rank} }
@@ -46,11 +48,11 @@ class Playlist < ActiveRecord::Base
   end
 
   def orderedplitems(session)
-    #THIS METHOD IS VERRY INEFFICIENT
+    #THIS METHOD IS VERY INEFFICIENT
     #ITEMS THAT HAVE BEEN RANKED
+
     all_pli_ranks = self.plitem_ranks.where(:session_id => session.id) #all ranks
     ranks_notRemoved = all_pli_ranks.select{|x| x.rank >= 0} #all non removed ranks
-    logger.debug("PLAYLIST ITEM 0")
 
     plitems_notRemoved = ranks_notRemoved.sort{ |pl1,pl2| pl1.rank - pl2.rank}.map{|x| x.plitem} #
     logger.debug("PLAYLIST ITEM 1")

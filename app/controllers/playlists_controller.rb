@@ -1,6 +1,11 @@
 class PlaylistsController < SharedPlaylistsController
   respond_to :json
 
+  def self.clean
+    for pl in Playlist.all.last_accessed
+    end
+  end
+
   def show
     pl = Playlist.where(:uuid => params[:id]).first
     render :json => as_json_pl(pl)

@@ -80,13 +80,20 @@ class Plitem < ActiveRecord::Base
       removes = getAllRemovalPlitemRanks.size()
       ranks =  getAllPositiveRanks.map{|r| r.rank}
       total = ranks.size + removes
-
-      #25% of pple want it removed it is removed, can come back with more pple
-      ret = 0
-      if removes >= (Plitem::REMOVAL_RATE * total)
-        ret = -1
+      if total != 0
+        #25% of pple want it removed it is removed, can come back with more pple
+        ret = 0
+        if removes >= (Plitem::REMOVAL_RATE * total)
+          ret = -1
+        else
+          ret = (1.0* ranks.sum) / total #this takes into account the removes
+        end
       else
-        ret = (1.0* ranks.sum) / total #this takes into account the removes
+        if self.rating
+          ret = self.rating # is dirty but there is no votes
+        else
+          ret = 1 #no votes nobody tells me nothing
+        end
       end
       self.rating = ret
       self.rating_dirty = false
