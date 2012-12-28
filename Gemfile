@@ -21,6 +21,9 @@ gem 'haml_coffee_assets'
 
 gem 'newrelic_rpm'
 
+gem 'httparty'
+gem 'oj'
+
 gem 'sass-rails',   '~> 3.2.3'
 gem "compass", "~> 0.12.rc.0"
 gem "compass-rails", "~> 1.0.1"

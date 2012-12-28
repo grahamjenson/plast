@@ -15,6 +15,8 @@ Plast::Application.routes.draw do
     end
   end
 
+  match "ytmp3/request" => "main#ytrequestproxy"
+
   match "/p/:id" => "main#index"
   match "/playlist/:uuid" => "main#index"
   root to: "main#index"

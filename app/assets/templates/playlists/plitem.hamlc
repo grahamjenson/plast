@@ -13,6 +13,14 @@
 
     - if not @plitem.collection.playlist.get("readonly")
       %i.icon-remove.action.remove
+    - if @plitem.get("dlerror")
+      %i.icon-exclamation-sign
+    - else
+      - if @plitem.get("dllink")
+        %a{id: "dllink_#{@plitem.id}", href: @plitem.get("dllink"), download: "#{@plitem.get('title')}.flv"}
+          %i.icon-download-alt.action.download
+      - else
+        %i.icon-download-alt.action.rdownload
   %li.length= @plitem.get("length").toMinSec()
   .clearfix
 

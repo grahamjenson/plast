@@ -5,6 +5,7 @@ class Plast.Views.Plitem extends Backbone.View
     'click .action.play' : (e) -> this.play(e)
     'click .action.pause' : (e) -> this.pause(e)
     'click .action.resume' : (e) -> this.resume(e)
+    'click .action.rdownload' : (e) -> this.rdownload(e)
 
   template: JST['playlists/plitem']
   tagName: "ul"
@@ -13,8 +14,13 @@ class Plast.Views.Plitem extends Backbone.View
     @plitem = this.model
     @player = @attributes.player
 
+
     @player.bind("change:state", (model,state) =>
       this.stateDirector(state)
+    )
+
+    @plitem.bind("change:dlerror", (model,val) =>
+      this.render()
     )
 
     this.render()
@@ -60,6 +66,18 @@ class Plast.Views.Plitem extends Backbone.View
 
   resume: (e) ->
     @player.resumeplaying()
+
+  rdownload: (e) ->
+    ytid = @plitem.get("youtubeid")
+    enqueURL = "/ytmp3/request"
+    $.post(enqueURL, {"ytid" : ytid}, (data) =>
+      console.log(data)
+      @plitem.set("dllink", data.dlurl)
+      @render()
+      fireclick("dllink_#{@plitem.id}")
+    ).error( =>
+      @plitem.set("dlerror", "error")
+    )
 
 Plast.Views.Plitem.NOT_PLAYED_STATE = 0
 Plast.Views.Plitem.PLAYING_STATE = 1

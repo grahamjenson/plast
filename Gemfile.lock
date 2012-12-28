@@ -62,6 +62,7 @@ GEM
       sass (~> 3.2.0.alpha.93)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    crack (0.3.1)
     daemons (1.1.9)
     debugger (1.2.2)
       columnize (>= 0.3.1)
@@ -123,6 +124,8 @@ GEM
       heroku-api (>= 0.1.2)
       rake
     hike (1.2.1)
+    httparty (0.4.3)
+      crack (>= 0.1.1)
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.1.4)
@@ -146,6 +149,7 @@ GEM
     netrc (0.7.7)
     newrelic_rpm (3.5.2.17)
     nokogiri (1.5.5)
+    oj (2.0.0)
     pg (0.14.1)
     polyglot (0.3.3)
     pry (0.9.10)
@@ -249,9 +253,11 @@ DEPENDENCIES
   haml_coffee_assets
   heroku
   heroku_san
+  httparty
   jquery-rails
   launchy
   newrelic_rpm
+  oj
   pg
   rails (= 3.2.8)
   rspec-rails
