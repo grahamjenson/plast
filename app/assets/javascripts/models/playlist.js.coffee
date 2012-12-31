@@ -18,7 +18,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
 
   initialize: ->
     if @get("readonly")
-      @refresh_time = 40000
+      @refresh_time = 240000
     else
       @refresh_time = 20000
     @resetRefresh()
