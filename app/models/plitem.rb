@@ -3,9 +3,9 @@ class Plitem < ActiveRecord::Base
   MAX_ITEMS = 100
   belongs_to :playlist
 
-  attr_accessible :youtubeid, :title, :thumbnail, :length, :rating, :rating_dirty, :playlist_id, :count
+  attr_accessible :mediaid, :playername, :title, :thumbnail, :length, :rating, :rating_dirty, :playlist_id, :count
 
-  validates :youtubeid, :title, :playlist, :presence => true
+  validates :mediaid, :playername, :title, :playlist, :presence => true
 
   validate :unique_ytid
 
@@ -33,7 +33,7 @@ class Plitem < ActiveRecord::Base
   end
 
   def unique_ytid
-    errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli != self and pli.youtubeid == youtubeid}
+    errors.add(:playlist, "Must be Unique") if playlist.plitems.find{|pli| pli != self and pli.playername == playername and pli.mediaid == mediaid}
   end
 
   def find_create_rank(session,rank)

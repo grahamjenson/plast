@@ -15,7 +15,15 @@ class Plast.Models.Player extends Backbone.RelationalModel
       relatedModel: 'Plast.Models.YTPlayer',
       reverseRelation:
         key: 'player',
-      }]
+      },
+      {
+      type: Backbone.HasOne,
+      key: 'scplayer',
+      relatedModel: 'Plast.Models.SCPlayer',
+      reverseRelation:
+        key: 'player',
+      }
+    ]
 
 
   initialize: ->
@@ -50,7 +58,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
     this.playingitem = plitem
 
     console.log("Playing #{plitem.get('title')}")
-    this.get("ytplayer").loadVideo(plitem.get("youtubeid"))
+    this.get("ytplayer").loadVideo(plitem)
     this.set("playing", plitem)
 
   playNext: (plitem = null) ->

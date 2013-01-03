@@ -12,6 +12,7 @@ class Plast.Views.Search extends Backbone.View
 
   initialize: ->
     @playlist = this.model
+    @searcher = new Searcher()
     this.render()
 
   render: ->
@@ -43,31 +44,30 @@ class Plast.Views.Search extends Backbone.View
     $('.search-bar .search-results').css('height', window.innerHeight - 190)
 
     # Search Videos
-    $.getJSON("https://gdata.youtube.com/feeds/api/videos?q=#{lol}&orderby=relevance&max-results=5&v=2&alt=jsonc", {}, (d) =>
-      if not d.data.items
+    @searcher.searchYTVideo(lol, (items) =>
+      if not items or items.length == 0
         $("#videosearchresults").html(no_results_found_string)
         return
 
-      existing_playlist_youtube_ids = (item.attributes['youtubeid'] for item in @playlist.get('plitems').models)
-      unique_video_search_results = (item for item in d.data.items when item.id not in existing_playlist_youtube_ids)[0..3]
-
-      search_results_html = JST["search/videosearchresult"](items : unique_video_search_results)
+      existing_playlist_youtube_ids = (item.attributes['mediaid'] for item in @playlist.get('plitems').models)
+      unique_video_search_results = (item for item in items when item.mediaid not in existing_playlist_youtube_ids)[0..3]
+      search_results_html = JST["search/searchitems"](items : unique_video_search_results)
       $("#videosearchresults").html(search_results_html)
 
       for item in unique_video_search_results
-        $("##{item.id}").data("yto", {video: item})
+        $("#"+ item.jsid).data("yto", item)
     )
 
     # Search Playlists
-    $.getJSON("https://gdata.youtube.com/feeds/api/playlists/snippets?q=#{lol}&orderby=relevance&max-results=5&v=2&alt=jsonc", {}, (d) =>
-      if not d.data.items
+    @searcher.searchYTPlaylist(lol, (items) =>
+      if not items or items.length == 0
         $("#playlistsearchresults").html(no_results_found_string)
         return
 
-      srhtml = JST["search/playlistsearchresult"](items : d.data.items)
+      srhtml = JST["search/searchitems"](items : items)
       $("#playlistsearchresults").html(srhtml)
-      for item in d.data.items
-        $("#"+item.id).data("yto", {playlist: item})
+      for item in items
+        $("#"+item.jsid).data("yto", item)
     )
 
   srkey: (e) =>
@@ -82,20 +82,20 @@ class Plast.Views.Search extends Backbone.View
     item = $(e.currentTarget).data("yto")
     $(e.currentTarget).parent().remove()
     @searchYouTube(e)
-    if item.video
-      @addAnItem(item.video)
-    if item.playlist
-      $.getJSON("https://gdata.youtube.com/feeds/api/playlists/#{item.playlist.id}?alt=jsonc&v=2&max-results=50", {}, (d) => @addManyItems((yto.video for yto in d.data.items))
-      )
+    console.log(item)
+    if item.type == "video" or item.type == "audio"
+      @addAnItem(item)
+    if item.type == "playlist"
+      @searcher.getYTPlaylistItems(item, (items) => @addManyItems(items))
 
 
   addManyItems: (items) ->
-    @playlist.add_yt_items(items)
+    @playlist.add_search_items(items)
     $("#js-search-input").focus()
     $("#js-search-input").select()
 
   addAnItem: (item) ->
-    @playlist.add_yt_item(item)
+    @playlist.add_search_item(item)
     $("#js-search-input").focus()
     $("#js-search-input").select()
 

@@ -15,7 +15,7 @@
     if (request.type === "plysit_plugin") {
       if (request.ytitem) {
         s = JSON.stringify(request.ytitem);
-        func = ["function(){window.global_pl.add_yt_item(" + s + ");}"].join("\n");
+        func = ["function(){window.global_pl.add_search_item(" + s + ");}"].join("\n");
         return inject(func);
       }
     }

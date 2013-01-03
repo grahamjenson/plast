@@ -48,7 +48,8 @@ class Plast.Routers.Playlists extends Backbone.Router
       #create and render ytPlayer
       #models
       ytplayer = new Plast.Models.YTPlayer()
-      player = new Plast.Models.Player({ytplayer: ytplayer, playlist: pl})
+      scplayer = new Plast.Models.SCPlayer()
+      player = new Plast.Models.Player({ytplayer: ytplayer, scplayer: scplayer, playlist: pl})
 
       #views
       console.log("rendering views")

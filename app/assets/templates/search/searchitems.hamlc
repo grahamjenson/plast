@@ -1,0 +1,25 @@
+- if not @items
+  %li.results-loading
+    Sorry, no results were found.
+- else
+  - for sritem in @items
+    %li
+      %a.srlink{:id => sritem.jsid, :tabindex => "0", href: "#"}
+        .media
+          .media-anchor.pull-left
+            %span.video-time
+              ="#{sritem.duration.toMinSec()}" if sritem.duration
+              ="#{sritem.size}" if sritem.size
+            %img.media-object{:src => sritem.thumbnail}
+          .media-body
+            %h4.media-heading
+              #{sritem.title}
+            by
+            %strong #{sritem.uploader}
+            ="• #{$.timeago(sritem.uploaded)}" if sritem.uploaded
+            ="• #{$.timeago(sritem.updated)}" if sritem.updated
+            - if sritem.viewCount
+              = " • #{sritem.viewCount.addCommas()} views"
+            %br
+            #{sritem.description.trunc(255)}
+        .clearfix

@@ -34,8 +34,6 @@ class MainController < ApplicationController
   def convert(url)
     r = HTTParty.get("http://www.youtube-mp3.org/api/pushItem/?item=#{CGI.escape(url)}&xy=yx&bf=false&r=#{Time.now.to_i}", :headers => {"Accept-Location" => "*"})
 
-
-
     handle_error(r)
 
     video_id = r

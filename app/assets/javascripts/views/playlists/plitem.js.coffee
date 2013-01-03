@@ -68,7 +68,7 @@ class Plast.Views.Plitem extends Backbone.View
     @player.resumeplaying()
 
   rdownload: (e) ->
-    ytid = @plitem.get("youtubeid")
+    ytid = @plitem.get("mediaid")
     enqueURL = "/ytmp3/request"
     $.post(enqueURL, {"ytid" : ytid}, (data) =>
       console.log(data)

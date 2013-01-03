@@ -8,7 +8,8 @@ class Plast.Models.Plitem extends Backbone.RelationalModel
   as_json: ->
     plitem = this
     return {
-      youtubeid: plitem.get("youtubeid"),
+      mediaid: plitem.get("mediaid"),
+      playername: plitem.get("playername"),
       title: plitem.get("title"),
       thumbnail: plitem.get("thumbnail"),
       length: plitem.get("length")

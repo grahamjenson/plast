@@ -10,10 +10,11 @@ class SharedPlaylistsController < ApplicationController
     i = initialRank
     for pli in plitems
       begin
-        plitem = Plitem.where(youtubeid: pli[:youtubeid], playlist_id: pl.id).first_or_create!(
+        plitem = Plitem.where(mediaid: pli[:mediaid], playlist_id: pl.id).first_or_create!(
           {
           playlist_id: pl.id,
-          youtubeid: pli[:youtubeid],
+          mediaid: pli[:mediaid],
+          playername: pli[:playername],
           title: pli[:title],
           thumbnail: pli[:thumbnail],
           length: pli[:length],

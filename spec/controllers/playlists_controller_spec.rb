@@ -9,7 +9,8 @@ describe PlaylistsController do
 
   def mockPlItem(i)
     {
-      youtubeid: "#{i}",
+      mediaid: "#{i}",
+      playername: "youtube",
       title: "#{i}",
       thumbnail: "#{i}",
       length: i,

@@ -1,7 +1,5 @@
 class Plast.Models.YTPlayer extends Backbone.RelationalModel
-  #this is a wrapper around the youtube object
-  #TODO replace swfobject with iframe https://developers.google.com/youtube/iframe_api_reference
-  #Example http://www.andrewchart.co.uk/blog/web-design/youtube-chromeless-api-fullscreen
+
   initialize: ->
     this.set("state", Plast.Models.YTPlayer.UNSTARTED)
 
@@ -46,7 +44,8 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   pauseVideo: ->
     @youtubeplayerobject.pauseVideo()
 
-  loadVideo: (id) ->
+  loadVideo: (plitem) ->
+    id = plitem.get("mediaid")
     @youtubeplayerobject.loadVideoById(id)
 
   setSize: (width = 640, height = 390) ->
@@ -57,6 +56,8 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
 
   width: ->
     $("#" + @youtubeplayerobject.a.id).width()
+
+
 
 Plast.Models.YTPlayer.UNSTARTED = -1# (unstarted)
 Plast.Models.YTPlayer.ENDED = 0 #(ended)

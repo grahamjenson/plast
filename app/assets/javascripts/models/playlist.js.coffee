@@ -29,35 +29,26 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       this.fetch()
     ,@refresh_time)
 
-  check_ytitem: (ytitem) ->
-    if not ytitem
-      return false
-    if not ytitem.status
-      return true
-    if not ytitem.thumbnail
-      return false
-    return true
-
-  add_yt_item_no_save: (ytitem) ->
+  add_search_item_no_save: (sitem) ->
     pli = new Plast.Models.Plitem({
-      "youtubeid" : ytitem.id,
+      "mediaid" : sitem.mediaid,
+      "playername": sitem.playername,
       playlist_id: this.id,
-      title: ytitem.title,
-      thumbnail: ytitem.thumbnail.sqDefault,
-      length: ytitem.duration
+      title: sitem.title,
+      thumbnail: sitem.thumbnail,
+      length: sitem.duration
       })
     @get("plitems").add(pli)
     return pli
 
-  add_yt_item: (ytitem) =>
-    if @check_ytitem(ytitem)
-      @resetRefresh()
-      pli = @add_yt_item_no_save(ytitem)
-      this.add_post([pli])
-
-  add_yt_items: (ytitems) ->
+  add_search_item: (sitem) =>
     @resetRefresh()
-    plis = (@add_yt_item_no_save(ytitem) for ytitem in ytitems when @check_ytitem(ytitem))
+    pli = @add_search_item_no_save(sitem)
+    this.add_post([pli])
+
+  add_search_items: (sitems) ->
+    @resetRefresh()
+    plis = (@add_search_item_no_save(ytitem) for ytitem in sitems)
     this.add_post(plis)
 
     #pli.save({}, {
