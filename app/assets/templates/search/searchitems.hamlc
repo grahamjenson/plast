@@ -21,5 +21,5 @@
             - if sritem.viewCount
               = " • #{sritem.viewCount.addCommas()} views"
             %br
-            #{sritem.description.trunc(255)}
+            = "#{sritem.description.trunc(255)}" if sritem.description
         .clearfix

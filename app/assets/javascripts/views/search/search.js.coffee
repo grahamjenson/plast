@@ -70,6 +70,18 @@ class Plast.Views.Search extends Backbone.View
         $("#"+item.jsid).data("yto", item)
     )
 
+    @searcher.searchSoundCloudTracks(lol, (items) ->
+      if not items or items.length == 0
+        $("#js-soundcloudsearchresults").html(no_results_found_string)
+        return
+
+      srhtml = JST["search/searchitems"](items : items)
+      $("#js-soundcloudsearchresults").html(srhtml)
+      for item in items
+        $("#"+item.jsid).data("yto", item)
+
+    )
+
   srkey: (e) =>
     ENTER_CODE = 13
     if e.which == ENTER_CODE

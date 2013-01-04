@@ -14,3 +14,33 @@ class Plast.Models.Plitem extends Backbone.RelationalModel
       thumbnail: plitem.get("thumbnail"),
       length: plitem.get("length")
     }
+
+  add_download_link: (success) ->
+    if @get('playername') == 'youtube'
+      @add_yt_dl_link(->
+        success()
+      )
+    else
+      if @get('playername') == 'soundcloud'
+        @add_sc_dl_link(->
+          success()
+        )
+
+  add_sc_dl_link: (success) ->
+    SC.init()
+    SC.get(this.get('mediaid'), (d) =>
+      if d.downloadable
+        @set("dllink", d.download_url)
+        success()
+      else
+        @set("dlerror", "non-downloadable")
+    )
+
+  add_yt_dl_link: (success)->
+    enqueURL = "/ytmp3/request"
+    $.post(enqueURL, {"ytid" : this.get('mediaid')}, (data) =>
+      @set("dllink", data.dlurl)
+      success()
+    ).error( =>
+      @set("dlerror", "error")
+    )

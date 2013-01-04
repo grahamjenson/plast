@@ -43,6 +43,7 @@ group :development, :test do
   gem 'launchy'
   gem 'factory_girl_rails'
   gem 'debugger'
+  gem 'jasmine'
 end
 
 group :development do

@@ -26,6 +26,15 @@ class Plast.Models.Player extends Backbone.RelationalModel
     ]
 
 
+  all_players: -> [@get('ytplayer'),@get('scplayer')]
+
+  get_player: (plitem) ->
+    playername = plitem.get('playername')
+    if playername == 'youtube'
+      return @get('ytplayer')
+    if playername == 'soundcloud'
+      return @get('scplayer')
+
   initialize: ->
     this.set("repeat", true)
     this.set("state", Plast.Models.Player.STATE_NOTREADY)
@@ -42,6 +51,18 @@ class Plast.Models.Player extends Backbone.RelationalModel
     )
     this.get("ytplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
 
+    this.get("scplayer").bind("change:state", (model,state) =>
+      switch state
+        when SC.Widget.Events.READY then #do nothing this is faster than youtube #TODO make ready take into account all players
+        when SC.Widget.Events.PLAY then this.set("state",Plast.Models.Player.STATE_PLAYING)
+        when SC.Widget.Events.PAUSE then this.set("state",Plast.Models.Player.STATE_PAUSED)
+        when SC.Widget.Events.FINISH then this.playNext()
+    )
+
+    this.get("scplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
+
+    #@bind("change:currentplayer", (model,player) => (p.get_player_element().hide() for p in @all_players() when p != player))
+
   skipToItem: (plitem) ->
     this.get("playlist").makeAllPlayable()
     for pli in this.get("playlist").getPlayableItems()
@@ -54,11 +75,16 @@ class Plast.Models.Player extends Backbone.RelationalModel
     this.playItem(plitem)
 
   playItem: (plitem) ->
+    currentplayer = @get('currentplayer')
+    currentplayer.pause() if currentplayer
     plitem.set("played", (new Date()).getTime())
     this.playingitem = plitem
 
     console.log("Playing #{plitem.get('title')}")
-    this.get("ytplayer").loadVideo(plitem)
+    newplayer = @get_player(plitem)
+    @set('currentplayer', newplayer)
+
+    newplayer.load_and_play_plitem(plitem)
     this.set("playing", plitem)
 
   playNext: (plitem = null) ->
@@ -84,7 +110,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
 
   pause: ->
     console.log("pause")
-    this.get("ytplayer").pauseVideo()
+    @get('currentplayer').pause()
 
   play: ->
     switch this.get("state")
@@ -94,7 +120,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
       when Plast.Models.Player.STATE_PAUSED then this.resumeplaying()
 
   resumeplaying: ->
-    this.get("ytplayer").playVideo()
+    @get('currentplayer').play()
 
   forward: ->
     this.playNext()
@@ -104,4 +130,3 @@ Plast.Models.Player.STATE_NOTREADY = 0
 Plast.Models.Player.STATE_READY = 1
 Plast.Models.Player.STATE_PLAYING = 2
 Plast.Models.Player.STATE_PAUSED = 3
-

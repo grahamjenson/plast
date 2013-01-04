@@ -17,7 +17,7 @@
       %i.icon-exclamation-sign
     - else
       - if @plitem.get("dllink")
-        %a{id: "dllink_#{@plitem.id}", href: @plitem.get("dllink"), download: "#{@plitem.get('title')}.flv"}
+        %a{id: "dllink_#{@plitem.id}", href: @plitem.get("dllink"), download: "#{@plitem.get('title')}.mp3"}
           %i.icon-download-alt.action.download
       - else
         %i.icon-download-alt.action.rdownload

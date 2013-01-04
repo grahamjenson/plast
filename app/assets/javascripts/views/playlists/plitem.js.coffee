@@ -68,16 +68,10 @@ class Plast.Views.Plitem extends Backbone.View
     @player.resumeplaying()
 
   rdownload: (e) ->
-    ytid = @plitem.get("mediaid")
-    enqueURL = "/ytmp3/request"
-    $.post(enqueURL, {"ytid" : ytid}, (data) =>
-      console.log(data)
-      @plitem.set("dllink", data.dlurl)
+    @plitem.add_download_link(=>
+      console.log("al3")
       @render()
-      fireclick("dllink_#{@plitem.id}")
-    ).error( =>
-      @plitem.set("dlerror", "error")
-    )
+      fireclick("dllink_#{@plitem.id}"))
 
 Plast.Views.Plitem.NOT_PLAYED_STATE = 0
 Plast.Views.Plitem.PLAYING_STATE = 1

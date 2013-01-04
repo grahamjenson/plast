@@ -1,4 +1,4 @@
-class Plast.Views.YoutubePlayer extends Backbone.View
+class Plast.Views.PlayersView extends Backbone.View
 
 
   initialize: ->
@@ -56,7 +56,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
       #REFACTOR change text and icons
     $("#show-video-btn").html('
         <i class="icon-chevron-up icon-white pull-left"></i>
-        Hide Video
+        Hide Players
         <i class="icon-chevron-up icon-white pull-right"></i>')
 
   toTop: ->
@@ -66,7 +66,7 @@ class Plast.Views.YoutubePlayer extends Backbone.View
       #REFACTOR change text and icons HACY
     $("#show-video-btn").html('
         <i class="icon-chevron-down icon-white pull-left"></i>
-        Show Video
+        Show Players
         <i class="icon-chevron-down icon-white pull-right"></i>')
 
   render: ->

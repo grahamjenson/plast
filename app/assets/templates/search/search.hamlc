@@ -2,9 +2,10 @@
   %input#js-search-input.search-input.search-query.span{type: "text", placeholder:"Begin your search here."}
 
 %ul.search-results.dropdown-menu.srddm{role: "menu", "aria-labelledby": "js-search-form"}
+
   %li.category
     %h4
-      Videos
+      Youtube
   %hr
 
   .search-result-category#videosearchresults
@@ -13,7 +14,15 @@
 
   %li.category
     %h4
-      Playlists
+      Soundcloud
+  %hr
+  .search-result-category#js-soundcloudsearchresults
+    %li.results-loading
+      Videos will appear here when you start your search
+
+  %li.category
+    %h4
+      Youtube Playlists
   %hr
 
   .search-result-category#playlistsearchresults

@@ -30,6 +30,22 @@ class Searcher
       }
     )
 
+  soundclouditem_to_searchitem: (scitem) ->
+    sr = new SearchItem({
+      type: 'audio',
+      title: scitem.title,
+      mediaid : scitem.uri,
+      playername: "soundcloud",
+      thumbnail: scitem.artwork_url,
+      duration: scitem.duration/1000,
+      description: scitem.description,
+      uploader: scitem.user.username,
+      viewCount: scitem.playback_count,
+      uploaded: scitem.created_at
+      download_url: scitem.download_url
+      }
+    )
+
   check_ytitem: (ytitem) ->
     if not ytitem
       return false
@@ -61,6 +77,16 @@ class Searcher
       (d) =>
         return ((@youtubeitem_to_searchitem(yto.video) for yto in d.data.items when @check_ytitem(yto)))
     )
+
+  searchSoundCloudTracks: (searchText, callback) ->
+    SC.init()
+    SC.get('/tracks', { q: "#{searchText}" }, (tracks) =>
+      console.log(tracks)
+      if tracks.errors or tracks.length == 0
+        callback([])
+      else
+        callback((@soundclouditem_to_searchitem(track) for track in tracks)[0..3])
+    );
 
 
 window.Searcher = Searcher

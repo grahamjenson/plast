@@ -36,7 +36,7 @@ class Plast.Models.Playlist extends Backbone.RelationalModel
       playlist_id: this.id,
       title: sitem.title,
       thumbnail: sitem.thumbnail,
-      length: sitem.duration
+      length: sitem.duration,
       })
     @get("plitems").add(pli)
     return pli

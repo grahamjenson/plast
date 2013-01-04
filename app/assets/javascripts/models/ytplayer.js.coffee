@@ -38,13 +38,13 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
       state = event.data
       this.set("state",state)
 
-  playVideo: ->
+  play: ->
     @youtubeplayerobject.playVideo()
 
-  pauseVideo: ->
+  pause: ->
     @youtubeplayerobject.pauseVideo()
 
-  loadVideo: (plitem) ->
+  load_and_play_plitem: (plitem) ->
     id = plitem.get("mediaid")
     @youtubeplayerobject.loadVideoById(id)
 
@@ -57,7 +57,7 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   width: ->
     $("#" + @youtubeplayerobject.a.id).width()
 
-
+  get_player_element: -> $("#js-youtube-player")
 
 Plast.Models.YTPlayer.UNSTARTED = -1# (unstarted)
 Plast.Models.YTPlayer.ENDED = 0 #(ended)

@@ -67,4 +67,5 @@ window.fireclick = (elem) ->
 
 
 $(document).ready ->
+  SC.init = -> SC.initialize({client_id: 'b289e5e4c7c980dcd46e35ac7d697878'});
   Plast.init()
