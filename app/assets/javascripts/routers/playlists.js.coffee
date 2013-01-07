@@ -33,13 +33,12 @@ class Plast.Routers.Playlists extends Backbone.Router
       #models
       ytplayer = new Plast.Models.YTPlayer()
       scplayer = new Plast.Models.SCPlayer()
-      player = new Plast.Models.Player({ytplayer: ytplayer, scplayer: scplayer, playlist: pl})
+      player = new Plast.Models.Player({ytplayer: ytplayer, scplayer: scplayer, playlist: npl})
 
       #views
       console.log("rendering readonly views")
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : npl, attributes: {player: player}})
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
-      playersview = new Plast.Views.PlayersView({model: player})
       full_side_bar = new Plast.Views.FullSideBar({model: npl, el: $('#js-right-side-bar')})
     })
 
@@ -57,8 +56,8 @@ class Plast.Routers.Playlists extends Backbone.Router
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : pl, attributes: {player: player}})
       plsearch = new Plast.Views.Search({el: $('#search'), model : pl})
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
-      playersview = new Plast.Views.PlayersView({model: player})
-      help_view = new Plast.Views.HelpContainer({el: $('.wrapper')})
+      pliteminfo = new Plast.Views.PlitemInfoView({el : $('#js-plitem-info'), model: player})
+      #help_view = new Plast.Views.HelpContainer({el: $('.wrapper')})
       full_side_bar = new Plast.Views.FullSideBar({model: pl, el: $('#js-right-side-bar')})
 
     })

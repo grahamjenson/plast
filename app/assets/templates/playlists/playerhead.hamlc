@@ -8,3 +8,11 @@
       %i.icon-play
     %button.btn.playerbtn#forward
       %i.icon-step-forward
+    %button.btn.playerbtn#fullscreen
+      %i.icon-fullscreen
+
+  #volume-bar.pull-right
+    %i.icon-volume-up.pull-right
+    .progress.pull-right{style: "width: 100px;"}
+      .bar{style: "width: 100%;"}
+    %i.icon-volume-down.pull-right

@@ -12,7 +12,13 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
     window.onYouTubeIframeAPIReady = () =>
       @youtubeplayerobject = new YT.Player('js-youtube-player', {
         align: "center",
+        width: 200
+        height: 200
+        allowfullscreen: ""
         playerVars:
+          allowfullscreen: true
+          allowScriptAccess: 'always'
+          controls: 0
           enablejsapi : 1,
           wmode : 'transparent',
           fs : 1,
@@ -44,6 +50,9 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   pause: ->
     @youtubeplayerobject.pauseVideo()
 
+  unload: ->
+    @youtubeplayerobject.loadVideoById("")
+
   load_and_play_plitem: (plitem) ->
     id = plitem.get("mediaid")
     @youtubeplayerobject.loadVideoById(id)
@@ -57,7 +66,17 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   width: ->
     $("#" + @youtubeplayerobject.a.id).width()
 
+  hide: ->
+    @get_player_element().hide()
+
+  show: ->
+    @get_player_element().show()
+
   get_player_element: -> $("#js-youtube-player")
+
+
+  fullscreen: ->
+    fullScreenApi.requestFullScreen(document.getElementById("js-youtube-player"))
 
 Plast.Models.YTPlayer.UNSTARTED = -1# (unstarted)
 Plast.Models.YTPlayer.ENDED = 0 #(ended)

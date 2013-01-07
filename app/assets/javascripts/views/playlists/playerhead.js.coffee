@@ -7,7 +7,7 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #play' : -> @player.play()
     'click #forward' : -> @player.forward()
     'click #pause' : -> @player.pause()
-    'click #showvideo': -> this.toggleVideo()
+    'click #fullscreen': -> @player.fullscreen()
 
 
   initialize: ->
@@ -45,23 +45,6 @@ class Plast.Views.PlayerHead extends Backbone.View
   paused: ->
     $("#pause").hide()
     $("#play").show()
-
-  toggleVideo: ->
-    $("#showvideo").popover({
-      html: true,
-      placement: "bottom",
-      title: "VIDEO"
-      content: "<div id='tmpytvideo'></div>",
-      selector: "#showvideo",
-      trigger: "manual",
-
-      })
-    if $("#tmpytvideo").length == 0
-      $("#showvideo").popover('show')
-      $("#outerytplayer").detach().prependTo("#tmpytvideo");
-    else
-      $("#outerytplayer").detach().prependTo(".invisible");
-      $("#showvideo").popover('hide')
 
   render: ->
     $(@el).html(@template(plitem: @player))

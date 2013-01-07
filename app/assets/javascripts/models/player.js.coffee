@@ -76,12 +76,16 @@ class Plast.Models.Player extends Backbone.RelationalModel
 
   playItem: (plitem) ->
     currentplayer = @get('currentplayer')
-    currentplayer.pause() if currentplayer
+    if currentplayer
+      currentplayer.unload()
+      currentplayer.hide()
+
     plitem.set("played", (new Date()).getTime())
     this.playingitem = plitem
 
     console.log("Playing #{plitem.get('title')}")
     newplayer = @get_player(plitem)
+    newplayer.show()
     @set('currentplayer', newplayer)
 
     newplayer.load_and_play_plitem(plitem)
@@ -125,6 +129,8 @@ class Plast.Models.Player extends Backbone.RelationalModel
   forward: ->
     this.playNext()
 
+  fullscreen: ->
+    @get('currentplayer').fullscreen()
 
 Plast.Models.Player.STATE_NOTREADY = 0
 Plast.Models.Player.STATE_READY = 1

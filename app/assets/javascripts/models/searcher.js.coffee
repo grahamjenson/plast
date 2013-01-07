@@ -36,7 +36,6 @@ class Searcher
       title: scitem.title,
       mediaid : scitem.uri,
       playername: "soundcloud",
-      thumbnail: scitem.artwork_url,
       duration: scitem.duration/1000,
       description: scitem.description,
       uploader: scitem.user.username,
@@ -45,6 +44,10 @@ class Searcher
       download_url: scitem.download_url
       }
     )
+    sr.thumbnail = scitem.waveform_url if scitem.waveform_url
+    sr.thumbnail = scitem.user.avatar_url if scitem.user.avatar_url
+    sr.thumbnail = scitem.artwork_url if scitem.artwork_url
+    return sr
 
   check_ytitem: (ytitem) ->
     if not ytitem
