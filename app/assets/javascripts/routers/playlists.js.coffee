@@ -39,6 +39,7 @@ class Plast.Routers.Playlists extends Backbone.Router
       console.log("rendering readonly views")
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : npl, attributes: {player: player}})
       playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
+      pliteminfo = new Plast.Views.PlitemInfoView({el : $('#js-plitem-info'), model: player})
       full_side_bar = new Plast.Views.FullSideBar({model: npl, el: $('#js-right-side-bar')})
     })
 

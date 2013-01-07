@@ -32,12 +32,13 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
 
       window.globalytplayer = @youtubeplayerobject
 
-    window.onPlayerReady = () =>
+    window.onPlayerReady = =>
       this.set("state", Plast.Models.YTPlayer.READY)
       this.timer = setInterval( =>
         p = @youtubeplayerobject.getCurrentTime()/@youtubeplayerobject.getDuration()
         this.set("progress", p*100)
-      ,1000)
+      ,100)
+      @setVolume(1)
 
       #@youtubeplayerobject = $("#"+"#{id}")[0] #this is so slow
     window.onPlayerStateChange = (event) =>
@@ -74,6 +75,13 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
 
   get_player_element: -> $("#js-youtube-player")
 
+  seekTo: (seconds) ->
+    #seek is in seconds
+    @youtubeplayerobject.seekTo(seconds)
+
+  setVolume: (vol) ->
+    #0 is nothing and 100 is full
+    @youtubeplayerobject.setVolume(vol*100)
 
   fullscreen: ->
     fullScreenApi.requestFullScreen(document.getElementById("js-youtube-player"))

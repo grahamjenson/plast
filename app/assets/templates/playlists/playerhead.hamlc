@@ -13,6 +13,6 @@
 
   #volume-bar.pull-right
     %i.icon-volume-up.pull-right
-    .progress.pull-right{style: "width: 100px;"}
-      .bar{style: "width: 100%;"}
+    #js-volumepb.progress.pull-right{style: "width: 100px;"}
+      #js-plitem-volume-bar.bar{style: "width: 100%;"}
     %i.icon-volume-down.pull-right

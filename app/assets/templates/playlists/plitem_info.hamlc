@@ -1,1 +1,13 @@
-adhiashdi
+.plitem-info
+  %h3
+    - if @plitem
+      = @plitem.get("title")
+    - else
+      = ""
+  #seek-bar
+    #js-plitem-from-begining.pull-left
+      = "--:--"
+    #js-seekpb.progress.pull-left{style: "width: 200px;"}
+      #js-plitem-info-progress-bar.bar{style: "width: 0%;"}
+    #js-plitem-from-end.pull-left
+      = "--:--"

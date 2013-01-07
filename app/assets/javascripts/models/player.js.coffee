@@ -61,6 +61,7 @@ class Plast.Models.Player extends Backbone.RelationalModel
 
     this.get("scplayer").bind("change:progress", (model,progress) => this.set("progress",progress))
 
+    this.set('volume',1.0)
     #@bind("change:currentplayer", (model,player) => (p.get_player_element().hide() for p in @all_players() when p != player))
 
   skipToItem: (plitem) ->
@@ -128,6 +129,15 @@ class Plast.Models.Player extends Backbone.RelationalModel
 
   forward: ->
     this.playNext()
+
+  seekTo: (seconds) ->
+    #seek is in seconds
+    @get('currentplayer').seekTo(seconds)
+
+  setVolume: (vol) ->
+    #volum should be between 0 and 1
+    this.set('volume',vol)
+    (player.setVolume(vol) for player in @all_players())
 
   fullscreen: ->
     @get('currentplayer').fullscreen()

@@ -8,6 +8,13 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #forward' : -> @player.forward()
     'click #pause' : -> @player.pause()
     'click #fullscreen': -> @player.fullscreen()
+    'click #js-volumepb' : (e) -> @volumeclick(e)
+
+  volumeclick: (e) ->
+    percent = e.offsetX / e.currentTarget.clientWidth
+    @player.setVolume(percent)
+    progress = 100 * percent
+    $("#js-plitem-volume-bar").width("#{progress}%")
 
 
   initialize: ->
