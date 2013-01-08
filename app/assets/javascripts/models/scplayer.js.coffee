@@ -29,6 +29,9 @@ class Plast.Models.SCPlayer extends Backbone.RelationalModel
 
     window.globalscplayer = @scplayer
 
+  player: ->
+    @get('player').models[0]
+
   play: ->
     @scplayer.play()
 
@@ -44,7 +47,8 @@ class Plast.Models.SCPlayer extends Backbone.RelationalModel
       {
         callback: =>
           @scplayer.play()
-          @setVolume(@get('player').get('volume'))
+          vol = @player().get('volume')
+          @setVolume(vol)
       }
     )
 
@@ -57,9 +61,6 @@ class Plast.Models.SCPlayer extends Backbone.RelationalModel
 
   show: ->
     $("#js-soundcloud-player-thumbnail").show()
-
-  height: ->
-  width: ->
 
   seekTo: (seconds) ->
     #seek is in milliseconds

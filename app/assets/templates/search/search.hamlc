@@ -1,11 +1,11 @@
-.search-bar.span12
+.search-bar.span10
   %form#js-search-form.navbar-form.pull-left.dropdown-toggle{'data-toggle':"dropdown"}
     %input#js-search-input.search-input.search-query.span{type: "text", placeholder:"Add Media"}
 
   %ul.search-results.dropdown-menu.srddm{role: "menu", "aria-labelledby": "js-search-form"}
 
     %li.category
-      %h4
+      %h5
         Youtube
     %hr
 
@@ -14,7 +14,7 @@
         Videos will appear here when you start your search
 
     %li.category
-      %h4
+      %h5
         Soundcloud
     %hr
     .search-result-category#js-soundcloudsearchresults
@@ -22,7 +22,7 @@
         Videos will appear here when you start your search
 
     %li.category
-      %h4
+      %h5
         Youtube Playlists
     %hr
 

@@ -3,7 +3,7 @@
     padding: 5px
 
   .logo
-    text-align: center
+    text-align: left
     margin-top: 10px
     margin-bottom: 15px
     cursor: pointer
@@ -21,7 +21,8 @@
 
       li.category
         text-align: center
-
+        h5
+          line-height: 10px
       hr
         margin: 10px 0 0 0
 
@@ -31,13 +32,15 @@
         margin: 15px 0 10px 0
 
       a.srlink
-        padding: 3px 10px 10px 10px
+        padding: 3px 3px 3px 3px
         white-space: normal
         border-bottom: 1px solid #EEE
 
       .media-body
         position: relative
-        margin-left: 130px
+        margin-left: 10px
+        .media-heading
+          line-height: 2px
 
       .media-anchor
         position: relative
@@ -48,6 +51,10 @@
         line-height: 20px
         color: #333
         white-space: nowrap
+
+        .media-object
+          width: auto /* you can use % */
+          height: 50px
 
         span.video-time
           position: absolute
@@ -76,6 +83,7 @@
 .player-inner-wrapper
   width: 200px
   height: 200px
+  margin-left: -5px
   +background-image(linear-gradient(left,rgba(255,255,255,.1), $BLUE))
   @include border-radius(30px)
 

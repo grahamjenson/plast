@@ -67,7 +67,6 @@ class Plast.Models.Player extends Backbone.RelationalModel
   skipToItem: (plitem) ->
     this.get("playlist").makeAllPlayable()
     for pli in this.get("playlist").getPlayableItems()
-      console.log(pli)
       if pli == plitem
         break
       else

@@ -1,13 +1,15 @@
-.plitem-info
-  %h3
+.row-fluid
+  #seek-bar
+    #js-plitem-from-begining{style: "float: left; margin: 6px;"}
+      = "--:--"
+    #js-seekpb.progress.pull-left{style: "width: 100px; height: 17px; float: left; margin: 2px;"}
+      #js-plitem-info-progress-bar.bar{style: "width: 0%;"}
+      %i.icon-play{style: "margin-left: -5px; "}
+    #js-plitem-from-end{style: "float: left; margin: 2px;"}
+      = "--:--"
+.row-fluid
+  %h5
     - if @plitem
       = @plitem.get("title")
     - else
       = ""
-  #seek-bar
-    #js-plitem-from-begining.pull-left
-      = "--:--"
-    #js-seekpb.progress.pull-left{style: "width: 200px;"}
-      #js-plitem-info-progress-bar.bar{style: "width: 0%;"}
-    #js-plitem-from-end.pull-left
-      = "--:--"

@@ -38,12 +38,15 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
         p = @youtubeplayerobject.getCurrentTime()/@youtubeplayerobject.getDuration()
         this.set("progress", p*100)
       ,100)
-      @setVolume(1)
+      @setVolume(@player().get('volume'))
 
       #@youtubeplayerobject = $("#"+"#{id}")[0] #this is so slow
     window.onPlayerStateChange = (event) =>
       state = event.data
       this.set("state",state)
+
+  player: ->
+    @get('player').models[0]
 
   play: ->
     @youtubeplayerobject.playVideo()
@@ -57,15 +60,6 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   load_and_play_plitem: (plitem) ->
     id = plitem.get("mediaid")
     @youtubeplayerobject.loadVideoById(id)
-
-  setSize: (width = 640, height = 390) ->
-    @youtubeplayerobject.setSize(width, height)
-
-  height: ->
-    $("#" + @youtubeplayerobject.a.id).height()
-
-  width: ->
-    $("#" + @youtubeplayerobject.a.id).width()
 
   hide: ->
     @get_player_element().hide()

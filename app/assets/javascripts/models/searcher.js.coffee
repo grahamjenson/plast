@@ -83,8 +83,7 @@ class Searcher
 
   searchSoundCloudTracks: (searchText, callback) ->
     SC.init()
-    SC.get('/tracks', { q: "#{searchText}" }, (tracks) =>
-      console.log(tracks)
+    SC.get('/tracks', { q: "#{searchText}", order: "hotness" }, (tracks) =>
       if tracks.errors or tracks.length == 0
         callback([])
       else

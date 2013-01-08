@@ -11,8 +11,8 @@
     %button.btn.playerbtn#fullscreen
       %i.icon-fullscreen
 
-  #volume-bar.pull-right
-    %i.icon-volume-up.pull-right
-    #js-volumepb.progress.pull-right{style: "width: 100px;"}
+  #volume-bar{style: "width: 130px; margin-left: auto; margin-right: auto"}
+    %i.icon-volume-down.pull-left
+    #js-volumepb.progress.pull-left{style: "width: 100px;"}
       #js-plitem-volume-bar.bar{style: "width: 100%;"}
-    %i.icon-volume-down.pull-right
+    %i.icon-volume-up.pull-left
