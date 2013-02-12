@@ -38,8 +38,8 @@ class Plast.Routers.Playlists extends Backbone.Router
       #views
       console.log("rendering readonly views")
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : npl, attributes: {player: player}})
-      playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
-      pliteminfo = new Plast.Views.PlitemInfoView({el : $('#js-plitem-info'), model: player})
+      playercontrols = new Plast.Views.PlayerControls({el : $('#js-player-controls'), model: player})
+      playerinfo = new Plast.Views.PlayerInfo({el : $('#js-player-info'), model: player})
       full_side_bar = new Plast.Views.FullSideBar({model: npl, el: $('#js-right-side-bar')})
     })
 
@@ -56,8 +56,8 @@ class Plast.Routers.Playlists extends Backbone.Router
       console.log("rendering views")
       plview = new Plast.Views.Playlist({el: $('#playlist'), model : pl, attributes: {player: player}})
       plsearch = new Plast.Views.Search({el: $('#search'), model : pl})
-      playerhead = new Plast.Views.PlayerHead({el : $('#playerhead'), model: player})
-      pliteminfo = new Plast.Views.PlitemInfoView({el : $('#js-plitem-info'), model: player})
+      playercontrols = new Plast.Views.PlayerControls({el : $('#js-player-controls'), model: player})
+      playerinfo = new Plast.Views.PlayerInfo({el : $('#js-player-info'), model: player})
       #help_view = new Plast.Views.HelpContainer({el: $('.wrapper')})
       full_side_bar = new Plast.Views.FullSideBar({model: pl, el: $('#js-right-side-bar')})
 

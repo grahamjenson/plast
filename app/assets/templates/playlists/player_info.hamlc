@@ -1,0 +1,29 @@
+.player-info
+  .title
+    %h5#js-plitem-title
+      Title
+      
+  .seek
+    
+
+    #js-seekpb.seek-bar-wrapper
+      #js-plitem-info-progress-bar.seek-bar
+      #js-seek-clickable.slider-bar
+    
+
+    .info-stuff
+      #js-plitem-from-begining.from-start
+        = "--:--"
+      #js-plitem-from-end.from-end
+        = "--:--"
+
+  .tools
+    .volume
+      %i.icon-volume-down.pull-left
+      #js-volumepb.progress.pull-left
+        #js-plitem-volume-bar.bar{style: "width: 100%"}
+      %i.icon-volume-up.pull-left
+
+    .quality
+      #js-quality-toggle.btn
+        High Quality      

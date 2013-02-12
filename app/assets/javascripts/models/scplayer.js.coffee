@@ -70,3 +70,6 @@ class Plast.Models.SCPlayer extends Backbone.RelationalModel
     #0 is nothing and 100 is full
     @scplayer.setVolume(vol*100)
 
+  setHighQuality: ()->
+  
+  setLowQuality: () ->  

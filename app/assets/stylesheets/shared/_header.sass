@@ -77,25 +77,87 @@
           z-index: 2
 
 
-
+.player-top
+  background-color: whitesmoke
 /* Players */
 
 .player-inner-wrapper
   width: 200px
   height: 200px
-  margin-left: -5px
-  +background-image(linear-gradient(left,rgba(255,255,255,.1), $BLUE))
-  @include border-radius(30px)
+  +background-image(url(/assets/static.gif))
+  @include border-radius(20px)
 
-.player-head
+  .player-view
+    @include border-radius(20px)
+    opacity: 1
+
+.player-controls
+  margin-top: -40px
+  margin-left: 10px
+
   #player-controls
-    margin-bottom: 12px
-
+    margin-top: -12px
   #play, #pause
     +border-radius(6px)
 
-  #volume-bar
-    margin-top: 6px
-    .progress
-      .bar
-        +background-image(linear-gradient(left,#08C, #04C))
+/* player info */
+.player-info
+  width: 100%
+
+  .title
+    height: 30px
+    
+  .seek
+    $SEEK-HEIGHT: 50px
+    height: $SEEK-HEIGHT
+    position: relative
+    
+    .seek-bar-wrapper
+      position: absolute
+      z-index: 10
+      left: 0px
+      right: 0px
+      top: 0px
+      bottom: 0px
+
+      .seek-bar
+        height: 100%
+        +background-image(linear-gradient(#08C, #04C))
+        opacity: .55
+        @include border-radius(10px)
+      .slider-bar
+        position: relative
+        top: -$SEEK-HEIGHT/2 - 5px
+        +background-image(linear-gradient(#08C, #04C))
+        border: 0px solid #FFF
+
+
+    .info-stuff
+      position: relative
+      top: $SEEK-HEIGHT - 20px
+
+      .from-start
+        float: left
+
+      .from-end
+        float: right
+
+  .tools
+    position: relative
+    height: 60px
+    width: 100%
+    margin-top: 10px
+
+    .volume
+      display: inline
+      width: 20%
+      margin-left: 10px
+      margin-right: 10px
+      .progress
+        width: 60px
+
+    .quality
+      display: inline
+      width: 20%
+      margin-left: 10px
+      margin-right: 10px

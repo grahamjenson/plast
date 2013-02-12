@@ -141,6 +141,14 @@ class Plast.Models.Player extends Backbone.RelationalModel
   fullscreen: ->
     @get('currentplayer').fullscreen()
 
+  setQuality: (qual) ->
+    if qual
+      this.get("ytplayer").setHighQuality()
+      this.get("scplayer").setHighQuality()
+    else
+      this.get("ytplayer").setLowQuality()
+      this.get("scplayer").setLowQuality()
+
 Plast.Models.Player.STATE_NOTREADY = 0
 Plast.Models.Player.STATE_READY = 1
 Plast.Models.Player.STATE_PLAYING = 2

@@ -80,6 +80,12 @@ class Plast.Models.YTPlayer extends Backbone.RelationalModel
   fullscreen: ->
     fullScreenApi.requestFullScreen(document.getElementById("js-youtube-player"))
 
+  setHighQuality: ()->
+    @youtubeplayerobject.setPlaybackQuality("hd720")
+
+  setLowQuality: () ->
+    @youtubeplayerobject.setPlaybackQuality("medium")
+    
 Plast.Models.YTPlayer.UNSTARTED = -1# (unstarted)
 Plast.Models.YTPlayer.ENDED = 0 #(ended)
 Plast.Models.YTPlayer.PLAYING = 1# (playing)

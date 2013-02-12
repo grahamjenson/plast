@@ -1,6 +1,6 @@
-class Plast.Views.PlayerHead extends Backbone.View
+class Plast.Views.PlayerControls extends Backbone.View
 
-  template: JST['playlists/playerhead']
+  template: JST['playlists/player_controls']
 
   events:
     'click #back' : -> @player.back()
@@ -8,20 +8,16 @@ class Plast.Views.PlayerHead extends Backbone.View
     'click #forward' : -> @player.forward()
     'click #pause' : -> @player.pause()
     'click #fullscreen': -> @player.fullscreen()
-    'click #js-volumepb' : (e) -> @volumeclick(e)
-
-  volumeclick: (e) ->
-    percent = e.offsetX / e.currentTarget.clientWidth
-    @player.setVolume(percent)
-    progress = 100 * percent
-    $("#js-plitem-volume-bar").width("#{progress}%")
-
 
   initialize: ->
     @player = this.model
 
     @player.bind("change:state", (model,state) =>
       this.stateDirector(state)
+    )
+
+    @player.bind("change:playing", (model,progress) =>
+      @render()
     )
 
     this.render()
@@ -54,10 +50,11 @@ class Plast.Views.PlayerHead extends Backbone.View
     $("#play").show()
 
   render: ->
-    $(@el).html(@template(plitem: @player))
+    playing = @player.get("playing")
+    
+    $(@el).html(@template(plitem: playing))
 
     this.stateDirector(@player.get("state"))
     this
-
 
 

@@ -1,13 +1,22 @@
 .body-wrapper
   .container
-    .row-fluid.help-container-row#js-help-container-wrapper
-
     .row-fluid
       .span9
+        .player-top
+          .row-fluid
+            .span4
+              #js-player-wrapper
+              .player-inner-wrapper
+                #waiting-image.player-view
+                #js-youtube-player.player-view{style: "display: none;"}
+                #js-soundcloud-player.player-view{style: "display: none;"}
+              #js-player-controls
+            .span8
+              #js-player-info
         #playlist
 
       .span3#js-right-side-bar.right-side-bar
-        = render 'shared/player_head'
+        
 
         .side-bar-container.well#google-ad
           :javascript

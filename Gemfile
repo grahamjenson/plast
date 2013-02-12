@@ -14,10 +14,11 @@ gem 'google-webfonts'
 gem 'bootstrap-sass', '~> 2.1.0.0'
 
 gem 'backbone-on-rails'
+gem 'haml_coffee_assets'
 
 gem "swfobject-rails"
 
-gem 'haml_coffee_assets'
+
 
 gem 'newrelic_rpm'
 
