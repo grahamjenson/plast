@@ -75,10 +75,10 @@ class Searcher
     )
 
   getYTPlaylistItems: (searchItem, callback) ->
-    $.getJSON("https://gdata.youtube.com/feeds/api/playlists/#{item.playlist.id}?alt=jsonc&v=2&max-results=50",
+    $.getJSON("https://gdata.youtube.com/feeds/api/playlists/#{searchItem.mediaid}?alt=jsonc&v=2&max-results=50",
       {},
       (d) =>
-        return ((@youtubeitem_to_searchitem(yto.video) for yto in d.data.items when @check_ytitem(yto)))
+        callback(((@youtubeitem_to_searchitem(yto.video) for yto in d.data.items when @check_ytitem(yto))))
     )
 
   searchSoundCloudTracks: (searchText, callback) ->
